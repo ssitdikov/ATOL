@@ -1,7 +1,4 @@
 <?php
-/**
- * User: Salavat Sitdikov
- */
 
 namespace SSitdikov\ATOL\Response;
 
@@ -18,15 +15,6 @@ class GetTokenResponse implements ResponseInterface
         $this->token = $json->token;
         $this->text = $json->text;
         $this->code = $json->code;
-    }
-
-    public function jsonSerialize()
-    {
-        return [
-            'token' => $this->token,
-            'text' => $this->text,
-            'code' => $this->code,
-        ];
     }
 
     /**

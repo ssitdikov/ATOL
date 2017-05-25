@@ -7,6 +7,8 @@ use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\StreamInterface;
 use SSitdikov\ATOL\ApiClient;
+use SSitdikov\ATOL\Code\ErrorCode;
+use SSitdikov\ATOL\Code\SuccessCode;
 use SSitdikov\ATOL\Request\GetTokenRequest;
 
 class ApiClientTest extends TestCase
@@ -15,6 +17,7 @@ class ApiClientTest extends TestCase
     /**
      * @test
      * @dataProvider tokenGeneratedProvider
+     * @dataProvider tokenOriginalProvider
      */
     public function testGetToken($json, $code, $token, $text)
     {
@@ -52,6 +55,30 @@ class ApiClientTest extends TestCase
             ];
         }
         return $tokens;
+    }
+
+    public function tokenOriginalProvider(){
+        $correctToken = [
+            'code' => SuccessCode::GetTokenCode,
+            'text' => '',
+            'token' => md5(time()),
+        ];
+        $notValidToken = [
+            'code' => ErrorCode::NotValidTokenCode,
+            'text' => 'Not Valid Token Code',
+            'token' => '',
+        ];
+        $oldToken = [
+            'code' => SuccessCode::IssuedOldTokenCode,
+            'text' => 'Issued Old Token Code',
+            'token' => md5(time()),
+        ];
+        return [
+            [json_encode($correctToken), $correctToken['code'], $correctToken['token'], $correctToken['text']],
+            [json_encode($notValidToken), $notValidToken['code'], $notValidToken['token'], $notValidToken['text']],
+            [json_encode($oldToken), $oldToken['code'], $oldToken['token'], $oldToken['text']],
+
+        ];
     }
 
 }

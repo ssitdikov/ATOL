@@ -1,7 +1,4 @@
 <?php
-/**
- * User: Salavat Sitdikov
- */
 
 namespace SSitdikov\ATOL\Request;
 

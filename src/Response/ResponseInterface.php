@@ -1,12 +1,9 @@
 <?php
-/**
- * User: Salavat Sitdikov
- */
 
 namespace SSitdikov\ATOL\Response;
 
 
-interface ResponseInterface extends \JsonSerializable
+interface ResponseInterface
 {
 
     public function __construct(\stdClass $json);

@@ -6,7 +6,12 @@ namespace SSitdikov\ATOL;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
+use SSitdikov\ATOL\Request\GetTokenRequest;
 use SSitdikov\ATOL\Request\RequestInterface;
+use SSitdikov\ATOL\Request\SellOperationRequest;
+use SSitdikov\ATOL\Response\GetTokenResponse;
+use SSitdikov\ATOL\Response\ResponseInterface;
+use SSitdikov\ATOL\Response\SellOperationResponse;
 
 class ApiClient
 {
@@ -34,6 +39,22 @@ class ApiClient
             $response = $e->getResponse();
         }
         return $request->getResponse( $response->getBody()->getContents() );
+    }
+
+    /**
+     * @param GetTokenRequest $request
+     * @return GetTokenResponse
+     */
+    public function getToken(GetTokenRequest $request){
+        return $this->makeRequest($request);
+    }
+
+    /**
+     * @param SellOperationRequest $request
+     * @return SellOperationResponse
+     */
+    public function sellOperation(SellOperationRequest $request){
+        return $this->makeRequest($request);
     }
 
 }
