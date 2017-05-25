@@ -1,0 +1,22 @@
+{
+  "name": "SSitdikov/ATOL",
+  "description": "ATOL API Client",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Salavat Sitdikov",
+      "email": "sitsalavat@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.0",
+    "guzzlehttp/guzzle": "~6.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "SSitdikov\\ATOL\\": "src/",
+      "SSitdikov\\ATOL\\Tests\\": "tests/"
+    }
+  }
+}
