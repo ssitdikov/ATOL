@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sitdikov
- * Date: 25.05.17
- * Time: 16:02
- */
 
 namespace SSitdikov\ATOL\Object;
-
 
 class Correction implements \JsonSerializable
 {
@@ -23,7 +16,6 @@ class Correction implements \JsonSerializable
      * @var array
      */
     private $payments = [];
-
 
 
     /**
@@ -74,7 +66,8 @@ class Correction implements \JsonSerializable
         $this->payments = $payments;
     }
 
-    public function addPayment(Payment $payment){
+    public function addPayment(Payment $payment)
+    {
         $this->payments[] = $payment;
     }
 
@@ -88,6 +81,4 @@ class Correction implements \JsonSerializable
             ]
         ];
     }
-
-
 }

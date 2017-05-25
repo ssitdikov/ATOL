@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sitdikov
- * Date: 25.05.17
- * Time: 16:01
- */
 
 namespace SSitdikov\ATOL\Object;
-
 
 class Info implements \JsonSerializable
 {
@@ -17,8 +10,7 @@ class Info implements \JsonSerializable
     private $callback_url = '';
 
     /**
-     * Service constructor.
-     * Сервисная часть чека, включает в себя ИНН, адрес сайта и callback_url (на него приходят POST данные, если указано)
+     * Сервисная часть чека, включает в себя ИНН, адрес сайта и callback_url (на него приходят POST, если указано)
      * @param string $inn
      * @param string $payment_address
      * @param string $callback_url
@@ -86,5 +78,4 @@ class Info implements \JsonSerializable
     {
         $this->callback_url = $callback_url;
     }
-
 }

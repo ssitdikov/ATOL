@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sitdikov
- * Date: 25.05.17
- * Time: 15:59
- */
 
 namespace SSitdikov\ATOL\Object;
-
 
 class Item implements \JsonSerializable
 {
@@ -43,7 +36,7 @@ class Item implements \JsonSerializable
         /**
          * @TODO Разобраться 110/118 как считать?
          */
-        switch ($tax){
+        switch ($tax) {
             case (self::TAX_VAT10):
                 $this->setTaxSum($price * $quantity * 0.1);
                 break;
@@ -166,6 +159,4 @@ class Item implements \JsonSerializable
 
         ];
     }
-
-
 }

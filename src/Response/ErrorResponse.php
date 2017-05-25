@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sitdikov
- * Date: 25.05.17
- * Time: 16:09
- */
 
 namespace SSitdikov\ATOL\Response;
-
 
 class ErrorResponse implements ResponseInterface
 {
@@ -57,5 +50,4 @@ class ErrorResponse implements ResponseInterface
     {
         return $this->type;
     }
-
 }

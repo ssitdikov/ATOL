@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sitdikov
- * Date: 25.05.17
- * Time: 16:07
- */
 
 namespace SSitdikov\ATOL\Response;
-
 
 class SellOperationResponse implements ResponseInterface
 {
@@ -75,6 +68,4 @@ class SellOperationResponse implements ResponseInterface
     {
         return $this->error;
     }
-
-
 }

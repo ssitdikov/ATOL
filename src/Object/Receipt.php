@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sitdikov
- * Date: 25.05.17
- * Time: 16:00
- */
 
 namespace SSitdikov\ATOL\Object;
-
 
 class Receipt implements \JsonSerializable
 {
@@ -163,9 +156,8 @@ class Receipt implements \JsonSerializable
         $this->payments = $payments;
     }
 
-    public function addPayment(Payment $payment){
+    public function addPayment(Payment $payment)
+    {
         $this->payments[] = $payment;
     }
-
-
 }

@@ -2,11 +2,9 @@
 
 namespace SSitdikov\ATOL\Code;
 
-
 class SuccessCode
 {
 
-    const GetTokenCode = 0;
-    const IssuedOldTokenCode = 1;
-
+    const GET_TOKEN_CODE = 0;
+    const ISSUED_OLD_TOKEN_CODE = 1;
 }

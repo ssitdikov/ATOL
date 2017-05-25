@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sitdikov
- * Date: 25.05.17
- * Time: 15:48
- */
 
 namespace SSitdikov\ATOL\Request;
-
 
 use SSitdikov\ATOL\Object\Info;
 use SSitdikov\ATOL\Object\Receipt;
@@ -23,13 +16,13 @@ class SellOperationRequest implements RequestInterface
     private $info;
     private $token = '';
 
-    public function __construct($groupId = '', $uuid = '', Receipt $receipt, Info $info, GetTokenResponse $tokenResponse)
+    public function __construct($groupId, $uuid, Receipt $receipt, Info $info, GetTokenResponse $token)
     {
         $this->group_id = $groupId;
         $this->uuid = $uuid;
         $this->receipt = $receipt;
         $this->info = $info;
-        $this->token = $tokenResponse->getToken();
+        $this->token = $token->getToken();
     }
 
 
@@ -42,11 +35,11 @@ class SellOperationRequest implements RequestInterface
     {
         return [
             'json' => [
-            'timestamp' => date('d.m.Y H:i:s'),
-            'external_id' => $this->uuid,
-            'receipt' => $this->receipt,
-            'service' => $this->info,
-                ],
+                'timestamp' => date('d.m.Y H:i:s'),
+                'external_id' => $this->uuid,
+                'receipt' => $this->receipt,
+                'service' => $this->info,
+            ],
         ];
     }
 
@@ -59,6 +52,4 @@ class SellOperationRequest implements RequestInterface
     {
         return new SellOperationResponse(json_decode($response));
     }
-
-
 }

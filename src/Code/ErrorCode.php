@@ -2,14 +2,12 @@
 
 namespace SSitdikov\ATOL\Code;
 
-
 class ErrorCode
 {
 
-    const NotValidTokenCode = 2;
+    const NOT_VALID_TOKEN_CODE = 2;
 
-    const AuthWrongUserOrPassword = 19;
-    const AuthGenToken = 18;
-    const AuthBadRequest = 17;
-
+    const AUTH_WROKNG_USER_OR_PASSWORD = 19;
+    const AUTH_GEN_TOKEN = 18;
+    const AUTH_BAD_REQUEST = 17;
 }

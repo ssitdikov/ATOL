@@ -2,7 +2,6 @@
 
 namespace SSitdikov\ATOL\Response;
 
-
 class GetTokenResponse implements ResponseInterface
 {
 
@@ -40,5 +39,4 @@ class GetTokenResponse implements ResponseInterface
     {
         return $this->code;
     }
-
 }

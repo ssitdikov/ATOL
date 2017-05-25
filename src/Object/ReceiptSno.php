@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sitdikov
- * Date: 25.05.17
- * Time: 16:00
- */
 
 namespace SSitdikov\ATOL\Object;
-
 
 class ReceiptSno
 {

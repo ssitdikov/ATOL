@@ -45,5 +45,4 @@ class GetTokenRequest implements RequestInterface
     {
         return new GetTokenResponse(json_decode($response));
     }
-
 }
