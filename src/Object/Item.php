@@ -53,13 +53,12 @@ class Item implements \JsonSerializable
     public function jsonSerialize()
     {
         return [
-            'sum' => $this->getSum(),
-            'tax' => $this->getTax(),
-            'tax_sum' => $this->getTaxSum(),
             'name' => $this->getName(),
             'price' => $this->getPrice(),
             'quantity' => $this->getQuantity(),
-
+            'sum' => $this->getSum(),
+            'tax' => $this->getTax(),
+            'tax_sum' => $this->getTaxSum(),
         ];
     }
 

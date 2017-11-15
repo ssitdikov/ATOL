@@ -34,8 +34,8 @@ class Payment implements \JsonSerializable
     public function jsonSerialize()
     {
         return [
-            'type' => $this->getType(),
             'sum' => $this->getSum(),
+            'type' => $this->getType(),
         ];
     }
 

@@ -45,10 +45,10 @@ class SellOperationRequest implements RequestInterface
     {
         return [
             'json' => [
-                'timestamp' => date('d.m.Y H:i:s'),
                 'external_id' => $this->uuid,
                 'receipt' => $this->receipt,
                 'service' => $this->info,
+                'timestamp' => date('d.m.Y H:i:s'),
             ],
         ];
     }
@@ -70,10 +70,11 @@ class SellOperationRequest implements RequestInterface
      * @throws ErrorIncomingNotExistTokenException
      * @throws ErrorIncomingOperationNotSupportException
      * @throws ErrorIsNullExternalIdException
+     * @throws \Exception
      */
     public function getResponse($response)
     {
-        if (null !== $response->error) {
+        if (null !== $response->error || isset($response->code)) {
             switch ($response->error->code) {
                 case ErrorCode::ERROR:
                     throw new ErrorException('Ошибка при парсинге JSON. Повторите с новым уникальным значением ' .
@@ -126,6 +127,9 @@ class SellOperationRequest implements RequestInterface
                         'Не был указан <external_id>.',
                         ErrorCode::ERROR_IS_NULL_EXTERNAL_ID
                     );
+                    break;
+                default:
+                    throw new \Exception($response->text, $response->code);
                     break;
             }
         }

@@ -25,9 +25,9 @@ class Info implements \JsonSerializable
     public function jsonSerialize()
     {
         return [
+            'callback_url' => $this->getCallbackUrl(),
             'inn' => $this->getInn(),
             'payment_address' => $this->getPaymentAddress(),
-            'callback_url' => $this->getCallbackUrl(),
         ];
     }
 

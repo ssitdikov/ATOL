@@ -63,6 +63,20 @@ class ApiClient
         }
     }
 
+    /**
+     * @param SellOperationRequest $request
+     * @return Response\SellOperationResponse
+     * @throws Exception\ErrorException
+     * @throws Exception\ErrorGroupCodeToTokenException
+     * @throws Exception\ErrorIncomingBadRequestException
+     * @throws Exception\ErrorIncomingExistExternalIdException
+     * @throws Exception\ErrorIncomingExpiredTokenException
+     * @throws Exception\ErrorIncomingMissingTokenException
+     * @throws Exception\ErrorIncomingNotExistTokenException
+     * @throws Exception\ErrorIncomingOperationNotSupportException
+     * @throws Exception\ErrorIsNullExternalIdException
+     * @throws \Exception
+     */
     public function sellOperation(SellOperationRequest $request)
     {
         return $request->getResponse(\json_decode($this->makeRequest($request)));

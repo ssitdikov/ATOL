@@ -2,6 +2,8 @@
 
 namespace SSitdikov\ATOL\Request;
 
+use SSitdikov\ATOL\Code\ErrorCode;
+use SSitdikov\ATOL\Code\SuccessCode;
 use SSitdikov\ATOL\Exception\ErrorAuthBadRequestException;
 use SSitdikov\ATOL\Exception\ErrorAuthGenTokenException;
 use SSitdikov\ATOL\Exception\ErrorAuthWrongUserOrPasswordException;
@@ -64,21 +66,21 @@ class GetTokenRequest implements RequestInterface
     public function getResponse($response)
     {
         switch ($response->code) {
-            case 0:
-            case 1:
+            case (SuccessCode::GET_TOKEN_CODE):
+            case (SuccessCode::ISSUED_OLD_TOKEN_CODE):
                 return new GetTokenResponse($response);
                 break;
-            case 17:
+            case (ErrorCode::AUTH_BAD_REQUEST):
                 throw new ErrorAuthBadRequestException('Некорректный запрос. Некорректная ссылка на авторизацию. ' .
-                    'Необходимо повторить запрос с корректными данными.', $response->code);
+                    'Необходимо повторить запрос с корректными данными.', ErrorCode::AUTH_BAD_REQUEST);
                 break;
-            case 18:
+            case (ErrorCode::AUTH_GEN_TOKEN):
                 throw new ErrorAuthGenTokenException('Не удалось сформировать токен. ' .
-                    'Необходимо повторить запрос.', $response->code);
+                    'Необходимо повторить запрос.', ErrorCode::AUTH_GEN_TOKEN);
                 break;
-            case 19:
+            case (ErrorCode::AUTH_WORKING_USER_OR_PASSWORD):
                 throw new ErrorAuthWrongUserOrPasswordException('Неверный логин или пароль. ' .
-                    'Необходимо повторить запрос с корректными данными.', $response->code);
+                    'Необходимо повторить запрос с корректными данными.', ErrorCode::AUTH_WORKING_USER_OR_PASSWORD);
                 break;
             default:
                 throw new \Exception($response->text, $response->code);
