@@ -50,6 +50,18 @@ class Item implements \JsonSerializable
         }
     }
 
+    public function jsonSerialize()
+    {
+        return [
+            'sum' => $this->getSum(),
+            'tax' => $this->getTax(),
+            'tax_sum' => $this->getTaxSum(),
+            'name' => $this->getName(),
+            'price' => $this->getPrice(),
+            'quantity' => $this->getQuantity(),
+
+        ];
+    }
 
     /**
      * @return float
@@ -145,18 +157,5 @@ class Item implements \JsonSerializable
     public function setQuantity(float $quantity)
     {
         $this->quantity = $quantity;
-    }
-
-    public function jsonSerialize()
-    {
-        return [
-            'sum' => $this->getSum(),
-            'tax' => $this->getTax(),
-            'tax_sum' => $this->getTaxSum(),
-            'name' => $this->getName(),
-            'price' => $this->getPrice(),
-            'quantity' => $this->getQuantity(),
-
-        ];
     }
 }

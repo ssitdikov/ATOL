@@ -31,6 +31,13 @@ class Payment implements \JsonSerializable
         $this->sum = $sum;
     }
 
+    public function jsonSerialize()
+    {
+        return [
+            'type' => $this->getType(),
+            'sum' => $this->getSum(),
+        ];
+    }
 
     /**
      * @return int
@@ -62,13 +69,5 @@ class Payment implements \JsonSerializable
     public function setSum(float $sum)
     {
         $this->sum = $sum;
-    }
-
-    public function jsonSerialize()
-    {
-        return [
-            'type' => $this->getType(),
-            'sum' => $this->getSum(),
-        ];
     }
 }

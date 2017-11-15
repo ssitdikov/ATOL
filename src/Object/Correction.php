@@ -17,6 +17,21 @@ class Correction implements \JsonSerializable
      */
     private $payments = [];
 
+    public function addPayment(Payment $payment)
+    {
+        $this->payments[] = $payment;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'attributes' => [
+                'sno' => $this->getSno(),
+                'tax' => $this->getTax(),
+                'payments' => $this->getPayments(),
+            ]
+        ];
+    }
 
     /**
      * @return string
@@ -64,21 +79,5 @@ class Correction implements \JsonSerializable
     public function setPayments(array $payments)
     {
         $this->payments = $payments;
-    }
-
-    public function addPayment(Payment $payment)
-    {
-        $this->payments[] = $payment;
-    }
-
-    public function jsonSerialize()
-    {
-        return [
-            'attributes' => [
-                'sno' => $this->getSno(),
-                'tax' => $this->getTax(),
-                'payments' => $this->getPayments(),
-            ]
-        ];
     }
 }

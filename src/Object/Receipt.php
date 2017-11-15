@@ -46,20 +46,6 @@ class Receipt implements \JsonSerializable
         ];
     }
 
-    public function addItem(Item $item)
-    {
-        $this->items[] = $item;
-        $this->addTotal($item->getSum());
-    }
-
-    /**
-     * @param float $sum
-     */
-    private function addTotal($sum)
-    {
-        $this->setTotal($this->getTotal() + $sum);
-    }
-
     /**
      * @return string
      */
@@ -70,10 +56,12 @@ class Receipt implements \JsonSerializable
 
     /**
      * @param string $sno
+     * @return Receipt
      */
-    public function setSno(string $sno)
+    public function setSno(string $sno): Receipt
     {
         $this->sno = $sno;
+        return $this;
     }
 
     /**
@@ -86,10 +74,12 @@ class Receipt implements \JsonSerializable
 
     /**
      * @param string $email
+     * @return Receipt
      */
-    public function setEmail(string $email)
+    public function setEmail(string $email): Receipt
     {
         $this->email = $email;
+        return $this;
     }
 
     /**
@@ -102,10 +92,12 @@ class Receipt implements \JsonSerializable
 
     /**
      * @param string $phone
+     * @return Receipt
      */
-    public function setPhone(string $phone)
+    public function setPhone(string $phone): Receipt
     {
         $this->phone = $phone;
+        return $this;
     }
 
     /**
@@ -118,26 +110,12 @@ class Receipt implements \JsonSerializable
 
     /**
      * @param array $items
+     * @return Receipt
      */
-    public function setItems(array $items)
+    public function setItems(array $items): Receipt
     {
         $this->items = $items;
-    }
-
-    /**
-     * @return float
-     */
-    public function getTotal(): float
-    {
-        return $this->total;
-    }
-
-    /**
-     * @param float $total
-     */
-    public function setTotal(float $total)
-    {
-        $this->total = $total;
+        return $this;
     }
 
     /**
@@ -150,14 +128,50 @@ class Receipt implements \JsonSerializable
 
     /**
      * @param array $payments
+     * @return Receipt
      */
-    public function setPayments(array $payments)
+    public function setPayments(array $payments): Receipt
     {
         $this->payments = $payments;
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getTotal(): float
+    {
+        return $this->total;
+    }
+
+    /**
+     * @param float $total
+     * @return Receipt
+     */
+    public function setTotal(float $total): Receipt
+    {
+        $this->total = $total;
+        return $this;
+    }
+
+    public function addItem(Item $item)
+    {
+        $this->items[] = $item;
+        $this->addTotal($item->getSum());
+        return $this;
+    }
+
+    /**
+     * @param float $sum
+     */
+    private function addTotal($sum)
+    {
+        $this->setTotal($this->getTotal() + $sum);
     }
 
     public function addPayment(Payment $payment)
     {
         $this->payments[] = $payment;
+        return $this;
     }
 }
