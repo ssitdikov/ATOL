@@ -2,7 +2,7 @@
 
 namespace SSitdikov\ATOL\Response;
 
-class SellOperationResponse implements ResponseInterface
+class OperationResponse implements ResponseInterface
 {
 
     const SELL_STATUS_WAIT = 'wait';

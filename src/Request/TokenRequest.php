@@ -9,7 +9,7 @@ use SSitdikov\ATOL\Exception\ErrorAuthGenTokenException;
 use SSitdikov\ATOL\Exception\ErrorAuthWrongUserOrPasswordException;
 use SSitdikov\ATOL\Response\GetTokenResponse;
 
-class GetTokenRequest implements RequestInterface
+class TokenRequest implements RequestInterface
 {
 
     private $login;
