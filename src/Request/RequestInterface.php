@@ -2,8 +2,6 @@
 
 namespace SSitdikov\ATOL\Request;
 
-use GuzzleHttp\Client;
-
 interface RequestInterface
 {
 
