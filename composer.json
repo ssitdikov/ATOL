@@ -18,5 +18,8 @@
       "SSitdikov\\ATOL\\": "src/",
       "SSitdikov\\ATOL\\Tests\\": "tests/"
     }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^6.4"
   }
 }
