@@ -3,9 +3,6 @@
 namespace SSitdikov\ATOL\Request;
 
 use SSitdikov\ATOL\Code\ErrorCode;
-use SSitdikov\ATOL\Object\Correction;
-use SSitdikov\ATOL\Object\Info;
-use SSitdikov\ATOL\Response\TokenResponse;
 use SSitdikov\ATOL\Exception\ErrorException;
 use SSitdikov\ATOL\Exception\ErrorGroupCodeToTokenException;
 use SSitdikov\ATOL\Exception\ErrorIncomingBadRequestException;
@@ -15,7 +12,10 @@ use SSitdikov\ATOL\Exception\ErrorIncomingMissingTokenException;
 use SSitdikov\ATOL\Exception\ErrorIncomingNotExistTokenException;
 use SSitdikov\ATOL\Exception\ErrorIncomingOperationNotSupportException;
 use SSitdikov\ATOL\Exception\ErrorIsNullExternalIdException;
+use SSitdikov\ATOL\Object\Correction;
+use SSitdikov\ATOL\Object\Info;
 use SSitdikov\ATOL\Response\OperationResponse;
+use SSitdikov\ATOL\Response\TokenResponse;
 
 /**
  * Class CorrectionRequest

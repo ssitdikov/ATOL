@@ -23,6 +23,19 @@ class ApiClient implements IClient
         ]);
     }
 
+    /**
+     * @param TokenRequest $request
+     * @return \SSitdikov\ATOL\Response\TokenResponse
+     * @throws \Exception
+     * @throws \SSitdikov\ATOL\Exception\ErrorAuthBadRequestException
+     * @throws \SSitdikov\ATOL\Exception\ErrorAuthGenTokenException
+     * @throws \SSitdikov\ATOL\Exception\ErrorAuthWrongUserOrPasswordException
+     */
+    public function getToken(TokenRequest $request)
+    {
+        return $request->getResponse(\json_decode($this->makeRequest($request)));
+    }
+
     public function makeRequest(RequestInterface $request)
     {
         try {
@@ -43,19 +56,6 @@ class ApiClient implements IClient
             }
             return \json_encode(['text' => $e->getResponse()->getReasonPhrase(), 'code' => $e->getCode()]);
         }
-    }
-
-    /**
-     * @param TokenRequest $request
-     * @return \SSitdikov\ATOL\Response\TokenResponse
-     * @throws \Exception
-     * @throws \SSitdikov\ATOL\Exception\ErrorAuthBadRequestException
-     * @throws \SSitdikov\ATOL\Exception\ErrorAuthGenTokenException
-     * @throws \SSitdikov\ATOL\Exception\ErrorAuthWrongUserOrPasswordException
-     */
-    public function getToken(TokenRequest $request)
-    {
-        return $request->getResponse(\json_decode($this->makeRequest($request)));
     }
 
     /**
@@ -97,11 +97,22 @@ class ApiClient implements IClient
         return $request->getResponse(\json_decode($this->makeRequest($request)));
     }
 
+    /**
+     * @param ReportRequest $request
+     * @return \SSitdikov\ATOL\Response\ReportResponse
+     * @throws \Exception
+     * @throws \SSitdikov\ATOL\Exception\ErrorIncomingQueueException
+     * @throws \SSitdikov\ATOL\Exception\ErrorIncomingQueueTimeoutException
+     * @throws \SSitdikov\ATOL\Exception\ErrorIncomingValidationException
+     * @throws \SSitdikov\ATOL\Exception\ErrorStateBadRequestException
+     * @throws \SSitdikov\ATOL\Exception\ErrorStateExpiredTokenException
+     * @throws \SSitdikov\ATOL\Exception\ErrorStateMissingTokenException
+     * @throws \SSitdikov\ATOL\Exception\ErrorStateMissingUuidException
+     * @throws \SSitdikov\ATOL\Exception\ErrorStateNotExistTokenException
+     * @throws \SSitdikov\ATOL\Exception\ErrorStateNotFoundException
+     */
     public function getReport(ReportRequest $request)
     {
-
-        print $request->getUrl() . PHP_EOL;
         return $request->getResponse(\json_decode($this->makeRequest($request)));
     }
-
 }

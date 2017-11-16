@@ -36,6 +36,22 @@ class Info implements \JsonSerializable
     /**
      * @return string
      */
+    public function getCallbackUrl(): string
+    {
+        return $this->callback_url;
+    }
+
+    /**
+     * @param string $callback_url
+     */
+    public function setCallbackUrl(string $callback_url)
+    {
+        $this->callback_url = $callback_url;
+    }
+
+    /**
+     * @return string
+     */
     public function getInn(): string
     {
         return $this->inn;
@@ -63,21 +79,5 @@ class Info implements \JsonSerializable
     public function setPaymentAddress(string $payment_address)
     {
         $this->payment_address = $payment_address;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCallbackUrl(): string
-    {
-        return $this->callback_url;
-    }
-
-    /**
-     * @param string $callback_url
-     */
-    public function setCallbackUrl(string $callback_url)
-    {
-        $this->callback_url = $callback_url;
     }
 }

@@ -14,8 +14,8 @@ use SSitdikov\ATOL\Exception\ErrorIncomingOperationNotSupportException;
 use SSitdikov\ATOL\Exception\ErrorIsNullExternalIdException;
 use SSitdikov\ATOL\Object\Info;
 use SSitdikov\ATOL\Object\Receipt;
-use SSitdikov\ATOL\Response\TokenResponse;
 use SSitdikov\ATOL\Response\OperationResponse;
+use SSitdikov\ATOL\Response\TokenResponse;
 
 class OperationRequest implements RequestInterface
 {

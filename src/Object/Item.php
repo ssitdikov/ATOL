@@ -63,54 +63,6 @@ class Item implements \JsonSerializable
     }
 
     /**
-     * @return float
-     */
-    public function getSum(): float
-    {
-        return $this->sum;
-    }
-
-    /**
-     * @param float $sum
-     */
-    public function setSum(float $sum)
-    {
-        $this->sum = $sum;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTax(): string
-    {
-        return $this->tax;
-    }
-
-    /**
-     * @param string $tax
-     */
-    public function setTax(string $tax)
-    {
-        $this->tax = $tax;
-    }
-
-    /**
-     * @return float
-     */
-    public function getTaxSum(): float
-    {
-        return $this->tax_sum;
-    }
-
-    /**
-     * @param float $tax_sum
-     */
-    public function setTaxSum(float $tax_sum)
-    {
-        $this->tax_sum = $tax_sum;
-    }
-
-    /**
      * @return string
      */
     public function getName(): string
@@ -156,5 +108,53 @@ class Item implements \JsonSerializable
     public function setQuantity(float $quantity)
     {
         $this->quantity = $quantity;
+    }
+
+    /**
+     * @return float
+     */
+    public function getSum(): float
+    {
+        return $this->sum;
+    }
+
+    /**
+     * @param float $sum
+     */
+    public function setSum(float $sum)
+    {
+        $this->sum = $sum;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTax(): string
+    {
+        return $this->tax;
+    }
+
+    /**
+     * @param string $tax
+     */
+    public function setTax(string $tax)
+    {
+        $this->tax = $tax;
+    }
+
+    /**
+     * @return float
+     */
+    public function getTaxSum(): float
+    {
+        return $this->tax_sum;
+    }
+
+    /**
+     * @param float $tax_sum
+     */
+    public function setTaxSum(float $tax_sum)
+    {
+        $this->tax_sum = $tax_sum;
     }
 }
