@@ -4,6 +4,5 @@ php:
   - '7.1'
   - '7.2'
 install: composer install
-before_script: cd project
 
 script: phpunit --bootstrap ./vendor/autoload.php ./tests
