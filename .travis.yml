@@ -3,7 +3,7 @@ language: php
 php:
   - '7.1'
   - '7.2'
+install: composer install
+before_script: cd project
 
-composer: install
-
-script: phpunit --bootstrap ./vendor/autoload.php tests
+script: phpunit --bootstrap ./vendor/autoload.php ./tests
