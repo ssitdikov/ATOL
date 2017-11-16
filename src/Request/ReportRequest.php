@@ -71,31 +71,58 @@ class ReportRequest implements RequestInterface
         if (null !== $response->error || isset($response->code)) {
             switch ($response->code) {
                 case (ErrorCode::ERROR_INCOMING_QUEUE_TIMEOUT):
-                    throw new ErrorIncomingQueueTimeoutException('', ErrorCode::ERROR_INCOMING_QUEUE_TIMEOUT);
+                    throw new ErrorIncomingQueueTimeoutException(
+                        'Не создан сервер очередей. Обратитесь к администратору.',
+                        ErrorCode::ERROR_INCOMING_QUEUE_TIMEOUT
+                    );
                     break;
                 case (ErrorCode::ERROR_INCOMING_VALIDATION_EXCEPTION):
-                    throw new ErrorIncomingValidationException('', ErrorCode::ERROR_INCOMING_VALIDATION_EXCEPTION);
+                    throw new ErrorIncomingValidationException(
+                        'Ошибка валидации JSON. Ошибка валидации входящего чека.',
+                        ErrorCode::ERROR_INCOMING_VALIDATION_EXCEPTION
+                    );
                     break;
                 case (ErrorCode::ERROR_INCOMING_QUEUE_EXCEPTION):
-                    throw new ErrorIncomingQueueException('', ErrorCode::ERROR_INCOMING_QUEUE_EXCEPTION);
+                    throw new ErrorIncomingQueueException(
+                        'Проблемы со связью очереди чеков. Обратитесь к администратору.',
+                        ErrorCode::ERROR_INCOMING_QUEUE_EXCEPTION
+                    );
                     break;
                 case (ErrorCode::ERROR_STATE_BAD_REQUEST):
-                    throw new ErrorStateBadRequestException('', ErrorCode::ERROR_STATE_BAD_REQUEST);
+                    throw new ErrorStateBadRequestException(
+                        'Не указан <group_code>',
+                        ErrorCode::ERROR_STATE_BAD_REQUEST
+                    );
                     break;
                 case (ErrorCode::ERROR_STATE_MISSING_TOKEN):
-                    throw new ErrorStateMissingTokenException('', ErrorCode::ERROR_STATE_MISSING_TOKEN);
+                    throw new ErrorStateMissingTokenException(
+                        'Передан некорректный <tokenid>.',
+                        ErrorCode::ERROR_STATE_MISSING_TOKEN
+                    );
                     break;
                 case (ErrorCode::ERROR_STATE_NOT_EXIST_TOKEN):
-                    throw new ErrorStateNotExistTokenException('', ErrorCode::ERROR_STATE_NOT_EXIST_TOKEN);
+                    throw new ErrorStateNotExistTokenException(
+                        'Переданный <tokenid> не выдавался.',
+                        ErrorCode::ERROR_STATE_NOT_EXIST_TOKEN
+                    );
                     break;
                 case (ErrorCode::ERROR_STATE_EXPIRED_TOKEN):
-                    throw new ErrorStateExpiredTokenException('', ErrorCode::ERROR_STATE_EXPIRED_TOKEN);
+                    throw new ErrorStateExpiredTokenException(
+                        'Срок действия <tokenid> истек (срок действия 24 часа).',
+                        ErrorCode::ERROR_STATE_EXPIRED_TOKEN
+                    );
                     break;
                 case (ErrorCode::ERROR_STATE_MISSING_UUID):
-                    throw new ErrorStateMissingUuidException('', ErrorCode::ERROR_STATE_MISSING_UUID);
+                    throw new ErrorStateMissingUuidException(
+                        'Передан некорректный UUID.',
+                        ErrorCode::ERROR_STATE_MISSING_UUID
+                    );
                     break;
                 case (ErrorCode::ERROR_STATE_NOT_FOUND):
-                    throw new ErrorStateNotFoundException('', ErrorCode::ERROR_STATE_NOT_FOUND);
+                    throw new ErrorStateNotFoundException(
+                        'Документ еще не обработан, нет информации. Попробуйте позднее.',
+                        ErrorCode::ERROR_STATE_NOT_FOUND
+                    );
                     break;
                 default:
                     throw new \Exception($response->text, $response->code);
