@@ -15,11 +15,13 @@ class Info implements \JsonSerializable
      * @param string $payment_address
      * @param string $callback_url
      */
-    public function __construct($inn, $payment_address, $callback_url)
+    public function __construct($inn, $payment_address, $callback_url = '')
     {
         $this->setInn($inn);
         $this->setPaymentAddress($payment_address);
-        $this->setCallbackUrl($callback_url);
+        if ($callback_url) {
+            $this->setCallbackUrl($callback_url);
+        }
     }
 
     public function jsonSerialize()

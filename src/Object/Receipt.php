@@ -114,7 +114,9 @@ class Receipt implements \JsonSerializable
      */
     public function setItems(array $items): Receipt
     {
-        $this->items = $items;
+        foreach ($items as $item) {
+            $this->addItem($item);
+        }
         return $this;
     }
 

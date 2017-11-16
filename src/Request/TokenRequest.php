@@ -7,7 +7,7 @@ use SSitdikov\ATOL\Code\SuccessCode;
 use SSitdikov\ATOL\Exception\ErrorAuthBadRequestException;
 use SSitdikov\ATOL\Exception\ErrorAuthGenTokenException;
 use SSitdikov\ATOL\Exception\ErrorAuthWrongUserOrPasswordException;
-use SSitdikov\ATOL\Response\GetTokenResponse;
+use SSitdikov\ATOL\Response\TokenResponse;
 
 class TokenRequest implements RequestInterface
 {
@@ -57,7 +57,7 @@ class TokenRequest implements RequestInterface
 
     /**
      * @param $response
-     * @return GetTokenResponse
+     * @return TokenResponse
      * @throws ErrorAuthBadRequestException
      * @throws ErrorAuthGenTokenException
      * @throws ErrorAuthWrongUserOrPasswordException
@@ -68,7 +68,7 @@ class TokenRequest implements RequestInterface
         switch ($response->code) {
             case (SuccessCode::GET_TOKEN_CODE):
             case (SuccessCode::ISSUED_OLD_TOKEN_CODE):
-                return new GetTokenResponse($response);
+                return new TokenResponse($response);
                 break;
             case (ErrorCode::AUTH_BAD_REQUEST):
                 throw new ErrorAuthBadRequestException('Некорректный запрос. Некорректная ссылка на авторизацию. ' .

@@ -5,7 +5,7 @@ namespace SSitdikov\ATOL\Request;
 use SSitdikov\ATOL\Code\ErrorCode;
 use SSitdikov\ATOL\Object\Correction;
 use SSitdikov\ATOL\Object\Info;
-use SSitdikov\ATOL\Response\GetTokenResponse;
+use SSitdikov\ATOL\Response\TokenResponse;
 use SSitdikov\ATOL\Exception\ErrorException;
 use SSitdikov\ATOL\Exception\ErrorGroupCodeToTokenException;
 use SSitdikov\ATOL\Exception\ErrorIncomingBadRequestException;
@@ -17,6 +17,11 @@ use SSitdikov\ATOL\Exception\ErrorIncomingOperationNotSupportException;
 use SSitdikov\ATOL\Exception\ErrorIsNullExternalIdException;
 use SSitdikov\ATOL\Response\OperationResponse;
 
+/**
+ * Class CorrectionRequest
+ * @package SSitdikov\ATOL\Request
+ * @deprecated
+ */
 class CorrectionRequest implements RequestInterface
 {
 
@@ -36,7 +41,7 @@ class CorrectionRequest implements RequestInterface
         $uuid,
         Correction $correction,
         Info $info,
-        GetTokenResponse $token
+        TokenResponse $token
     ) {
         $this->group_id = $groupId;
         $this->operation = $operation;

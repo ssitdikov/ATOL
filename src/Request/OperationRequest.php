@@ -14,7 +14,7 @@ use SSitdikov\ATOL\Exception\ErrorIncomingOperationNotSupportException;
 use SSitdikov\ATOL\Exception\ErrorIsNullExternalIdException;
 use SSitdikov\ATOL\Object\Info;
 use SSitdikov\ATOL\Object\Receipt;
-use SSitdikov\ATOL\Response\GetTokenResponse;
+use SSitdikov\ATOL\Response\TokenResponse;
 use SSitdikov\ATOL\Response\OperationResponse;
 
 class OperationRequest implements RequestInterface
@@ -32,7 +32,7 @@ class OperationRequest implements RequestInterface
     private $token = '';
     private $operation = self::OPERATION_SELL;
 
-    public function __construct($groupId, $operation, $uuid, Receipt $receipt, Info $info, GetTokenResponse $token)
+    public function __construct($groupId, $operation, $uuid, Receipt $receipt, Info $info, TokenResponse $token)
     {
         $this->group_id = $groupId;
         $this->operation = $operation;

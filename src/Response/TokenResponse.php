@@ -2,7 +2,7 @@
 
 namespace SSitdikov\ATOL\Response;
 
-class GetTokenResponse implements ResponseInterface
+class TokenResponse implements ResponseInterface
 {
 
     private $token = '';
