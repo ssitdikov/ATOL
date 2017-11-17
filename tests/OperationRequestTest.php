@@ -19,6 +19,7 @@ use SSitdikov\ATOL\Object\Receipt;
 use SSitdikov\ATOL\Object\ReceiptSno;
 use SSitdikov\ATOL\Request\OperationRequest;
 use SSitdikov\ATOL\Request\RequestInterface;
+use SSitdikov\ATOL\Response\ErrorResponse;
 use SSitdikov\ATOL\Response\OperationResponse;
 use SSitdikov\ATOL\Response\TokenResponse;
 
@@ -375,5 +376,23 @@ class OperationRequestTest extends TestCase
 
         $this->expectException(\Exception::class);
         $request->getResponse($response);
+    }
+
+    /**
+     * @test
+     */
+    public function getErrorResponse()
+    {
+        $code = 400;
+        $type = 'system';
+        $text = 'test text';
+
+        $errorResponse = new ErrorResponse(
+            \json_decode('{"code":"' . $code . '", "text":"' . $text . '", "type":"' . $type . '"}')
+        );
+
+        $this->assertEquals($code, $errorResponse->getCode());
+        $this->assertEquals($text, $errorResponse->getText());
+        $this->assertEquals($type, $errorResponse->getType());
     }
 }
