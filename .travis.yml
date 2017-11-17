@@ -3,6 +3,10 @@ language: php
 php:
   - '7.1'
   - '7.2'
+
 install: composer install
 
-script: phpunit --bootstrap ./vendor/autoload.php ./tests
+script:
+  - mkdir build/logs -p
+  - phpunit
+  - vendor/bin/coveralls -x ./build/logs/clover.xml
