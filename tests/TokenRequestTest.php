@@ -29,7 +29,8 @@ class TokenRequestTest extends TestCase
             \json_decode('{"code": 1, "text": null, "token": "' . self::TOKEN . '"}'),
             \json_decode('{"code": 17, "text": "", "token": ""}'),
             \json_decode('{"code": 18, "text": "", "token": ""}'),
-            \json_decode('{"code": 19, "text": "", "token": ""}')
+            \json_decode('{"code": 19, "text": "", "token": ""}'),
+            \json_decode('{"code": 404, "text": "", "token": ""}'),
         ];
     }
 
@@ -70,23 +71,60 @@ class TokenRequestTest extends TestCase
             self::TOKEN
         );
         $this->assertEquals(
+            $this->request->getResponse($this->responses[0])->getCode(),
+            0
+        );
+        $this->assertEquals(
+            '',
+            $this->request->getResponse($this->responses[0])->getText()
+        );
+        $this->assertEquals(
             $this->request->getResponse($this->responses[1])->getToken(),
-            self::TOKEN)
-        ;
+            self::TOKEN
+        );
+        $this->assertEquals(
+            $this->request->getResponse($this->responses[1])->getCode(),
+            1
+        );
+        $this->assertEquals(
+            '',
+            $this->request->getResponse($this->responses[1])->getText()
+        );
     }
 
     /**
      * @test
      */
-    public function getExceptions()
+    public function getExceptionErrorAuthBadRequest()
     {
         $this->expectException(ErrorAuthBadRequestException::class);
         $this->request->getResponse($this->responses[2]);
+    }
 
+    /**
+     * @test
+     */
+    public function getExceptionAuthGenToken()
+    {
         $this->expectException(ErrorAuthGenTokenException::class);
         $this->request->getResponse($this->responses[3]);
+    }
 
+    /**
+     * @test
+     */
+    public function getExceptionAuthWrongUserOrPassword()
+    {
         $this->expectException(ErrorAuthWrongUserOrPasswordException::class);
         $this->request->getResponse($this->responses[4]);
+    }
+
+    /**
+     * @test
+     */
+    public function getException()
+    {
+        $this->expectException(\Exception::class);
+        $this->request->getResponse($this->responses[5]);
     }
 }
