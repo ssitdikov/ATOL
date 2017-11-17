@@ -9,6 +9,8 @@ install: composer install
 script:
   - mkdir build/logs -p
   - phpunit
+  - export TRAVIS='true'
+  - export TRAVIS_JOB_ID=$TRAVIS_JOB_ID
 
 after_success:
   - travis_retry php vendor/bin/coveralls -v
