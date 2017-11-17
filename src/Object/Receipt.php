@@ -121,24 +121,6 @@ class Receipt implements \JsonSerializable
     }
 
     /**
-     * @return float
-     */
-    public function getTotal(): float
-    {
-        return $this->total;
-    }
-
-    /**
-     * @param float $total
-     * @return Receipt
-     */
-    public function setTotal(float $total): Receipt
-    {
-        $this->total = $total;
-        return $this;
-    }
-
-    /**
      * @return array
      */
     public function getPayments(): array
@@ -156,6 +138,14 @@ class Receipt implements \JsonSerializable
         return $this;
     }
 
+    /**
+     * @return float
+     */
+    public function getTotal(): float
+    {
+        return $this->total;
+    }
+
     public function addItem(Item $item)
     {
         $this->items[] = $item;
@@ -168,7 +158,7 @@ class Receipt implements \JsonSerializable
      */
     private function addTotal($sum)
     {
-        $this->setTotal($this->getTotal() + $sum);
+        $this->total += $sum;
     }
 
     public function addPayment(Payment $payment)

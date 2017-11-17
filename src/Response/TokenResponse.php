@@ -11,8 +11,8 @@ class TokenResponse implements ResponseInterface
 
     public function __construct(\stdClass $json)
     {
-        $this->token = $json->token;
-        $this->text = $json->text;
+        $this->token = $json->token ? $json->token : '';
+        $this->text = $json->text ? $json->text : '';
         $this->code = $json->code;
     }
 

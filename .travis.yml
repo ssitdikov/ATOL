@@ -11,6 +11,4 @@ script:
   - phpunit
 
 after_success:
-  - export TRAVIS='true'
-  - export TRAVIS_JOB_ID=$TRAVIS_JOB_ID
   - travis_retry php vendor/bin/coveralls -v
