@@ -2,7 +2,7 @@
 
 namespace SSitdikov\ATOL\Object;
 
-class ReceiptSno
+interface ReceiptSno
 {
     const RECEIPT_SNO_OSN = 'osn';
     const RECEIPT_SNO_USN_INCOME = 'usn_income';

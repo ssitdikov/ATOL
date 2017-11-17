@@ -136,7 +136,7 @@ class OperationRequest implements RequestInterface
                     );
                     break;
                 default:
-                    throw new \Exception($response->text, $response->code);
+                    throw new \Exception($response->error->text, $response->error->code);
                     break;
             }
         }

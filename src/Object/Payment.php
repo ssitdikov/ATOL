@@ -27,8 +27,8 @@ class Payment implements \JsonSerializable
      */
     public function __construct($type = self::PAYMENT_TYPE_ELECTR, $sum = 0.0)
     {
-        $this->type = $type;
-        $this->sum = $sum;
+        $this->setType($type);
+        $this->setSum($sum);
     }
 
     public function jsonSerialize()

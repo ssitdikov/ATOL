@@ -33,21 +33,6 @@ class Item implements \JsonSerializable
         $this->setQuantity($quantity);
         $this->setTax($tax);
         $this->setSum($price * $quantity);
-        /**
-         * @TODO Разобраться 110/118 как считать?
-         */
-        switch ($tax) {
-            case (self::TAX_VAT10):
-                $this->setTaxSum($price * $quantity * 0.1);
-                break;
-            case (self::TAX_VAT18):
-                $this->setTaxSum($price * $quantity * 0.18);
-                break;
-            case (self::TAX_VAT0):
-            case (self::TAX_NONE):
-            default:
-                $this->setTaxSum(0);
-        }
     }
 
     public function jsonSerialize()
@@ -140,6 +125,21 @@ class Item implements \JsonSerializable
     public function setTax(string $tax)
     {
         $this->tax = $tax;
+        /**
+         * @TODO Разобраться 110/118 как считать?
+         */
+        switch ($tax) {
+            case (self::TAX_VAT10):
+                $this->setTaxSum($this->getPrice() * $this->getQuantity() * 0.1);
+                break;
+            case (self::TAX_VAT18):
+                $this->setTaxSum($this->getPrice() * $this->getQuantity() * 0.18);
+                break;
+            case (self::TAX_VAT0):
+            case (self::TAX_NONE):
+            default:
+                $this->setTaxSum(0);
+        }
     }
 
     /**
