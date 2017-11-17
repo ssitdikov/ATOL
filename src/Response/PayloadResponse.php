@@ -36,27 +36,11 @@ class PayloadResponse implements ResponseInterface
     }
 
     /**
-     * @param mixed $total
-     */
-    public function setTotal($total)
-    {
-        $this->total = $total;
-    }
-
-    /**
      * @return mixed
      */
     public function getFnsSite()
     {
         return $this->fns_site;
-    }
-
-    /**
-     * @param mixed $fns_site
-     */
-    public function setFnsSite($fns_site)
-    {
-        $this->fns_site = $fns_site;
     }
 
     /**
@@ -68,27 +52,11 @@ class PayloadResponse implements ResponseInterface
     }
 
     /**
-     * @param mixed $fn_number
-     */
-    public function setFnNumber($fn_number)
-    {
-        $this->fn_number = $fn_number;
-    }
-
-    /**
      * @return mixed
      */
     public function getShiftNumber()
     {
         return $this->shift_number;
-    }
-
-    /**
-     * @param mixed $shift_number
-     */
-    public function setShiftNumber($shift_number)
-    {
-        $this->shift_number = $shift_number;
     }
 
     /**
@@ -100,27 +68,11 @@ class PayloadResponse implements ResponseInterface
     }
 
     /**
-     * @param mixed $receipt_datetime
-     */
-    public function setReceiptDatetime($receipt_datetime)
-    {
-        $this->receipt_datetime = $receipt_datetime;
-    }
-
-    /**
      * @return mixed
      */
     public function getFiscalReceiptNumber()
     {
         return $this->fiscal_receipt_number;
-    }
-
-    /**
-     * @param mixed $fiscal_receipt_number
-     */
-    public function setFiscalReceiptNumber($fiscal_receipt_number)
-    {
-        $this->fiscal_receipt_number = $fiscal_receipt_number;
     }
 
     /**
@@ -132,14 +84,6 @@ class PayloadResponse implements ResponseInterface
     }
 
     /**
-     * @param mixed $fiscal_document_number
-     */
-    public function setFiscalDocumentNumber($fiscal_document_number)
-    {
-        $this->fiscal_document_number = $fiscal_document_number;
-    }
-
-    /**
      * @return mixed
      */
     public function getFiscalDocumentAttribute()
@@ -148,26 +92,10 @@ class PayloadResponse implements ResponseInterface
     }
 
     /**
-     * @param mixed $fiscal_document_attribute
-     */
-    public function setFiscalDocumentAttribute($fiscal_document_attribute)
-    {
-        $this->fiscal_document_attribute = $fiscal_document_attribute;
-    }
-
-    /**
      * @return mixed
      */
     public function getEcrRegistrationNumber()
     {
         return $this->ecr_registration_number;
-    }
-
-    /**
-     * @param mixed $ecr_registration_number
-     */
-    public function setEcrRegistrationNumber($ecr_registration_number)
-    {
-        $this->ecr_registration_number = $ecr_registration_number;
     }
 }

@@ -69,7 +69,7 @@ class ReportRequest implements RequestInterface
     public function getResponse($response)
     {
         if (null !== $response->error || isset($response->code)) {
-            switch ($response->code) {
+            switch ($response->error->code) {
                 case (ErrorCode::ERROR_INCOMING_QUEUE_TIMEOUT):
                     throw new ErrorIncomingQueueTimeoutException(
                         'Не создан сервер очередей. Обратитесь к администратору.',
@@ -125,7 +125,7 @@ class ReportRequest implements RequestInterface
                     );
                     break;
                 default:
-                    throw new \Exception($response->text, $response->code);
+                    throw new \Exception($response->error->text, $response->error->code);
             }
         }
         return new ReportResponse($response);

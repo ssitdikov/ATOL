@@ -52,4 +52,76 @@ class ReportResponse implements ResponseInterface
         $this->device_code = $json->device_code;
         $this->callback_url = $json->callback_url;
     }
+
+    /**
+     * @return string
+     */
+    public function getUuid(): string
+    {
+        return $this->uuid;
+    }
+
+    /**
+     * @return null|ErrorResponse
+     */
+    public function getError()
+    {
+        return $this->error;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    /**
+     * @return null|PayloadResponse
+     */
+    public function getPayload(): PayloadResponse
+    {
+        return $this->payload;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTimestamp(): string
+    {
+        return $this->timestamp;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGroupCode(): string
+    {
+        return $this->group_code;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDaemonCode(): string
+    {
+        return $this->daemon_code;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDeviceCode(): string
+    {
+        return $this->device_code;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCallbackUrl(): string
+    {
+        return $this->callback_url;
+    }
 }
