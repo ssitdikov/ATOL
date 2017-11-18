@@ -60,11 +60,14 @@ class OperationRequestTest extends TestCase
         );
 
         $item->setTax(Item::TAX_VAT18);
-        $this->assertEquals($price * $quantity * 0.18, $item->getTaxSum());
+        $this->assertEquals(round($price * $quantity * 0.18, 2), $item->getTaxSum());
         $item->setTax(Item::TAX_VAT10);
-        $this->assertEquals($price * $quantity * 0.10, $item->getTaxSum());
+        $this->assertEquals(round($price * $quantity * 0.10, 2), $item->getTaxSum());
+        $item->setTax(Item::TAX_VAT110);
+        $this->assertEquals(round($price * $quantity * 10 / 110, 2), $item->getTaxSum());
+        $item->setTax(Item::TAX_VAT118);
+        $this->assertEquals(round($price * $quantity * 18 / 118, 2), $item->getTaxSum());
         $item->setTax($tax);
-
 
         return $item;
     }

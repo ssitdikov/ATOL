@@ -31,6 +31,28 @@ use SSitdikov\ATOL\Response\TokenResponse;
 
 class ApiClientTest extends TestCase
 {
+
+    /**
+     * @test
+     */
+    public function getApiClient()
+    {
+        $apiMock = $this->getMockBuilder(ApiClient::class)
+            ->getMock();
+
+        $apiMock->expects($this->once())->method('makeRequest')->willReturn(
+            '{"code":"", "text":"", "token":"token"}'
+        );
+
+        $response = $apiMock->makeRequest(
+            new TokenRequest('login', 'password')
+        );
+
+        $tokenResponse = new TokenResponse(\json_decode($response));
+        $this->assertEquals('token', $tokenResponse->getToken());
+
+    }
+
     /**
      * @test
      */
