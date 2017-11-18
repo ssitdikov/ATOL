@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/edfd60d8d87347d29872c19be7a0401a)](https://www.codacy.com/app/sitsalavat/ATOL?utm_source=github.com&utm_medium=referral&utm_content=ssitdikov/ATOL&utm_campaign=badger)
 [![Build Status](https://travis-ci.org/ssitdikov/ATOL.svg?branch=master)](https://travis-ci.org/ssitdikov/ATOL)
 [![Coverage Status](https://coveralls.io/repos/github/ssitdikov/ATOL/badge.svg?branch=master)](https://coveralls.io/github/ssitdikov/ATOL?branch=master)
 [![codecov](https://codecov.io/gh/ssitdikov/ATOL/branch/master/graph/badge.svg)](https://codecov.io/gh/ssitdikov/ATOL)
