@@ -129,6 +129,12 @@ class Item implements \JsonSerializable
          * @TODO Разобраться 110/118 как считать?
          */
         switch ($tax) {
+            case (self::TAX_VAT110):
+                $this->setTaxSum($this->getPrice() * $this->getQuantity() * 10 / 110);
+                break;
+            case (self::TAX_VAT118):
+                $this->setTaxSum($this->getPrice() * $this->getQuantity() * 18 / 118);
+                break;
             case (self::TAX_VAT10):
                 $this->setTaxSum($this->getPrice() * $this->getQuantity() * 0.1);
                 break;
@@ -155,6 +161,6 @@ class Item implements \JsonSerializable
      */
     public function setTaxSum(float $tax_sum)
     {
-        $this->tax_sum = $tax_sum;
+        $this->tax_sum = round($tax_sum, 2);
     }
 }
