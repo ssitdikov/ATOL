@@ -1,6 +1,6 @@
 {
   "name": "ssitdikov/atol",
-  "description": "ATOL API Client",
+  "description": "ATOL API Client. Данная библиотека предназначена для работы с сервисом АТОЛ Онлайн",
   "keywords": ["atol", "api", "online", "php"],
   "minimum-stability": "stable",
   "license": "MIT",
