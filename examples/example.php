@@ -1,8 +1,8 @@
 <?php
 
 use \SSitdikov\ATOL\Client\ApiClient;
-use \SSitdikov\ATOL\Response\{OperationResponse, TokenResponse};
-use \SSitdikov\ATOL\Request\{TokenRequest, OperationRequest};
+use \SSitdikov\ATOL\Response\{OperationResponse, TokenResponse, ReportResponse};
+use \SSitdikov\ATOL\Request\{TokenRequest, OperationRequest, ReportRequest};
 use \SSitdikov\ATOL\Object\{Info, Item, Payment, Receipt, ReceiptSno};
 
 require __DIR__ . '/../vendor/autoload.php';
@@ -52,7 +52,7 @@ try {
 
         try {
             $report = $client->getReport(
-                new \SSitdikov\ATOL\Request\ReportRequest($groupId, $uuidAtol, $token)
+                new ReportRequest($groupId, $uuidAtol, $token)
             );
         } catch (\Exception $e) {
             print $e->getMessage();
