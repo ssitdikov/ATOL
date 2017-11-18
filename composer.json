@@ -1,6 +1,7 @@
 {
   "name": "SSitdikov/ATOL",
   "description": "ATOL API Client",
+  "keywords": ["atol", "api", "online", "php"],
   "minimum-stability": "stable",
   "license": "MIT",
   "authors": [
@@ -11,9 +12,7 @@
   ],
   "require": {
     "php": ">=7.0",
-    "guzzlehttp/guzzle": "~6.0",
-    "php-coveralls/php-coveralls": "^1.0",
-    "phpunit/phpcov": "^4.0"
+    "guzzlehttp/guzzle": "~6.0"
   },
   "autoload": {
     "psr-4": {
@@ -22,6 +21,8 @@
     }
   },
   "require-dev": {
-    "phpunit/phpunit": "^6.4"
+    "phpunit/phpunit": "^6.4",
+    "php-coveralls/php-coveralls": "^1.0",
+    "phpunit/phpcov": "^4.0"
   }
 }
