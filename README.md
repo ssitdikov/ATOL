@@ -19,7 +19,7 @@ composer require ssitdikov/atol
 $client = new ApiClient();
 
 try {
-	/**
+    /**
      * @var TokenResponse $token
      */
     $token = $client->getToken(
