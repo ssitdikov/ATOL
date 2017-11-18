@@ -9,11 +9,17 @@
 namespace SSitdikov\ATOL\Tests;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use SSitdikov\ATOL\Client\ApiClient;
 use PHPUnit\Framework\TestCase;
 use SSitdikov\ATOL\Code\ErrorCode;
 use SSitdikov\ATOL\Exception\ErrorAuthBadRequestException;
+use SSitdikov\ATOL\Exception\ErrorAuthGenTokenException;
 use SSitdikov\ATOL\Object\Correction;
 use SSitdikov\ATOL\Object\Info;
 use SSitdikov\ATOL\Object\Receipt;
@@ -77,7 +83,7 @@ class ApiClientTest extends TestCase
     }
 
     /**
-     *
+     * @test
      */
     public function doCorrection()
     {
@@ -135,5 +141,42 @@ class ApiClientTest extends TestCase
         $report = $api->getReport($request);
 
         $this->assertEquals($uuid, $report->getUuid());
+    }
+
+    /**
+     * @test
+     */
+    public function getClientException()
+    {
+        $mock = new MockHandler([
+            new RequestException('', new Request('', ''))
+        ]);
+        $handler = HandlerStack::create($mock);
+
+        $client = new Client(['handler' => $handler]);
+
+        $api = new ApiClient($client);
+
+        $request = new TokenRequest('', '');
+        $this->expectException(RequestException::class);
+        $api->makeRequest($request);
+    }
+
+    /**
+     * @test
+     */
+    public function getErrorAuthBadRequestException()
+    {
+        $client = $this->getMockBuilder(Client::class)->getMock();
+
+
+        $client->expects($this->once())
+            ->method('request')->willThrowException(new ErrorAuthBadRequestException());
+
+        $api = new ApiClient($client);
+
+        $request = new TokenRequest('', '');
+        $this->expectException(ErrorAuthBadRequestException::class);
+        $api->makeRequest($request);
     }
 }
