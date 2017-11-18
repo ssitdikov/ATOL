@@ -10,6 +10,8 @@ use SSitdikov\ATOL\Request\OperationRequest;
 use SSitdikov\ATOL\Request\ReportRequest;
 use SSitdikov\ATOL\Request\RequestInterface;
 use SSitdikov\ATOL\Request\TokenRequest;
+use SSitdikov\ATOL\Response\OperationResponse;
+use SSitdikov\ATOL\Response\TokenResponse;
 
 class ApiClient implements IClient
 {
@@ -31,16 +33,19 @@ class ApiClient implements IClient
      * @throws \SSitdikov\ATOL\Exception\ErrorAuthGenTokenException
      * @throws \SSitdikov\ATOL\Exception\ErrorAuthWrongUserOrPasswordException
      */
-    public function getToken(TokenRequest $request)
+    public function getToken(TokenRequest $request): TokenResponse
     {
         return $request->getResponse(\json_decode($this->makeRequest($request)));
     }
 
-    public function makeRequest(RequestInterface $request)
+    public function makeRequest(RequestInterface $request): string
     {
         try {
-            $response = $this->http->request($request->getMethod(),
-                $request->getUrl(), $request->getParams());
+            $response = $this->http->request(
+                $request->getMethod(),
+                $request->getUrl(),
+                $request->getParams()
+            );
 
             return $response->getBody()->getContents();
         } catch (ClientException $e) {
@@ -82,7 +87,7 @@ class ApiClient implements IClient
      * @throws \SSitdikov\ATOL\Exception\ErrorIncomingOperationNotSupportException
      * @throws \SSitdikov\ATOL\Exception\ErrorIsNullExternalIdException
      */
-    public function doOperation(OperationRequest $request)
+    public function doOperation(OperationRequest $request): OperationResponse
     {
         return $request->getResponse(\json_decode($this->makeRequest($request)));
     }
@@ -102,7 +107,7 @@ class ApiClient implements IClient
      * @throws \SSitdikov\ATOL\Exception\ErrorIsNullExternalIdException
      * @deprecated
      */
-    public function doCorrection(CorrectionRequest $request)
+    public function doCorrection(CorrectionRequest $request): OperationResponse
     {
         return $request->getResponse(\json_decode($this->makeRequest($request)));
     }
