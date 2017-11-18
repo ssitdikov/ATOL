@@ -125,9 +125,6 @@ class Item implements \JsonSerializable
     public function setTax(string $tax)
     {
         $this->tax = $tax;
-        /**
-         * @TODO Разобраться 110/118 как считать?
-         */
         switch ($tax) {
             case (self::TAX_VAT110):
                 $this->setTaxSum($this->getPrice() * $this->getQuantity() * 10 / 110);
