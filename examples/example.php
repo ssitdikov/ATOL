@@ -55,11 +55,11 @@ try {
                 new ReportRequest($groupId, $uuidAtol, $token)
             );
         } catch (\Exception $e) {
-            print $e->getMessage();
+            // ...
         }
     } catch (\Exception $e) {
-        print $e->getMessage() . PHP_EOL;
+        // ...
     }
 } catch (\Exception $e) {
-    print $e->getMessage();
+    // ...
 }
