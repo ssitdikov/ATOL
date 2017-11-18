@@ -49,7 +49,7 @@ class ReportRequest implements RequestInterface
 
     public function getUrl()
     {
-        return $this->groupId . '/report/' . $this->uuid . '?tokenid=' . $this->token;
+        return $this->groupId.'/report/'.$this->uuid.'?tokenid='.$this->token;
     }
 
     /**
@@ -125,9 +125,11 @@ class ReportRequest implements RequestInterface
                     );
                     break;
                 default:
-                    throw new \Exception($response->error->text, $response->error->code);
+                    throw new \Exception($response->error->text,
+                        $response->error->code);
             }
         }
+
         return new ReportResponse($response);
     }
 }

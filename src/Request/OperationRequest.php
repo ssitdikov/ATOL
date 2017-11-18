@@ -32,8 +32,14 @@ class OperationRequest implements RequestInterface
     private $token = '';
     private $operation = self::OPERATION_SELL;
 
-    public function __construct($groupId, $operation, $uuid, Receipt $receipt, Info $info, TokenResponse $token)
-    {
+    public function __construct(
+        $groupId,
+        $operation,
+        $uuid,
+        Receipt $receipt,
+        Info $info,
+        TokenResponse $token
+    ) {
         $this->group_id = $groupId;
         $this->operation = $operation;
         $this->uuid = $uuid;
@@ -62,7 +68,7 @@ class OperationRequest implements RequestInterface
 
     public function getUrl()
     {
-        return $this->group_id . '/' . $this->operation . '?tokenid=' . $this->token;
+        return $this->group_id.'/'.$this->operation.'?tokenid='.$this->token;
     }
 
     /**
@@ -84,48 +90,50 @@ class OperationRequest implements RequestInterface
         if (null !== $response->error || isset($response->code)) {
             switch ($response->error->code) {
                 case ErrorCode::ERROR:
-                    throw new ErrorException('Ошибка при парсинге JSON. Повторите с новым уникальным значением ' .
-                        '<external_id>, указав корректные данные. ' . $response->error->text, ErrorCode::ERROR);
+                    throw new ErrorException('Ошибка при парсинге JSON. Повторите с новым уникальным значением '.
+                        '<external_id>, указав корректные данные. '.$response->error->text,
+                        ErrorCode::ERROR);
                     break;
                 case (ErrorCode::ERROR_INCOMING_BAD_REQUEST):
-                    throw new ErrorIncomingBadRequestException('Переданые пустые значения <group_code> и/или ' .
-                        '<operation>. ' . $response->error->text, ErrorCode::ERROR_INCOMING_BAD_REQUEST);
+                    throw new ErrorIncomingBadRequestException('Переданые пустые значения <group_code> и/или '.
+                        '<operation>. '.$response->error->text,
+                        ErrorCode::ERROR_INCOMING_BAD_REQUEST);
                     break;
                 case (ErrorCode::ERROR_INCOMING_OPERATION_NOT_SUPPORT):
                     throw new ErrorIncomingOperationNotSupportException(
-                        'Передано некорректное значение <operation>. ' . $response->error->text,
+                        'Передано некорректное значение <operation>. '.$response->error->text,
                         ErrorCode::ERROR_INCOMING_OPERATION_NOT_SUPPORT
                     );
                     break;
                 case (ErrorCode::ERROR_INCOMING_MISSING_TOKEN):
                     throw new ErrorIncomingMissingTokenException(
-                        'Передан некорректный <tokenid>. ' . $response->error->text,
+                        'Передан некорректный <tokenid>. '.$response->error->text,
                         ErrorCode::ERROR_INCOMING_MISSING_TOKEN
                     );
                     break;
                 case (ErrorCode::ERROR_INCOMING_NOT_EXIST_TOKEN):
                     throw new ErrorIncomingNotExistTokenException(
-                        'Переданный <tokenid> не выдавался. ' . $response->error->text,
+                        'Переданный <tokenid> не выдавался. '.$response->error->text,
                         ErrorCode::ERROR_INCOMING_NOT_EXIST_TOKEN
                     );
                     break;
                 case (ErrorCode::ERROR_INCOMING_EXPIRED_TOKEN):
                     throw new ErrorIncomingExpiredTokenException(
-                        'Срок действия, переданного <tokenid> истек ' .
-                        '(срок действия 24 часа). Необходимо запросить новый. ' . $response->error->text,
+                        'Срок действия, переданного <tokenid> истек '.
+                        '(срок действия 24 часа). Необходимо запросить новый. '.$response->error->text,
                         ErrorCode::ERROR_INCOMING_EXPIRED_TOKEN
                     );
                     break;
                 case (ErrorCode::ERROR_INCOMING_EXIST_EXTERNAL_ID):
                     throw new ErrorIncomingExistExternalIdException(
-                        'Документ с переданными значениями <external_id> и ' .
-                        '<group_code> уже существует. ' . $response->error->text,
+                        'Документ с переданными значениями <external_id> и '.
+                        '<group_code> уже существует. '.$response->error->text,
                         ErrorCode::ERROR_INCOMING_EXIST_EXTERNAL_ID
                     );
                     break;
                 case (ErrorCode::ERROR_GROUP_CODE_TO_TOKEN):
                     throw new ErrorGroupCodeToTokenException(
-                        'Передан некорректный <tokenid> или <group_code>. ' . $response->error->text,
+                        'Передан некорректный <tokenid> или <group_code>. '.$response->error->text,
                         ErrorCode::ERROR_GROUP_CODE_TO_TOKEN
                     );
                     break;
@@ -136,10 +144,12 @@ class OperationRequest implements RequestInterface
                     );
                     break;
                 default:
-                    throw new \Exception($response->error->text, $response->error->code);
+                    throw new \Exception($response->error->text,
+                        $response->error->code);
                     break;
             }
         }
+
         return new OperationResponse($response);
     }
 }

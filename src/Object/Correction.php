@@ -9,9 +9,9 @@ class Correction implements \JsonSerializable
      */
     private $sno = ReceiptSno::RECEIPT_SNO_USN_INCOME;
     /**
-     * @var float
+     * @var string
      */
-    private $tax = 0.0;
+    private $tax = '';
     /**
      * @var array
      */
@@ -29,7 +29,7 @@ class Correction implements \JsonSerializable
                 'sno' => $this->getSno(),
                 'tax' => $this->getTax(),
                 'payments' => $this->getPayments(),
-            ]
+            ],
         ];
     }
 
@@ -50,17 +50,17 @@ class Correction implements \JsonSerializable
     }
 
     /**
-     * @return float
+     * @return string
      */
-    public function getTax(): float
+    public function getTax(): string
     {
         return $this->tax;
     }
 
     /**
-     * @param float $tax
+     * @param string $tax
      */
-    public function setTax(float $tax)
+    public function setTax(string $tax)
     {
         $this->tax = $tax;
     }

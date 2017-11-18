@@ -61,6 +61,7 @@ class Receipt implements \JsonSerializable
     public function setSno(string $sno): Receipt
     {
         $this->sno = $sno;
+
         return $this;
     }
 
@@ -79,6 +80,7 @@ class Receipt implements \JsonSerializable
     public function setEmail(string $email): Receipt
     {
         $this->email = $email;
+
         return $this;
     }
 
@@ -97,6 +99,7 @@ class Receipt implements \JsonSerializable
     public function setPhone(string $phone): Receipt
     {
         $this->phone = $phone;
+
         return $this;
     }
 
@@ -117,6 +120,7 @@ class Receipt implements \JsonSerializable
         foreach ($items as $item) {
             $this->addItem($item);
         }
+
         return $this;
     }
 
@@ -135,6 +139,7 @@ class Receipt implements \JsonSerializable
     public function setPayments(array $payments): Receipt
     {
         $this->payments = $payments;
+
         return $this;
     }
 
@@ -150,6 +155,7 @@ class Receipt implements \JsonSerializable
     {
         $this->items[] = $item;
         $this->addTotal($item->getSum());
+
         return $this;
     }
 
@@ -164,6 +170,7 @@ class Receipt implements \JsonSerializable
     public function addPayment(Payment $payment)
     {
         $this->payments[] = $payment;
+
         return $this;
     }
 }

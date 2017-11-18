@@ -39,7 +39,9 @@ class ApiClient implements IClient
     public function makeRequest(RequestInterface $request)
     {
         try {
-            $response = $this->http->request($request->getMethod(), $request->getUrl(), $request->getParams());
+            $response = $this->http->request($request->getMethod(),
+                $request->getUrl(), $request->getParams());
+
             return $response->getBody()->getContents();
         } catch (ClientException $e) {
             $response = $e->getResponse()->getBody()->getContents();
@@ -47,14 +49,22 @@ class ApiClient implements IClient
             if (json_last_error() === JSON_ERROR_NONE) {
                 return $response;
             }
-            return \json_encode(['text' => $e->getResponse()->getReasonPhrase(), 'code' => $e->getCode()]);
+
+            return \json_encode([
+                'text' => $e->getResponse()->getReasonPhrase(),
+                'code' => $e->getCode(),
+            ]);
         } catch (ServerException $e) {
             $response = $e->getResponse()->getBody()->getContents();
             \json_decode($response);
             if (json_last_error() === JSON_ERROR_NONE) {
                 return $response;
             }
-            return \json_encode(['text' => $e->getResponse()->getReasonPhrase(), 'code' => $e->getCode()]);
+
+            return \json_encode([
+                'text' => $e->getResponse()->getReasonPhrase(),
+                'code' => $e->getCode(),
+            ]);
         }
     }
 
