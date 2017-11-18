@@ -11,6 +11,7 @@ use SSitdikov\ATOL\Request\ReportRequest;
 use SSitdikov\ATOL\Request\RequestInterface;
 use SSitdikov\ATOL\Request\TokenRequest;
 use SSitdikov\ATOL\Response\OperationResponse;
+use SSitdikov\ATOL\Response\ReportResponse;
 use SSitdikov\ATOL\Response\TokenResponse;
 
 class ApiClient implements IClient
@@ -18,11 +19,14 @@ class ApiClient implements IClient
 
     private $http;
 
-    public function __construct()
+    public function __construct(Client $client = null)
     {
-        $this->http = new Client([
-            'base_uri' => 'https://online.atol.ru/possystem/v3/',
-        ]);
+        $this->http = $client;
+        if (null === $client) {
+            $this->http = new Client([
+                'base_uri' => 'https://online.atol.ru/possystem/v3/',
+            ]);
+        }
     }
 
     /**
@@ -126,7 +130,7 @@ class ApiClient implements IClient
      * @throws \SSitdikov\ATOL\Exception\ErrorStateNotExistTokenException
      * @throws \SSitdikov\ATOL\Exception\ErrorStateNotFoundException
      */
-    public function getReport(ReportRequest $request)
+    public function getReport(ReportRequest $request): ReportResponse
     {
         return $request->getResponse(\json_decode($this->makeRequest($request)));
     }
