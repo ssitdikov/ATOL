@@ -9,6 +9,7 @@
 namespace SSitdikov\ATOL\Tests;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Handler\MockHandler;
@@ -207,8 +208,16 @@ class ApiClientTest extends TestCase
 
 
         $client->expects($this->once())
-            ->method('request')->willThrowException(new ErrorAuthBadRequestException());
+            ->method('request')->willThrowException(new BadResponseException(
+                '',
+                new Request('', ''),
+                new Response(400, [], '{"code":17, "text":"", "token":""}')
+            ));
 
         $api = new ApiClient($client);
+        $this->expectException(BadResponseException::class);
+        $api->makeRequest(
+            new TokenRequest('login', 'password')
+        );
     }
 }

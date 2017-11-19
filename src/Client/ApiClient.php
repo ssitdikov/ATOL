@@ -3,6 +3,7 @@
 namespace SSitdikov\ATOL\Client;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use SSitdikov\ATOL\Request\CorrectionRequest;
@@ -52,18 +53,7 @@ class ApiClient implements IClient
             );
 
             return $response->getBody()->getContents();
-        } catch (ClientException $e) {
-            $response = $e->getResponse()->getBody()->getContents();
-            \json_decode($response);
-            if (json_last_error() === JSON_ERROR_NONE) {
-                return $response;
-            }
-
-            return \json_encode([
-                'text' => $e->getResponse()->getReasonPhrase(),
-                'code' => $e->getCode(),
-            ]);
-        } catch (ServerException $e) {
+        } catch (BadResponseException $e) {
             $response = $e->getResponse()->getBody()->getContents();
             \json_decode($response);
             if (json_last_error() === JSON_ERROR_NONE) {
