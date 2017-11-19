@@ -4,8 +4,6 @@ namespace SSitdikov\ATOL\Client;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
-use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Exception\ServerException;
 use SSitdikov\ATOL\Request\CorrectionRequest;
 use SSitdikov\ATOL\Request\OperationRequest;
 use SSitdikov\ATOL\Request\ReportRequest;

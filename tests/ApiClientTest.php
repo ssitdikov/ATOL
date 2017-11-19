@@ -202,22 +202,52 @@ class ApiClientTest extends TestCase
         $api->makeRequest($request);
     }
 
-    public function getApiClientResponse()
+    /**
+     * @test
+     */
+    public function getApiClientBadResponse()
     {
         $client = $this->getMockBuilder(Client::class)->getMock();
-
 
         $client->expects($this->once())
             ->method('request')->willThrowException(new BadResponseException(
                 '',
                 new Request('', ''),
-                new Response(400, [], '{"code":17, "text":"", "token":""}')
+                new Response(400, [], 'text')
             ));
 
         $api = new ApiClient($client);
-        $this->expectException(BadResponseException::class);
-        $api->makeRequest(
-            new TokenRequest('login', 'password')
-        );
+        try {
+            $api->makeRequest(
+                new TokenRequest('login', 'password')
+            );
+        } catch (BadResponseException $e) {
+            $this->assertEquals('text', $e->getResponse()->getBody()->getContents());
+        }
+    }
+
+    /**
+     * @test
+     */
+    public function getApiClientBadException()
+    {
+        $client = $this->getMockBuilder(Client::class)->getMock();
+
+        $client->expects($this->once())
+            ->method('request')->willThrowException(new BadResponseException(
+                '',
+                new Request('', ''),
+                new Response(400, [], '{"code":1, "text":"", "token":"token"}')
+            ));
+
+        $api = new ApiClient($client);
+        try {
+            $token = $api->getToken(
+                new TokenRequest('login', 'password')
+            );
+            $this->assertEquals('token', $token->getToken());
+        } catch (BadResponseException $e) {
+            $this->assertEquals('text', $e->getResponse()->getBody()->getContents());
+        }
     }
 }
