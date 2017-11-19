@@ -37,17 +37,17 @@ class ReportRequest implements RequestInterface
         $this->token = $token->getToken();
     }
 
-    public function getMethod()
+    public function getMethod(): string
     {
         return self::GET;
     }
 
-    public function getParams()
+    public function getParams(): array
     {
         return [];
     }
 
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->groupId.'/report/'.$this->uuid.'?tokenid='.$this->token;
     }
@@ -68,7 +68,7 @@ class ReportRequest implements RequestInterface
      */
     public function getResponse($response)
     {
-        if (null !== $response->error || isset($response->code)) {
+        if (null !== $response->error) {
             switch ($response->error->code) {
                 case (ErrorCode::ERROR_INCOMING_QUEUE_TIMEOUT):
                     throw new ErrorIncomingQueueTimeoutException(
@@ -125,8 +125,10 @@ class ReportRequest implements RequestInterface
                     );
                     break;
                 default:
-                    throw new \Exception($response->error->text,
-                        $response->error->code);
+                    throw new \Exception(
+                        $response->error->text,
+                        $response->error->code
+                    );
             }
         }
 

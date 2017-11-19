@@ -17,7 +17,7 @@ class ReportResponse implements ResponseInterface
     /**
      * @var string
      */
-    private $status = self::STATUS_WAIT;
+    private $status;
     private $payload;
     /**
      * @var string
@@ -26,19 +26,19 @@ class ReportResponse implements ResponseInterface
     /**
      * @var string
      */
-    private $group_code;
+    private $groupCode;
     /**
      * @var string
      */
-    private $daemon_code;
+    private $daemonCode;
     /**
      * @var string
      */
-    private $device_code;
+    private $deviceCode;
     /**
      * @var string
      */
-    private $callback_url;
+    private $callbackUrl;
 
     public function __construct(\stdClass $json)
     {
@@ -47,10 +47,10 @@ class ReportResponse implements ResponseInterface
         $this->payload = $json->payload ? new PayloadResponse($json->payload) : null;
         $this->status = $json->status;
         $this->timestamp = $json->timestamp;
-        $this->group_code = $json->group_code;
-        $this->daemon_code = $json->daemon_code;
-        $this->device_code = $json->device_code;
-        $this->callback_url = $json->callback_url;
+        $this->groupCode = $json->group_code;
+        $this->daemonCode = $json->daemon_code;
+        $this->deviceCode = $json->device_code;
+        $this->callbackUrl = $json->callback_url;
     }
 
     /**
@@ -98,7 +98,7 @@ class ReportResponse implements ResponseInterface
      */
     public function getGroupCode(): string
     {
-        return $this->group_code;
+        return $this->groupCode;
     }
 
     /**
@@ -106,7 +106,7 @@ class ReportResponse implements ResponseInterface
      */
     public function getDaemonCode(): string
     {
-        return $this->daemon_code;
+        return $this->daemonCode;
     }
 
     /**
@@ -114,7 +114,7 @@ class ReportResponse implements ResponseInterface
      */
     public function getDeviceCode(): string
     {
-        return $this->device_code;
+        return $this->deviceCode;
     }
 
     /**
@@ -122,6 +122,6 @@ class ReportResponse implements ResponseInterface
      */
     public function getCallbackUrl(): string
     {
-        return $this->callback_url;
+        return $this->callbackUrl;
     }
 }

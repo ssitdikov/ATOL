@@ -25,12 +25,12 @@ class OperationRequest implements RequestInterface
     const OPERATION_BUY = 'buy';
     const OPERATION_BUY_REFUND = 'buy_refund';
 
-    private $group_id = '';
-    private $uuid = '';
+    private $groupId;
+    private $uuid;
     private $receipt;
     private $info;
-    private $token = '';
-    private $operation = self::OPERATION_SELL;
+    private $token;
+    private $operation;
 
     public function __construct(
         $groupId,
@@ -40,7 +40,7 @@ class OperationRequest implements RequestInterface
         Info $info,
         TokenResponse $token
     ) {
-        $this->group_id = $groupId;
+        $this->groupId = $groupId;
         $this->operation = $operation;
         $this->uuid = $uuid;
         $this->receipt = $receipt;
@@ -49,12 +49,12 @@ class OperationRequest implements RequestInterface
     }
 
 
-    public function getMethod()
+    public function getMethod(): string
     {
         return self::POST;
     }
 
-    public function getParams()
+    public function getParams(): array
     {
         return [
             'json' => [
@@ -66,9 +66,9 @@ class OperationRequest implements RequestInterface
         ];
     }
 
-    public function getUrl()
+    public function getUrl(): string
     {
-        return $this->group_id.'/'.$this->operation.'?tokenid='.$this->token;
+        return $this->groupId.'/'.$this->operation.'?tokenid='.$this->token;
     }
 
     /**
@@ -87,7 +87,7 @@ class OperationRequest implements RequestInterface
      */
     public function getResponse($response)
     {
-        if (null !== $response->error || isset($response->code)) {
+        if (null !== $response->error) {
             switch ($response->error->code) {
                 case ErrorCode::ERROR:
                     throw new ErrorException('Ошибка при парсинге JSON. Повторите с новым уникальным значением '.
@@ -144,8 +144,10 @@ class OperationRequest implements RequestInterface
                     );
                     break;
                 default:
-                    throw new \Exception($response->error->text,
-                        $response->error->code);
+                    throw new \Exception(
+                        $response->error->text,
+                        $response->error->code
+                    );
                     break;
             }
         }

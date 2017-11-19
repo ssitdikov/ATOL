@@ -28,12 +28,12 @@ class CorrectionRequest implements RequestInterface
     const OPERATION_SELL_CORRECTION = 'sell_correction';
     const OPERATION_BUY_CORRECTION = 'buy_correction';
 
-    private $group_id = '';
-    private $uuid = '';
+    private $groupId;
+    private $uuid;
     private $info;
     private $correction;
-    private $token = '';
-    private $operation = self::OPERATION_SELL_CORRECTION;
+    private $token;
+    private $operation;
 
     public function __construct(
         $groupId,
@@ -43,7 +43,7 @@ class CorrectionRequest implements RequestInterface
         Info $info,
         TokenResponse $token
     ) {
-        $this->group_id = $groupId;
+        $this->groupId = $groupId;
         $this->operation = $operation;
         $this->uuid = $uuid;
         $this->correction = $correction;
@@ -51,12 +51,12 @@ class CorrectionRequest implements RequestInterface
         $this->token = $token->getToken();
     }
 
-    public function getMethod()
+    public function getMethod(): string
     {
         return self::POST;
     }
 
-    public function getParams()
+    public function getParams(): array
     {
         return [
             'json' => [
@@ -68,14 +68,15 @@ class CorrectionRequest implements RequestInterface
         ];
     }
 
-    public function getUrl()
+    public function getUrl(): string
     {
-        return $this->group_id.'/'.$this->operation.'?tokenid='.$this->token;
+        return $this->groupId.'/'.$this->operation.'?tokenid='.$this->token;
     }
 
     /**
      * @param $response
      * @return \SSitdikov\ATOL\Response\OperationResponse
+     * @throws \Exception
      * @throws \SSitdikov\ATOL\Exception\ErrorException
      * @throws \SSitdikov\ATOL\Exception\ErrorGroupCodeToTokenException
      * @throws \SSitdikov\ATOL\Exception\ErrorIncomingBadRequestException
@@ -85,21 +86,24 @@ class CorrectionRequest implements RequestInterface
      * @throws \SSitdikov\ATOL\Exception\ErrorIncomingNotExistTokenException
      * @throws \SSitdikov\ATOL\Exception\ErrorIncomingOperationNotSupportException
      * @throws \SSitdikov\ATOL\Exception\ErrorIsNullExternalIdException
-     * @throws \Exception
      */
-    public function getResponse($response)
+    public function getResponse($response): OperationResponse
     {
-        if (null !== $response->error || isset($response->code)) {
+        if (null !== $response->error) {
             switch ($response->error->code) {
-                case ErrorCode::ERROR:
-                    throw new ErrorException('Ошибка при парсинге JSON. Повторите с новым уникальным значением '.
+                case (ErrorCode::ERROR):
+                    throw new ErrorException(
+                        'Ошибка при парсинге JSON. Повторите с новым уникальным значением '.
                         '<external_id>, указав корректные данные. '.$response->error->text,
-                        ErrorCode::ERROR);
+                        ErrorCode::ERROR
+                    );
                     break;
                 case (ErrorCode::ERROR_INCOMING_BAD_REQUEST):
-                    throw new ErrorIncomingBadRequestException('Переданые пустые значения <group_code> и/или '.
+                    throw new ErrorIncomingBadRequestException(
+                        'Переданые пустые значения <group_code> и/или '.
                         '<operation>. '.$response->error->text,
-                        ErrorCode::ERROR_INCOMING_BAD_REQUEST);
+                        ErrorCode::ERROR_INCOMING_BAD_REQUEST
+                    );
                     break;
                 case (ErrorCode::ERROR_INCOMING_OPERATION_NOT_SUPPORT):
                     throw new ErrorIncomingOperationNotSupportException(
@@ -146,8 +150,10 @@ class CorrectionRequest implements RequestInterface
                     );
                     break;
                 default:
-                    throw new \Exception($response->error->text,
-                        $response->error->code);
+                    throw new \Exception(
+                        $response->error->text,
+                        $response->error->code
+                    );
                     break;
             }
         }

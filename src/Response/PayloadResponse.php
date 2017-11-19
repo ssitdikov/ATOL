@@ -5,26 +5,26 @@ namespace SSitdikov\ATOL\Response;
 class PayloadResponse implements ResponseInterface
 {
     private $total;
-    private $fns_site;
-    private $fn_number;
-    private $shift_number;
-    private $receipt_datetime;
-    private $fiscal_receipt_number;
-    private $fiscal_document_number;
-    private $fiscal_document_attribute;
-    private $ecr_registration_number;
+    private $fnsSite;
+    private $fnNumber;
+    private $shiftNumber;
+    private $receiptDatetime;
+    private $fiscalReceiptNumber;
+    private $fiscalDocumentNumber;
+    private $fiscalDocumentAttribute;
+    private $ecrRegistrationNumber;
 
     public function __construct(\stdClass $json)
     {
         $this->total = $json->total;
-        $this->fns_site = $json->fns_site;
-        $this->fn_number = $json->fn_number;
-        $this->shift_number = $json->shift_number;
-        $this->receipt_datetime = $json->receipt_datetime;
-        $this->fiscal_receipt_number = $json->fiscal_receipt_number;
-        $this->fiscal_document_number = $json->fiscal_document_number;
-        $this->fiscal_document_attribute = $json->fiscal_document_attribute;
-        $this->ecr_registration_number = $json->ecr_registration_number;
+        $this->fnsSite = $json->fns_site;
+        $this->fnNumber = $json->fn_number;
+        $this->shiftNumber = $json->shift_number;
+        $this->receiptDatetime = $json->receipt_datetime;
+        $this->fiscalReceiptNumber = $json->fiscal_receipt_number;
+        $this->fiscalDocumentNumber = $json->fiscal_document_number;
+        $this->fiscalDocumentAttribute = $json->fiscal_document_attribute;
+        $this->ecrRegistrationNumber = $json->ecr_registration_number;
     }
 
     /**
@@ -40,7 +40,7 @@ class PayloadResponse implements ResponseInterface
      */
     public function getFnsSite()
     {
-        return $this->fns_site;
+        return $this->fnsSite;
     }
 
     /**
@@ -48,7 +48,7 @@ class PayloadResponse implements ResponseInterface
      */
     public function getFnNumber()
     {
-        return $this->fn_number;
+        return $this->fnNumber;
     }
 
     /**
@@ -56,7 +56,7 @@ class PayloadResponse implements ResponseInterface
      */
     public function getShiftNumber()
     {
-        return $this->shift_number;
+        return $this->shiftNumber;
     }
 
     /**
@@ -64,7 +64,7 @@ class PayloadResponse implements ResponseInterface
      */
     public function getReceiptDatetime()
     {
-        return $this->receipt_datetime;
+        return $this->receiptDatetime;
     }
 
     /**
@@ -72,7 +72,7 @@ class PayloadResponse implements ResponseInterface
      */
     public function getFiscalReceiptNumber()
     {
-        return $this->fiscal_receipt_number;
+        return $this->fiscalReceiptNumber;
     }
 
     /**
@@ -80,7 +80,7 @@ class PayloadResponse implements ResponseInterface
      */
     public function getFiscalDocumentNumber()
     {
-        return $this->fiscal_document_number;
+        return $this->fiscalDocumentNumber;
     }
 
     /**
@@ -88,7 +88,7 @@ class PayloadResponse implements ResponseInterface
      */
     public function getFiscalDocumentAttribute()
     {
-        return $this->fiscal_document_attribute;
+        return $this->fiscalDocumentAttribute;
     }
 
     /**
@@ -96,6 +96,6 @@ class PayloadResponse implements ResponseInterface
      */
     public function getEcrRegistrationNumber()
     {
-        return $this->ecr_registration_number;
+        return $this->ecrRegistrationNumber;
     }
 }

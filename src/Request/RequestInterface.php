@@ -8,11 +8,11 @@ interface RequestInterface
     const POST = 'POST';
     const GET = 'GET';
 
-    public function getMethod();
+    public function getMethod(): string;
 
-    public function getParams();
+    public function getParams(): array;
 
-    public function getUrl();
+    public function getUrl(): string;
 
     public function getResponse($response);
 }

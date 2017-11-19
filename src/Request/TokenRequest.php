@@ -29,7 +29,7 @@ class TokenRequest implements RequestInterface
     /**
      * @return string
      */
-    public function getMethod()
+    public function getMethod(): string
     {
         return self::POST;
     }
@@ -37,7 +37,7 @@ class TokenRequest implements RequestInterface
     /**
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return [
             'json' => [
@@ -50,7 +50,7 @@ class TokenRequest implements RequestInterface
     /**
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return 'getToken/';
     }
@@ -71,18 +71,24 @@ class TokenRequest implements RequestInterface
                 return new TokenResponse($response);
                 break;
             case (ErrorCode::AUTH_BAD_REQUEST):
-                throw new ErrorAuthBadRequestException('Некорректный запрос. Некорректная ссылка на авторизацию. '.
+                throw new ErrorAuthBadRequestException(
+                    'Некорректный запрос. Некорректная ссылка на авторизацию. '.
                     'Необходимо повторить запрос с корректными данными.',
-                    ErrorCode::AUTH_BAD_REQUEST);
+                    ErrorCode::AUTH_BAD_REQUEST
+                );
                 break;
             case (ErrorCode::AUTH_GEN_TOKEN):
-                throw new ErrorAuthGenTokenException('Не удалось сформировать токен. '.
-                    'Необходимо повторить запрос.', ErrorCode::AUTH_GEN_TOKEN);
+                throw new ErrorAuthGenTokenException(
+                    'Не удалось сформировать токен. '.
+                    'Необходимо повторить запрос.', ErrorCode::AUTH_GEN_TOKEN
+                );
                 break;
             case (ErrorCode::AUTH_WORKING_USER_OR_PASSWORD):
-                throw new ErrorAuthWrongUserOrPasswordException('Неверный логин или пароль. '.
+                throw new ErrorAuthWrongUserOrPasswordException(
+                    'Неверный логин или пароль. '.
                     'Необходимо повторить запрос с корректными данными.',
-                    ErrorCode::AUTH_WORKING_USER_OR_PASSWORD);
+                    ErrorCode::AUTH_WORKING_USER_OR_PASSWORD
+                );
                 break;
             default:
                 throw new \Exception($response->text, $response->code);

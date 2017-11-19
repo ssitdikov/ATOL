@@ -2,7 +2,7 @@
 
 namespace SSitdikov\ATOL\Code;
 
-class SuccessCode
+interface SuccessCode
 {
 
     const GET_TOKEN_CODE = 0;

@@ -8,17 +8,17 @@ class ErrorResponse implements ResponseInterface
     /**
      * @var int
      */
-    private $code = 0;
+    private $code;
 
     /**
      * @var string
      */
-    private $text = '';
+    private $text;
 
     /**
      * @var string
      */
-    private $type = '';
+    private $type;
 
     public function __construct(\stdClass $json)
     {

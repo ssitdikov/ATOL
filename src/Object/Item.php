@@ -14,7 +14,7 @@ class Item implements \JsonSerializable
 
     private $sum = 0.0;
     private $tax = 'none';
-    private $tax_sum = 0.0;
+    private $taxSum = 0.0;
     private $name = '';
     private $price = 0.0;
     private $quantity = 1.0;
@@ -150,14 +150,14 @@ class Item implements \JsonSerializable
      */
     public function getTaxSum(): float
     {
-        return $this->tax_sum;
+        return $this->taxSum;
     }
 
     /**
-     * @param float $tax_sum
+     * @param float $taxSum
      */
-    public function setTaxSum(float $tax_sum)
+    public function setTaxSum(float $taxSum)
     {
-        $this->tax_sum = round($tax_sum, 2);
+        $this->taxSum = round($taxSum, 2);
     }
 }

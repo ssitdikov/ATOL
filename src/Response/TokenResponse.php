@@ -5,14 +5,14 @@ namespace SSitdikov\ATOL\Response;
 class TokenResponse implements ResponseInterface
 {
 
-    private $token = '';
-    private $text = '';
-    private $code = 0;
+    private $token;
+    private $text;
+    private $code;
 
     public function __construct(\stdClass $json)
     {
-        $this->token = $json->token ? $json->token : '';
-        $this->text = $json->text ? $json->text : '';
+        $this->token = $json->token ?: '';
+        $this->text = $json->text ?: '';
         $this->code = $json->code;
     }
 

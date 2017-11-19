@@ -2,7 +2,7 @@
 
 namespace SSitdikov\ATOL\Code;
 
-class ErrorCode
+interface ErrorCode
 {
 
     const ERROR = 1;

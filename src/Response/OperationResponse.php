@@ -12,17 +12,17 @@ class OperationResponse implements ResponseInterface
     /**
      * @var string
      */
-    private $uuid = '';
+    private $uuid;
 
     /**
      * @var string
      */
-    private $timestamp = '';
+    private $timestamp;
 
     /**
      * @var string
      */
-    private $status = self::SELL_STATUS_WAIT;
+    private $status;
 
     /**
      * @var null | ErrorResponse
