@@ -55,8 +55,10 @@ class CorrectionRequestTest extends TestCase
         $correction->setPayments([$payment]);
         $correction->setTax(Item::TAX_NONE);
 
-        $this->assertEquals(ReceiptSno::RECEIPT_SNO_USN_INCOME,
-            $correction->getSno());
+        $this->assertEquals(
+            ReceiptSno::RECEIPT_SNO_USN_INCOME,
+            $correction->getSno()
+        );
         $this->assertEquals(Item::TAX_NONE, $correction->getTax());
         $this->assertEquals([$payment], $correction->getPayments());
         $this->assertEquals([
@@ -80,21 +82,29 @@ class CorrectionRequestTest extends TestCase
     public function doCorrection(Correction $correction)
     {
         $groupId = 'test';
-        $uuid = rand(1, 100);
+        $uuid = random_int(1, 100);
         $operationType = CorrectionRequest::OPERATION_SELL_CORRECTION;
         $token = new TokenResponse(\json_decode('{"text":"", "code":"0", "token":"token"}'));
 
         $inn = '1111111111';
-        $payment_address = 'test.mystore.dev';
-        $callback_url = 'http://test.mystore.dev/callback/api/url';
-        $info = new Info($inn, $payment_address, $callback_url);
+        $paymentAddress = 'test.mystore.dev';
+        $callbackUrl = 'http://test.mystore.dev/callback/api/url';
+        $info = new Info($inn, $paymentAddress, $callbackUrl);
 
-        $request = new CorrectionRequest($groupId, $operationType, $uuid,
-            $correction, $info, $token);
+        $request = new CorrectionRequest(
+            $groupId,
+            $operationType,
+            $uuid,
+            $correction,
+            $info,
+            $token
+        );
 
         $this->assertEquals(RequestInterface::POST, $request->getMethod());
-        $this->assertEquals($groupId.'/'.$operationType.'?tokenid='.$token->getToken(),
-            $request->getUrl());
+        $this->assertEquals(
+            $groupId.'/'.$operationType.'?tokenid='.$token->getToken(),
+            $request->getUrl()
+        );
         /**
          * @todo Возможно будет возникать ошибка с timestamp
          */
@@ -108,7 +118,6 @@ class CorrectionRequestTest extends TestCase
         ], $request->getParams());
 
         return $request;
-
     }
 
     /**
@@ -207,7 +216,8 @@ class CorrectionRequestTest extends TestCase
         $status = 'fail';
 
         $response = \json_decode(
-            '{"uuid":"'.$uuid.'", "error": {"code":"4", "text":"", "type":""} , "status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
+            '{"uuid":"'.$uuid.'", "error": {"code":"4", "text":"", "type":""} ,' .
+            '"status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
         );
 
         $this->expectException(ErrorIncomingMissingTokenException::class);
@@ -225,7 +235,8 @@ class CorrectionRequestTest extends TestCase
         $status = 'fail';
 
         $response = \json_decode(
-            '{"uuid":"'.$uuid.'", "error": {"code":"5", "text":"", "type":""} , "status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
+            '{"uuid":"'.$uuid.'", "error": {"code":"5", "text":"", "type":""} ,' .
+            '"status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
         );
 
         $this->expectException(ErrorIncomingNotExistTokenException::class);
@@ -243,7 +254,8 @@ class CorrectionRequestTest extends TestCase
         $status = 'fail';
 
         $response = \json_decode(
-            '{"uuid":"'.$uuid.'", "error": {"code":"6", "text":"", "type":""} , "status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
+            '{"uuid":"'.$uuid.'", "error": {"code":"6", "text":"", "type":""} ,' .
+            '"status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
         );
 
         $this->expectException(ErrorIncomingExpiredTokenException::class);
@@ -261,7 +273,8 @@ class CorrectionRequestTest extends TestCase
         $status = 'fail';
 
         $response = \json_decode(
-            '{"uuid":"'.$uuid.'", "error": {"code":"10", "text":"", "type":""} , "status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
+            '{"uuid":"'.$uuid.'", "error": {"code":"10", "text":"", "type":""} ,' .
+            '"status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
         );
 
         $this->expectException(ErrorIncomingExistExternalIdException::class);
@@ -279,7 +292,8 @@ class CorrectionRequestTest extends TestCase
         $status = 'fail';
 
         $response = \json_decode(
-            '{"uuid":"'.$uuid.'", "error": {"code":"22", "text":"", "type":""} , "status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
+            '{"uuid":"'.$uuid.'", "error": {"code":"22", "text":"", "type":""} ,' .
+            '"status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
         );
 
         $this->expectException(ErrorGroupCodeToTokenException::class);
@@ -297,7 +311,8 @@ class CorrectionRequestTest extends TestCase
         $status = 'fail';
 
         $response = \json_decode(
-            '{"uuid":"'.$uuid.'", "error": {"code":"23", "text":"", "type":""} , "status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
+            '{"uuid":"'.$uuid.'", "error": {"code":"23", "text":"", "type":""} ,' .
+            '"status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
         );
 
         $this->expectException(ErrorIsNullExternalIdException::class);
@@ -315,7 +330,8 @@ class CorrectionRequestTest extends TestCase
         $status = 'fail';
 
         $response = \json_decode(
-            '{"uuid":"'.$uuid.'", "error": {"code":"400", "text":"", "type":""} , "status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
+            '{"uuid":"'.$uuid.'", "error": {"code":"400", "text":"", "type":""} ,' .
+            '"status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
         );
 
         $this->expectException(\Exception::class);

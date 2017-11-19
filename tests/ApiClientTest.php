@@ -50,7 +50,6 @@ class ApiClientTest extends TestCase
 
         $tokenResponse = new TokenResponse(\json_decode($response));
         $this->assertEquals('token', $tokenResponse->getToken());
-
     }
 
     /**
@@ -200,5 +199,16 @@ class ApiClientTest extends TestCase
         $request = new TokenRequest('', '');
         $this->expectException(ErrorAuthBadRequestException::class);
         $api->makeRequest($request);
+    }
+
+    public function getApiClientResponse()
+    {
+        $client = $this->getMockBuilder(Client::class)->getMock();
+
+
+        $client->expects($this->once())
+            ->method('request')->willThrowException(new ErrorAuthBadRequestException());
+
+        $api = new ApiClient($client);
     }
 }

@@ -28,7 +28,7 @@ class ReportRequestTest extends TestCase
     public function getReport()
     {
         $groupId = 'test';
-        $uuid = rand(1000, 9999);
+        $uuid = random_int(1000, 9999);
         $token = md5(time());
         $token = new TokenResponse(\json_decode('{"code":0, "text":"", "token":"' . $token . '"}'));
         $report = new ReportRequest($groupId, $uuid, $token);
@@ -49,38 +49,38 @@ class ReportRequestTest extends TestCase
         $uuid = md5(time());
         $timestamp = date('Y-m-d H:i:s');
         $total = 3660.43;
-        $fns_site = 'www.nalog.ru';
-        $fn_number = rand(1, 100);
-        $shift_number = rand(1, 100);
-        $receipt_datetime = date('Y-m-d H:i:s', strtotime('-' . rand(1, 5) . 'h'));
-        $fiscal_receipt_number = rand(1, 100);
-        $fiscal_document_number = rand(1, 100);
-        $fiscal_document_attribute = rand(10000, 99999);
-        $ecr_registration_number = rand(11111, 99999);
-        $group_code = 'TestShop';
-        $daemon_code = 'prod-agent-1';
-        $device_code = 'TEST01-00-01';
-        $callback_url = '';
+        $fnsSite = 'www.nalog.ru';
+        $fnNumber = random_int(1, 100);
+        $shiftNumber = random_int(1, 100);
+        $receiptDatetime = date('Y-m-d H:i:s', strtotime('-' . rand(1, 5) . 'h'));
+        $fiscalReceiptNumber = random_int(1, 100);
+        $fiscalDocumentNumber = random_int(1, 100);
+        $fiscalDocumentAttr = random_int(10000, 99999);
+        $ecrRegistrationNum = random_int(11111, 99999);
+        $groupCode = 'TestShop';
+        $daemonCode = 'prod-agent-1';
+        $deviceCode = 'TEST01-00-01';
+        $callbackUrl = '';
         $json = '{
             "uuid":"' . $uuid . '",
             "error":null,
             "status":"done",
             "payload": {
                 "total":"' . $total . '",
-                "fns_site":"' . $fns_site . '",
-                "fn_number":"' . $fn_number . '",
-                "shift_number":"' . $shift_number . '",
-                "receipt_datetime":"' . $receipt_datetime . '",
-                "fiscal_receipt_number":"' . $fiscal_receipt_number . '",
-                "fiscal_document_number":"' . $fiscal_document_number . '",
-                "fiscal_document_attribute":"' . $fiscal_document_attribute . '",
-                "ecr_registration_number":"' . $ecr_registration_number . '"
+                "fns_site":"' . $fnsSite . '",
+                "fn_number":"' . $fnNumber . '",
+                "shift_number":"' . $shiftNumber . '",
+                "receipt_datetime":"' . $receiptDatetime . '",
+                "fiscal_receipt_number":"' . $fiscalReceiptNumber . '",
+                "fiscal_document_number":"' . $fiscalDocumentNumber . '",
+                "fiscal_document_attribute":"' . $fiscalDocumentAttr . '",
+                "ecr_registration_number":"' . $ecrRegistrationNum . '"
              },
             "timestamp":"' . $timestamp . '",
-            "group_code":"' . $group_code . '",
-            "daemon_code":"' . $daemon_code . '",
-            "device_code":"' . $device_code . '",
-            "callback_url":"' . $callback_url . '"
+            "group_code":"' . $groupCode . '",
+            "daemon_code":"' . $daemonCode . '",
+            "device_code":"' . $deviceCode . '",
+            "callback_url":"' . $callbackUrl . '"
         }';
         $response = \json_decode($json);
 
@@ -89,31 +89,31 @@ class ReportRequestTest extends TestCase
         $this->isNull($request->getResponse($response)->getError());
         $this->assertEquals('done', $request->getResponse($response)->getStatus());
         $this->assertEquals($total, $request->getResponse($response)->getPayload()->getTotal());
-        $this->assertEquals($fns_site, $request->getResponse($response)->getPayload()->getFnsSite());
-        $this->assertEquals($fn_number, $request->getResponse($response)->getPayload()->getFnNumber());
-        $this->assertEquals($shift_number, $request->getResponse($response)->getPayload()->getShiftNumber());
-        $this->assertEquals($receipt_datetime, $request->getResponse($response)->getPayload()->getReceiptDatetime());
+        $this->assertEquals($fnsSite, $request->getResponse($response)->getPayload()->getFnsSite());
+        $this->assertEquals($fnNumber, $request->getResponse($response)->getPayload()->getFnNumber());
+        $this->assertEquals($shiftNumber, $request->getResponse($response)->getPayload()->getShiftNumber());
+        $this->assertEquals($receiptDatetime, $request->getResponse($response)->getPayload()->getReceiptDatetime());
         $this->assertEquals(
-            $fiscal_receipt_number,
+            $fiscalReceiptNumber,
             $request->getResponse($response)->getPayload()->getFiscalReceiptNumber()
         );
         $this->assertEquals(
-            $fiscal_document_number,
+            $fiscalDocumentNumber,
             $request->getResponse($response)->getPayload()->getFiscalDocumentNumber()
         );
         $this->assertEquals(
-            $fiscal_document_attribute,
+            $fiscalDocumentAttr,
             $request->getResponse($response)->getPayload()->getFiscalDocumentAttribute()
         );
         $this->assertEquals(
-            $ecr_registration_number,
+            $ecrRegistrationNum,
             $request->getResponse($response)->getPayload()->getEcrRegistrationNumber()
         );
         $this->assertEquals($timestamp, $request->getResponse($response)->getTimestamp());
-        $this->assertEquals($group_code, $request->getResponse($response)->getGroupCode());
-        $this->assertEquals($daemon_code, $request->getResponse($response)->getDaemonCode());
-        $this->assertEquals($device_code, $request->getResponse($response)->getDeviceCode());
-        $this->assertEquals($callback_url, $request->getResponse($response)->getCallbackUrl());
+        $this->assertEquals($groupCode, $request->getResponse($response)->getGroupCode());
+        $this->assertEquals($daemonCode, $request->getResponse($response)->getDaemonCode());
+        $this->assertEquals($deviceCode, $request->getResponse($response)->getDeviceCode());
+        $this->assertEquals($callbackUrl, $request->getResponse($response)->getCallbackUrl());
     }
 
     /**

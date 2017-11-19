@@ -144,19 +144,19 @@ class OperationRequestTest extends TestCase
     public function newInfo()
     {
         $inn = '1111111111';
-        $payment_address = 'test.mystore.dev';
-        $callback_url = 'http://test.mystore.dev/callback/api/url';
+        $paymentAddress = 'test.mystore.dev';
+        $callbackUrl = 'http://test.mystore.dev/callback/api/url';
 
-        $info = new Info($inn, $payment_address, $callback_url);
+        $info = new Info($inn, $paymentAddress, $callbackUrl);
         $this->assertEquals($inn, $info->getInn());
-        $this->assertEquals($payment_address, $info->getPaymentAddress());
-        $this->assertEquals($callback_url, $info->getCallbackUrl());
+        $this->assertEquals($paymentAddress, $info->getPaymentAddress());
+        $this->assertEquals($callbackUrl, $info->getCallbackUrl());
         $this->assertJson(
             \json_encode(
                 [
-                    'callback_url' => $callback_url,
+                    'callbackUrl' => $callbackUrl,
                     'inn' => $inn,
-                    'payment_address' => $payment_address,
+                    'payment_address' => $paymentAddress,
                 ]
             ),
             $info->jsonSerialize()
@@ -173,7 +173,7 @@ class OperationRequestTest extends TestCase
     public function doOperation(Receipt $receipt, Info $info)
     {
         $groupId = 'test';
-        $uuid = rand(1, 100);
+        $uuid = random_int(1, 100);
         $operationType = OperationRequest::OPERATION_SELL;
         $token = new TokenResponse(
             json_decode('{"code":0, "text":null, "token": "'.md5($uuid).'"}')
@@ -303,7 +303,8 @@ class OperationRequestTest extends TestCase
         $status = 'fail';
 
         $response = \json_decode(
-            '{"uuid":"'.$uuid.'", "error": {"code":"4", "text":"", "type":""} , "status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
+            '{"uuid":"'.$uuid.'", "error": {"code":"4", "text":"", "type":""}' .
+            ', "status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
         );
 
         $this->expectException(ErrorIncomingMissingTokenException::class);
@@ -321,7 +322,8 @@ class OperationRequestTest extends TestCase
         $status = 'fail';
 
         $response = \json_decode(
-            '{"uuid":"'.$uuid.'", "error": {"code":"5", "text":"", "type":""} , "status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
+            '{"uuid":"'.$uuid.'", "error": {"code":"5", "text":"", "type":""} ,' .
+            '"status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
         );
 
         $this->expectException(ErrorIncomingNotExistTokenException::class);
@@ -339,7 +341,8 @@ class OperationRequestTest extends TestCase
         $status = 'fail';
 
         $response = \json_decode(
-            '{"uuid":"'.$uuid.'", "error": {"code":"6", "text":"", "type":""} , "status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
+            '{"uuid":"'.$uuid.'", "error": {"code":"6", "text":"", "type":""} ,' .
+            '"status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
         );
 
         $this->expectException(ErrorIncomingExpiredTokenException::class);
@@ -357,7 +360,8 @@ class OperationRequestTest extends TestCase
         $status = 'fail';
 
         $response = \json_decode(
-            '{"uuid":"'.$uuid.'", "error": {"code":"10", "text":"", "type":""} , "status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
+            '{"uuid":"'.$uuid.'", "error": {"code":"10", "text":"", "type":""} ,' .
+            '"status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
         );
 
         $this->expectException(ErrorIncomingExistExternalIdException::class);
@@ -375,7 +379,8 @@ class OperationRequestTest extends TestCase
         $status = 'fail';
 
         $response = \json_decode(
-            '{"uuid":"'.$uuid.'", "error": {"code":"22", "text":"", "type":""} , "status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
+            '{"uuid":"'.$uuid.'", "error": {"code":"22", "text":"", "type":""} ,' .
+            '"status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
         );
 
         $this->expectException(ErrorGroupCodeToTokenException::class);
@@ -393,7 +398,8 @@ class OperationRequestTest extends TestCase
         $status = 'fail';
 
         $response = \json_decode(
-            '{"uuid":"'.$uuid.'", "error": {"code":"23", "text":"", "type":""} , "status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
+            '{"uuid":"'.$uuid.'", "error": {"code":"23", "text":"", "type":""} ,' .
+            '"status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
         );
 
         $this->expectException(ErrorIsNullExternalIdException::class);
@@ -411,7 +417,8 @@ class OperationRequestTest extends TestCase
         $status = 'fail';
 
         $response = \json_decode(
-            '{"uuid":"'.$uuid.'", "error": {"code":"400", "text":"", "type":""} , "status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
+            '{"uuid":"'.$uuid.'", "error": {"code":"400", "text":"", "type":""} ,' .
+            '"status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
         );
 
         $this->expectException(\Exception::class);
