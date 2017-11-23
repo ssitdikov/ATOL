@@ -13,7 +13,7 @@ class ErrorAuthBadRequestException extends \Exception
             'Некорректный запрос. Некорректная ссылка на авторизацию. '.
             'Необходимо повторить запрос с корректными данными.' .
             ($message ? ' ' . $message : ''),
-            ErrorCode::AUTH_BAD_REQUEST,
+            $code,
             $previous
         );
     }

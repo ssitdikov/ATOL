@@ -13,7 +13,7 @@ class ErrorIncomingBadRequestException extends \Exception
             'Переданы пустые значения <group_code> и/или <operation>. ' .
             'Необходмио повторить запрос с новым уникальным значением <external_id>, указав корректные данные.' .
             ($message ? ' ' . $message : ''),
-            ErrorCode::ERROR_INCOMING_BAD_REQUEST,
+            $code,
             $previous
         );
     }

@@ -12,7 +12,7 @@ class ErrorIncomingExpiredTokenException extends \Exception
         parent::__construct(
             'Срок действия, переданнного <tokenid> истек (срок действия 24 часа). ' .
             'Необходимо запросить новый <tokenid>' . ($message ? ' ' . $message : ''),
-            ErrorCode::ERROR_INCOMING_EXPIRED_TOKEN,
+            $code,
             $previous
         );
     }

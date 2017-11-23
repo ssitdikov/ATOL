@@ -12,7 +12,7 @@ class ErrorIncomingQueueTimeoutException extends \Exception
         parent::__construct(
             'Не создан сервер очередей. Обратитесь к администратору.' .
             ($message ? ' ' . $message : ''),
-            ErrorCode::ERROR_INCOMING_QUEUE_TIMEOUT,
+            $code,
             $previous
         );
     }

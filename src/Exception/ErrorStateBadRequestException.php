@@ -12,7 +12,7 @@ class ErrorStateBadRequestException extends \Exception
         parent::__construct(
             'Не указан <group_code>. Необходимо повторить запрос на получение результата обработки документа ' .
             'с корректными данными.' . ($message ? ' ' . $message : ''),
-            ErrorCode::ERROR_STATE_BAD_REQUEST,
+            $code,
             $previous
         );
     }

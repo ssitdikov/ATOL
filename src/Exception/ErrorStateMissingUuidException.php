@@ -12,7 +12,7 @@ class ErrorStateMissingUuidException extends \Exception
         parent::__construct(
             'Передан некорректный UUID. Необходимо повторить запрос с корректными данными.' .
             ($message ? ' ' . $message : ''),
-            ErrorCode::ERROR_STATE_MISSING_UUID,
+            $code,
             $previous
         );
     }

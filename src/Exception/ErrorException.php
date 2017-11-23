@@ -12,7 +12,7 @@ class ErrorException extends \Exception
         parent::__construct(
             'Ошибка при парсинге JSON. Необходимо повторить запрос с новым уникальным значением <external_id>, ' .
             'указав корректные данные.' . ($message ? ' ' . $message : ''),
-            ErrorCode::ERROR,
+            $code,
             $previous
         );
     }

@@ -13,7 +13,7 @@ class ErrorStateNotFoundException extends \Exception
             'Документ еще не обработан. Необходимо повторить запрос на получение резльутата обработки ' .
             'чека позднее. Повторно отправлять чек на регистрацию не нужно.' .
             ($message ? ' ' . $message : ''),
-            ErrorCode::ERROR_STATE_NOT_FOUND,
+            $code,
             $previous
         );
     }

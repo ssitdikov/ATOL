@@ -13,7 +13,7 @@ class ErrorIncomingOperationNotSupportException extends \Exception
             'Передано некорректное значение <operation>. Необходимо повторить запрос с новым уникальным ' .
             'значением <external_id>, указав корректные данные.' .
             ($message ? ' ' . $message : ''),
-            ErrorCode::ERROR_INCOMING_OPERATION_NOT_SUPPORT,
+            $code,
             $previous
         );
     }

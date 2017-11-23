@@ -12,7 +12,7 @@ class ErrorIncomingQueueException extends \Exception
         parent::__construct(
             'Проблемы со связью очереди чеков. Обратитесь к администратору.' .
             ($message ? ' ' . $message : ''),
-            ErrorCode::ERROR_INCOMING_QUEUE_EXCEPTION,
+            $code,
             $previous
         );
     }

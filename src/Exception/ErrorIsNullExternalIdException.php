@@ -13,7 +13,7 @@ class ErrorIsNullExternalIdException extends \Exception
             'Не был указан <external_id>. Системой для данного чека был выдан <external_id> и отправлен ' .
             'на регистрацию. В дальнейшем вам необходимо самостоятельно указывать уникальный <external_id> ' .
             'для каждого чека.' . ($message ? ' ' . $message : ''),
-            ErrorCode::ERROR_IS_NULL_EXTERNAL_ID,
+            $code,
             $previous
         );
     }

@@ -12,7 +12,7 @@ class ErrorIncomingValidationException extends \Exception
         parent::__construct(
             'Ошибка валидации JSON. Необходимо повторить запрос с новым уникальным значением <external_id>, ' .
             'указав корректные данные.' . ($message ? ' ' . $message : ''),
-            ErrorCode::ERROR_INCOMING_VALIDATION_EXCEPTION,
+            $code,
             $previous
         );
     }

@@ -14,7 +14,7 @@ class ErrorIncomingExistExternalIdException extends \Exception
             'В ответе на ошибку будет передан UUID первого присланного чека с данными параметрами. ' .
             'Можно воспользоваться запросом на получение резльутата регистрации, указав UUID.' .
             ($message ? ' ' . $message : ''),
-            ErrorCode::ERROR_INCOMING_EXIST_EXTERNAL_ID,
+            $code,
             $previous
         );
     }

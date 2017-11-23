@@ -13,7 +13,7 @@ class ErrorStateMissingTokenException extends \Exception
             'Передан некорректный <tokenid>. Необходимо повторить запрос на получение результата обработки ' .
             'с корректными данными. Если с момента получения <tokenid> прошло больше 24 часов, заново ' .
             'запросить <tokenid>.' . ($message ? ' ' . $message : ''),
-            ErrorCode::ERROR_STATE_MISSING_TOKEN,
+            $code,
             $previous
         );
     }

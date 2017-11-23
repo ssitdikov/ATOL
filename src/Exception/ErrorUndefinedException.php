@@ -15,7 +15,7 @@ class ErrorUndefinedException extends \Exception
         parent::__construct(
             'Неизвестная ошибка, обратитесь в службу поддержки' .
             ($message ? ' ' . $message : ''),
-            ErrorCode::ERROR_UNDEFINED,
+            $code,
             $previous
         );
     }

@@ -59,17 +59,17 @@ class TokenRequest implements RequestInterface
     /**
      * @param $response
      * @return TokenResponse
+     * @throws \Exception
      */
     public function getResponse($response)
     {
-        switch ($response->code) {
-            case (SuccessCode::GET_TOKEN_CODE):
-            case (SuccessCode::ISSUED_OLD_TOKEN_CODE):
-                return new TokenResponse($response);
-                break;
-            default:
-                ErrorFactoryResponse::getError($response->text, $response->code);
+        if (in_array(
+            $response->code,
+            [SuccessCode::GET_TOKEN_CODE, SuccessCode::ISSUED_OLD_TOKEN_CODE],
+            false
+        )) {
+            return new TokenResponse($response);
         }
-        return null;
+        return ErrorFactoryResponse::getError($response->text, $response->code);
     }
 }

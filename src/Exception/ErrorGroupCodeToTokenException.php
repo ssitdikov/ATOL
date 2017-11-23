@@ -13,7 +13,7 @@ class ErrorGroupCodeToTokenException extends \Exception
             'Передан некорректный <tokenid> или <group_code>. Необходимо повторить запрос с новым ' .
             'уникальным знаением <external_id>, указав корректные данные.' .
             ($message ? ' ' . $message : ''),
-            ErrorCode::ERROR_GROUP_CODE_TO_TOKEN,
+            $code,
             $previous
         );
     }

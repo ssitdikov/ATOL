@@ -12,7 +12,7 @@ class ErrorIncomingNotExistTokenException extends \Exception
         parent::__construct(
             'Переданный <tokenid> не выдавался. Необходимо повторить запрос с новым уникальным значением ' .
             '<external_id>, указав корректные данные.' . ($message ? ' ' . $message : ''),
-            ErrorCode::ERROR_INCOMING_NOT_EXIST_TOKEN,
+            $code,
             $previous
         );
     }

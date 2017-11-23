@@ -12,7 +12,7 @@ class ErrorAuthGenTokenException extends \Exception
         parent::__construct(
             'Не удалось сформировать токен. '.
             'Необходимо повторить запрос.' . ($message ? ' ' . $message : ''),
-            ErrorCode::AUTH_GEN_TOKEN,
+            $code,
             $previous
         );
     }

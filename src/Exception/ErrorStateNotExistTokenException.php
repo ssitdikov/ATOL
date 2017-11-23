@@ -13,7 +13,7 @@ class ErrorStateNotExistTokenException extends \Exception
             'Переданный <tokenid> не выдавался. Необходимо повторить запрос с корректными данными. ' .
             'Если с момент получения <tokenid> прошло больше 24 часов, необходимо заново запросить <tokenid>.' .
             ($message ? ' ' . $message : ''),
-            ErrorCode::ERROR_STATE_NOT_EXIST_TOKEN,
+            $code,
             $previous
         );
     }
