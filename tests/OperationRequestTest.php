@@ -12,6 +12,7 @@ use SSitdikov\ATOL\Exception\ErrorIncomingMissingTokenException;
 use SSitdikov\ATOL\Exception\ErrorIncomingNotExistTokenException;
 use SSitdikov\ATOL\Exception\ErrorIncomingOperationNotSupportException;
 use SSitdikov\ATOL\Exception\ErrorIsNullExternalIdException;
+use SSitdikov\ATOL\Exception\ErrorUndefinedException;
 use SSitdikov\ATOL\Object\Info;
 use SSitdikov\ATOL\Object\Item;
 use SSitdikov\ATOL\Object\Payment;
@@ -422,6 +423,25 @@ class OperationRequestTest extends TestCase
         );
 
         $this->expectException(\Exception::class);
+        $request->getResponse($response);
+    }
+
+    /**
+     * @test
+     * @depends doOperation
+     */
+    public function getErrorUndefined(OperationRequest $request)
+    {
+        $uuid = md5(time());
+        $timestamp = date('Y-m-d H:i:s');
+        $status = 'fail';
+
+        $response = \json_decode(
+            '{"uuid":"'.$uuid.'", "error": {"code":"26", "text":"", "type":""} ,' .
+            '"status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
+        );
+
+        $this->expectException(ErrorUndefinedException::class);
         $request->getResponse($response);
     }
 

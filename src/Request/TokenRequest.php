@@ -67,8 +67,9 @@ class TokenRequest implements RequestInterface
             case (SuccessCode::ISSUED_OLD_TOKEN_CODE):
                 return new TokenResponse($response);
                 break;
+            default:
+                ErrorFactoryResponse::getError($response->text, $response->code);
         }
-        ErrorFactoryResponse::getError($response->text, $response->code);
         return null;
     }
 }
