@@ -23,7 +23,8 @@ interface ErrorCode
     const ERROR_STATE_NOT_FOUND = 16;
     const AUTH_BAD_REQUEST = 17;
     const AUTH_GEN_TOKEN = 18;
-    const AUTH_WORKING_USER_OR_PASSWORD = 19;
+    const AUTH_WRONG_USER_OR_PASSWORD = 19;
     const ERROR_GROUP_CODE_TO_TOKEN = 22;
     const ERROR_IS_NULL_EXTERNAL_ID = 23;
+    const ERROR_UNDEFINED = 26;
 }

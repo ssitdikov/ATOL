@@ -7,12 +7,13 @@ use Throwable;
 
 class ErrorAuthGenTokenException extends \Exception
 {
-    public function __construct(
-        string $message = 'Не удалось сформировать токен. '.
-        'Необходимо повторить запрос.',
-        int $code = ErrorCode::AUTH_GEN_TOKEN,
-        \Throwable $previous = null
-    ) {
-        parent::__construct($message, $code, $previous);
+    public function __construct(string $message = '', int $code = 0, \Throwable $previous = null)
+    {
+        parent::__construct(
+            'Не удалось сформировать токен. '.
+            'Необходимо повторить запрос.' . ($message ? ' ' . $message : ''),
+            ErrorCode::AUTH_GEN_TOKEN,
+            $previous
+        );
     }
 }

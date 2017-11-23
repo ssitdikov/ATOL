@@ -4,6 +4,7 @@ namespace SSitdikov\ATOL\Request;
 
 use SSitdikov\ATOL\Code\ErrorCode;
 use SSitdikov\ATOL\Exception\ErrorException;
+use SSitdikov\ATOL\Exception\ErrorFactoryResponse;
 use SSitdikov\ATOL\Exception\ErrorGroupCodeToTokenException;
 use SSitdikov\ATOL\Exception\ErrorIncomingBadRequestException;
 use SSitdikov\ATOL\Exception\ErrorIncomingExistExternalIdException;
@@ -74,82 +75,11 @@ class OperationRequest implements RequestInterface
     /**
      * @param $response
      * @return OperationResponse
-     * @throws ErrorException
-     * @throws ErrorGroupCodeToTokenException
-     * @throws ErrorIncomingBadRequestException
-     * @throws ErrorIncomingExistExternalIdException
-     * @throws ErrorIncomingExpiredTokenException
-     * @throws ErrorIncomingMissingTokenException
-     * @throws ErrorIncomingNotExistTokenException
-     * @throws ErrorIncomingOperationNotSupportException
-     * @throws ErrorIsNullExternalIdException
-     * @throws \Exception
      */
     public function getResponse($response)
     {
         if (null !== $response->error) {
-            switch ($response->error->code) {
-                case ErrorCode::ERROR:
-                    throw new ErrorException('Ошибка при парсинге JSON. Повторите с новым уникальным значением '.
-                        '<external_id>, указав корректные данные. '.$response->error->text,
-                        ErrorCode::ERROR);
-                    break;
-                case (ErrorCode::ERROR_INCOMING_BAD_REQUEST):
-                    throw new ErrorIncomingBadRequestException('Переданые пустые значения <group_code> и/или '.
-                        '<operation>. '.$response->error->text,
-                        ErrorCode::ERROR_INCOMING_BAD_REQUEST);
-                    break;
-                case (ErrorCode::ERROR_INCOMING_OPERATION_NOT_SUPPORT):
-                    throw new ErrorIncomingOperationNotSupportException(
-                        'Передано некорректное значение <operation>. '.$response->error->text,
-                        ErrorCode::ERROR_INCOMING_OPERATION_NOT_SUPPORT
-                    );
-                    break;
-                case (ErrorCode::ERROR_INCOMING_MISSING_TOKEN):
-                    throw new ErrorIncomingMissingTokenException(
-                        'Передан некорректный <tokenid>. '.$response->error->text,
-                        ErrorCode::ERROR_INCOMING_MISSING_TOKEN
-                    );
-                    break;
-                case (ErrorCode::ERROR_INCOMING_NOT_EXIST_TOKEN):
-                    throw new ErrorIncomingNotExistTokenException(
-                        'Переданный <tokenid> не выдавался. '.$response->error->text,
-                        ErrorCode::ERROR_INCOMING_NOT_EXIST_TOKEN
-                    );
-                    break;
-                case (ErrorCode::ERROR_INCOMING_EXPIRED_TOKEN):
-                    throw new ErrorIncomingExpiredTokenException(
-                        'Срок действия, переданного <tokenid> истек '.
-                        '(срок действия 24 часа). Необходимо запросить новый. '.$response->error->text,
-                        ErrorCode::ERROR_INCOMING_EXPIRED_TOKEN
-                    );
-                    break;
-                case (ErrorCode::ERROR_INCOMING_EXIST_EXTERNAL_ID):
-                    throw new ErrorIncomingExistExternalIdException(
-                        'Документ с переданными значениями <external_id> и '.
-                        '<group_code> уже существует. '.$response->error->text,
-                        ErrorCode::ERROR_INCOMING_EXIST_EXTERNAL_ID
-                    );
-                    break;
-                case (ErrorCode::ERROR_GROUP_CODE_TO_TOKEN):
-                    throw new ErrorGroupCodeToTokenException(
-                        'Передан некорректный <tokenid> или <group_code>. '.$response->error->text,
-                        ErrorCode::ERROR_GROUP_CODE_TO_TOKEN
-                    );
-                    break;
-                case (ErrorCode::ERROR_IS_NULL_EXTERNAL_ID):
-                    throw new ErrorIsNullExternalIdException(
-                        'Не был указан <external_id>.',
-                        ErrorCode::ERROR_IS_NULL_EXTERNAL_ID
-                    );
-                    break;
-                default:
-                    throw new \Exception(
-                        $response->error->text,
-                        $response->error->code
-                    );
-                    break;
-            }
+            ErrorFactoryResponse::getError($response->error->text, $response->error->code);
         }
 
         return new OperationResponse($response);
