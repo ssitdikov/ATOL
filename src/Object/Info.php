@@ -6,21 +6,21 @@ class Info implements \JsonSerializable
 {
 
     private $inn = '';
-    private $payment_address = '';
-    private $callback_url = '';
+    private $paymentAddress = '';
+    private $callbackUrl = '';
 
     /**
      * Сервисная часть чека, включает в себя ИНН, адрес сайта и callback_url (на него приходят POST, если указано)
      * @param string $inn
-     * @param string $payment_address
-     * @param string $callback_url
+     * @param string $paymentAddress
+     * @param string $callbackUrl
      */
-    public function __construct($inn, $payment_address, $callback_url = '')
+    public function __construct($inn, $paymentAddress, $callbackUrl = '')
     {
         $this->setInn($inn);
-        $this->setPaymentAddress($payment_address);
-        if ($callback_url) {
-            $this->setCallbackUrl($callback_url);
+        $this->setPaymentAddress($paymentAddress);
+        if ($callbackUrl) {
+            $this->setCallbackUrl($callbackUrl);
         }
     }
 
@@ -38,15 +38,15 @@ class Info implements \JsonSerializable
      */
     public function getCallbackUrl(): string
     {
-        return $this->callback_url;
+        return $this->callbackUrl;
     }
 
     /**
-     * @param string $callback_url
+     * @param string $callbackUrl
      */
-    public function setCallbackUrl(string $callback_url)
+    public function setCallbackUrl(string $callbackUrl)
     {
-        $this->callback_url = $callback_url;
+        $this->callbackUrl = $callbackUrl;
     }
 
     /**
@@ -70,14 +70,14 @@ class Info implements \JsonSerializable
      */
     public function getPaymentAddress(): string
     {
-        return $this->payment_address;
+        return $this->paymentAddress;
     }
 
     /**
-     * @param string $payment_address
+     * @param string $paymentAddress
      */
-    public function setPaymentAddress(string $payment_address)
+    public function setPaymentAddress(string $paymentAddress)
     {
-        $this->payment_address = $payment_address;
+        $this->paymentAddress = $paymentAddress;
     }
 }

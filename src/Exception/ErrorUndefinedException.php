@@ -5,20 +5,18 @@ namespace SSitdikov\ATOL\Exception;
 use SSitdikov\ATOL\Code\ErrorCode;
 use Throwable;
 
-class ErrorAuthWrongUserOrPasswordException extends \Exception
+class ErrorUndefinedException extends \Exception
 {
     public function __construct(
         string $message = '',
         int $code = 0,
-        \Throwable $previous = null
+        Throwable $previous = null
     ) {
         parent::__construct(
-            'Неверный логин или пароль. '.
-            'Необходимо повторить запрос с корректными данными.' .
+            'Неизвестная ошибка, обратитесь в службу поддержки' .
             ($message ? ' ' . $message : ''),
             $code,
             $previous
         );
     }
-
 }

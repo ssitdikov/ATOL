@@ -60,6 +60,8 @@ try {
     } catch (\Exception $e) {
         // ...
     }
+} catch (\SSitdikov\ATOL\Exception\ErrorAuthWrongUserOrPasswordException $e) {
+    // wrong user or password Exception
 } catch (\Exception $e) {
     // ...
 }

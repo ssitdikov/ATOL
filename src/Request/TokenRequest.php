@@ -7,6 +7,7 @@ use SSitdikov\ATOL\Code\SuccessCode;
 use SSitdikov\ATOL\Exception\ErrorAuthBadRequestException;
 use SSitdikov\ATOL\Exception\ErrorAuthGenTokenException;
 use SSitdikov\ATOL\Exception\ErrorAuthWrongUserOrPasswordException;
+use SSitdikov\ATOL\Exception\ErrorFactoryResponse;
 use SSitdikov\ATOL\Response\TokenResponse;
 
 class TokenRequest implements RequestInterface
@@ -58,29 +59,17 @@ class TokenRequest implements RequestInterface
     /**
      * @param $response
      * @return TokenResponse
-     * @throws ErrorAuthBadRequestException
-     * @throws ErrorAuthGenTokenException
-     * @throws ErrorAuthWrongUserOrPasswordException
      * @throws \Exception
      */
     public function getResponse($response)
     {
-        switch ($response->code) {
-            case (SuccessCode::GET_TOKEN_CODE):
-            case (SuccessCode::ISSUED_OLD_TOKEN_CODE):
-                return new TokenResponse($response);
-                break;
-            case (ErrorCode::AUTH_BAD_REQUEST):
-                throw new ErrorAuthBadRequestException();
-                break;
-            case (ErrorCode::AUTH_GEN_TOKEN):
-                throw new ErrorAuthGenTokenException();
-                break;
-            case (ErrorCode::AUTH_WORKING_USER_OR_PASSWORD):
-                throw new ErrorAuthWrongUserOrPasswordException();
-                break;
-            default:
-                throw new \Exception($response->text, $response->code);
+        if (in_array(
+            $response->code,
+            [SuccessCode::GET_TOKEN_CODE, SuccessCode::ISSUED_OLD_TOKEN_CODE],
+            false
+        )) {
+            return new TokenResponse($response);
         }
+        return ErrorFactoryResponse::getError($response->text, $response->code);
     }
 }
