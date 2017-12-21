@@ -93,7 +93,7 @@ class OperationRequest implements RequestInterface
      */
     private function getErrorMessage($response)
     {
-        if ($response->error->code !== ErrorCode::ERROR_INCOMING_EXIST_EXTERNAL_ID) {
+        if ($response->error->code != ErrorCode::ERROR_INCOMING_EXIST_EXTERNAL_ID) {
             return $response->error->text;
         }
 
