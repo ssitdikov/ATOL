@@ -375,11 +375,12 @@ class OperationRequestTest extends TestCase
      */
     public function getErrorIncomingExistExternalIdWithoutUUID(OperationRequest $request)
     {
+        $uuid = 0;
         $timestamp = date('Y-m-d H:i:s');
         $status = 'fail';
 
         $response = \json_decode(
-            '{"error": {"code":"10", "text":"", "type":""} ,' .
+            '{"uuid":"'.$uuid.'", "error": {"code":"10", "text":"", "type":""} ,' .
             '"status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
         );
 
