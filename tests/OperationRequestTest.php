@@ -373,6 +373,24 @@ class OperationRequestTest extends TestCase
      * @test
      * @depends doOperation
      */
+    public function getErrorIncomingExistExternalIdWithoutUUID(OperationRequest $request)
+    {
+        $timestamp = date('Y-m-d H:i:s');
+        $status = 'fail';
+
+        $response = \json_decode(
+            '{"error": {"code":"10", "text":"", "type":""} ,' .
+            '"status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
+        );
+
+        $this->expectException(ErrorIncomingExistExternalIdException::class);
+        $request->getResponse($response);
+    }
+
+    /**
+     * @test
+     * @depends doOperation
+     */
     public function getErrorGroupCodeToToken(OperationRequest $request)
     {
         $uuid = md5(time());
