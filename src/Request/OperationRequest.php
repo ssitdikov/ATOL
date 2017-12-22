@@ -26,6 +26,8 @@ class OperationRequest implements RequestInterface
     const OPERATION_BUY = 'buy';
     const OPERATION_BUY_REFUND = 'buy_refund';
 
+    const UUID_TEXT_ID = "UUID=";
+
     private $groupId;
     private $uuid;
     private $receipt;
@@ -79,9 +81,29 @@ class OperationRequest implements RequestInterface
     public function getResponse($response)
     {
         if (null !== $response->error) {
-            ErrorFactoryResponse::getError($response->error->text, $response->error->code);
+            ErrorFactoryResponse::getError($this->getErrorMessage($response), $response->error->code);
         }
 
         return new OperationResponse($response);
+    }
+
+    /**
+     * @param $response
+     * @return string
+     */
+    private function getErrorMessage($response)
+    {
+        if ($response->error->code != ErrorCode::ERROR_INCOMING_EXIST_EXTERNAL_ID) {
+            return $response->error->text;
+        }
+
+        if (!$response->uuid) {
+            return $response->error->text;
+        }
+
+        return implode(' ', [
+            $response->error->text,
+            self::UUID_TEXT_ID.$response->uuid,
+        ]);
     }
 }
