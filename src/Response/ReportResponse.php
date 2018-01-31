@@ -4,7 +4,6 @@ namespace SSitdikov\ATOL\Response;
 
 class ReportResponse implements ResponseInterface
 {
-
     const STATUS_DONE = 'done';
     const STATUS_FAIL = 'fail';
     const STATUS_WAIT = 'wait';
@@ -80,7 +79,7 @@ class ReportResponse implements ResponseInterface
     /**
      * @return null|PayloadResponse
      */
-    public function getPayload(): PayloadResponse
+    public function getPayload(): ?PayloadResponse
     {
         return $this->payload;
     }
