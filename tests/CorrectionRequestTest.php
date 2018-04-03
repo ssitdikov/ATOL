@@ -39,7 +39,7 @@ class CorrectionRequestTest extends TestCase
 
         $this->assertEquals(3600, $payment->getSum());
         $this->assertEquals(Payment::PAYMENT_TYPE_CASH, $payment->getType());
-        $this->assertJson('{"sum":3600, "type": 0}', $payment->jsonSerialize());
+        $this->assertEquals(\json_decode('{"sum":3600, "type": 0}', true), $payment->jsonSerialize());
 
         return $payment;
     }

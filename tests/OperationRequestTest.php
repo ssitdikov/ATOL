@@ -46,8 +46,7 @@ class OperationRequestTest extends TestCase
         $this->assertEquals($sum, $item->getSum());
         $this->assertEquals(Item::TAX_NONE, $item->getTax());
         $this->assertEquals($taxSum, $item->getTaxSum());
-        $this->assertJson(
-            json_encode(
+        $this->assertEquals(
                 [
                     'name' => $title,
                     'price' => $price,
@@ -55,8 +54,7 @@ class OperationRequestTest extends TestCase
                     'sum' => $sum,
                     'tax' => $tax,
                     'tax_sum' => $taxSum,
-                ]
-            ),
+                ],
             $item->jsonSerialize()
         );
 
@@ -82,7 +80,7 @@ class OperationRequestTest extends TestCase
 
         $this->assertEquals(3600, $payment->getSum());
         $this->assertEquals(Payment::PAYMENT_TYPE_CASH, $payment->getType());
-        $this->assertJson('{"sum":3600, "type": 0}', $payment->jsonSerialize());
+        $this->assertEquals(\json_decode('{"sum":3600, "type": 0}', true), $payment->jsonSerialize());
 
         return $payment;
     }
@@ -114,19 +112,17 @@ class OperationRequestTest extends TestCase
         );
         $this->assertEquals($item->getSum(), $receipt->getTotal());
 
-        $this->assertJson(
-            json_encode(
-                [
-                    'attributes' => [
-                        'sno' => ReceiptSno::RECEIPT_SNO_USN_INCOME,
-                        'email' => $email,
-                        'phone' => $phone,
-                    ],
-                    'items' => [$item],
-                    'total' => $payment->getSum(),
-                    'payments' => [$payment],
-                ]
-            ),
+        $this->assertEquals(
+            [
+                'attributes' => [
+                    'sno' => ReceiptSno::RECEIPT_SNO_USN_INCOME,
+                    'email' => $email,
+                    'phone' => $phone,
+                ],
+                'items' => [$item],
+                'total' => $payment->getSum(),
+                'payments' => [$payment],
+            ],
             $receipt->jsonSerialize()
         );
 
@@ -153,14 +149,12 @@ class OperationRequestTest extends TestCase
         $this->assertEquals($paymentAddress, $info->getPaymentAddress());
         $this->assertEquals($callbackUrl, $info->getCallbackUrl());
         $this->assertJson(
-            \json_encode(
-                [
-                    'callbackUrl' => $callbackUrl,
-                    'inn' => $inn,
-                    'payment_address' => $paymentAddress,
-                ]
-            ),
-            $info->jsonSerialize()
+            \json_encode([
+                'callbackUrl' => $callbackUrl,
+                'inn' => $inn,
+                'payment_address' => $paymentAddress,
+            ]),
+            \json_encode($info->jsonSerialize())
         );
 
         return $info;
