@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SSitdikov\ATOL\Request;
 
+use SSitdikov\ATOL\Code\ErrorCode;
 use SSitdikov\ATOL\Exception\ErrorFactoryResponse;
 use SSitdikov\ATOL\Object\Info;
 use SSitdikov\ATOL\Object\Receipt;
@@ -21,6 +22,8 @@ class OperationRequest implements RequestInterface
     public const OPERATION_SELL_REFUND = 'sell_refund';
     public const OPERATION_BUY = 'buy';
     public const OPERATION_BUY_REFUND = 'buy_refund';
+
+    const UUID_TEXT_ID = "UUID=";
 
     private $groupId;
     private $uuid;
@@ -92,9 +95,30 @@ class OperationRequest implements RequestInterface
     public function getResponse($response): OperationResponse
     {
         if (null !== $response->error) {
-            ErrorFactoryResponse::getError($response->error->text, $response->error->code);
+            ErrorFactoryResponse::getError($this->getErrorMessage($response), $response->error->code);
         }
 
         return new OperationResponse($response);
+    }
+
+    /**
+     * @param $response
+     * @return string
+     */
+    private function getErrorMessage($response)
+    {
+        $message = null;
+        if ($response->error->code != ErrorCode::ERROR_INCOMING_EXIST_EXTERNAL_ID) {
+            $message = $response->error->text;
+        }
+
+        if (!$response->uuid) {
+            $message = $response->error->text;
+        }
+
+        return $message ?: implode(' ', [
+            $response->error->text,
+            self::UUID_TEXT_ID.$response->uuid,
+        ]);
     }
 }
