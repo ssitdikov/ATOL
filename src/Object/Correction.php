@@ -1,7 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SSitdikov\ATOL\Object;
 
+/**
+ * Class Correction
+ * @package SSitdikov\ATOL\Object
+ */
 class Correction implements \JsonSerializable
 {
     /**
@@ -17,19 +23,25 @@ class Correction implements \JsonSerializable
      */
     private $payments = [];
 
-    public function addPayment(Payment $payment)
+    /**
+     * @param Payment $payment
+     */
+    public function addPayment(Payment $payment): void
     {
         $this->payments[] = $payment;
     }
 
-    public function jsonSerialize()
+    /**
+     * @return array
+     */
+    public function jsonSerialize(): array
     {
         return [
             'attributes' => [
                 'sno' => $this->getSno(),
                 'tax' => $this->getTax(),
-                'payments' => $this->getPayments(),
-            ],
+                'payments' => $this->getPayments()
+            ]
         ];
     }
 
@@ -44,7 +56,7 @@ class Correction implements \JsonSerializable
     /**
      * @param string $sno
      */
-    public function setSno(string $sno)
+    public function setSno(string $sno): void
     {
         $this->sno = $sno;
     }
@@ -60,7 +72,7 @@ class Correction implements \JsonSerializable
     /**
      * @param string $tax
      */
-    public function setTax(string $tax)
+    public function setTax(string $tax): void
     {
         $this->tax = $tax;
     }
@@ -76,7 +88,7 @@ class Correction implements \JsonSerializable
     /**
      * @param array $payments
      */
-    public function setPayments(array $payments)
+    public function setPayments(array $payments): void
     {
         $this->payments = $payments;
     }

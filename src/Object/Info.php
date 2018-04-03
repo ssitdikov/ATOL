@@ -1,7 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SSitdikov\ATOL\Object;
 
+/**
+ * Class Info
+ * @package SSitdikov\ATOL\Object
+ */
 class Info implements \JsonSerializable
 {
 
@@ -19,12 +25,15 @@ class Info implements \JsonSerializable
     {
         $this->setInn($inn);
         $this->setPaymentAddress($paymentAddress);
-        if ($callbackUrl) {
+        if ($callbackUrl !== '') {
             $this->setCallbackUrl($callbackUrl);
         }
     }
 
-    public function jsonSerialize()
+    /**
+     * @return array
+     */
+    public function jsonSerialize(): array
     {
         return [
             'callback_url' => $this->getCallbackUrl(),
@@ -44,7 +53,7 @@ class Info implements \JsonSerializable
     /**
      * @param string $callbackUrl
      */
-    public function setCallbackUrl(string $callbackUrl)
+    public function setCallbackUrl(string $callbackUrl): void
     {
         $this->callbackUrl = $callbackUrl;
     }
@@ -60,7 +69,7 @@ class Info implements \JsonSerializable
     /**
      * @param string $inn
      */
-    public function setInn(string $inn)
+    public function setInn(string $inn): void
     {
         $this->inn = $inn;
     }
@@ -76,7 +85,7 @@ class Info implements \JsonSerializable
     /**
      * @param string $paymentAddress
      */
-    public function setPaymentAddress(string $paymentAddress)
+    public function setPaymentAddress(string $paymentAddress): void
     {
         $this->paymentAddress = $paymentAddress;
     }

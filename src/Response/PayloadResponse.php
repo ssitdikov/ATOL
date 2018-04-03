@@ -1,7 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SSitdikov\ATOL\Response;
 
+/**
+ * Class PayloadResponse
+ * @package SSitdikov\ATOL\Response
+ */
 class PayloadResponse implements ResponseInterface
 {
     private $total;
@@ -14,6 +20,10 @@ class PayloadResponse implements ResponseInterface
     private $fiscalDocumentAttribute;
     private $ecrRegistrationNumber;
 
+    /**
+     * PayloadResponse constructor.
+     * @param \stdClass $json
+     */
     public function __construct(\stdClass $json)
     {
         $this->total = $json->total;

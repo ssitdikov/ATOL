@@ -1,15 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SSitdikov\ATOL\Object;
 
+/**
+ * Class Payment
+ * @package SSitdikov\ATOL\Object
+ */
 class Payment implements \JsonSerializable
 {
 
-    const PAYMENT_TYPE_CASH = 0;
-    const PAYMENT_TYPE_ELECTR = 1;
-    const PAYMENT_TYPE_PREPAID = 2;
-    const PAYMENT_TYPE_CREDIT = 3;
-    const PAYMENT_TYPE_OTHER = 4;
+    public const PAYMENT_TYPE_CASH = 0;
+    public const PAYMENT_TYPE_ELECTR = 1;
+    public const PAYMENT_TYPE_PREPAID = 2;
+    public const PAYMENT_TYPE_CREDIT = 3;
+    public const PAYMENT_TYPE_OTHER = 4;
     /**
      * 5 - 9 расширенные типы оплаты, устанавливаются отдельно
      */
@@ -18,6 +24,10 @@ class Payment implements \JsonSerializable
      * @var int
      */
     private $type = self::PAYMENT_TYPE_ELECTR;
+
+    /**
+     * @var float
+     */
     private $sum = 0.0;
 
     /**
@@ -31,11 +41,14 @@ class Payment implements \JsonSerializable
         $this->setSum($sum);
     }
 
-    public function jsonSerialize()
+    /**
+     * @return array
+     */
+    public function jsonSerialize(): array
     {
         return [
             'sum' => $this->getSum(),
-            'type' => $this->getType(),
+            'type' => $this->getType()
         ];
     }
 
@@ -50,7 +63,7 @@ class Payment implements \JsonSerializable
     /**
      * @param float $sum
      */
-    public function setSum(float $sum)
+    public function setSum(float $sum): void
     {
         $this->sum = $sum;
     }
@@ -66,7 +79,7 @@ class Payment implements \JsonSerializable
     /**
      * @param int $type
      */
-    public function setType(int $type)
+    public function setType(int $type): void
     {
         $this->type = $type;
     }

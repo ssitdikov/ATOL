@@ -1,7 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SSitdikov\ATOL\Response;
 
+/**
+ * Class OperationResponse
+ * @package SSitdikov\ATOL\Response
+ */
 class OperationResponse implements ResponseInterface
 {
 
@@ -29,6 +35,10 @@ class OperationResponse implements ResponseInterface
      */
     private $error;
 
+    /**
+     * OperationResponse constructor.
+     * @param \stdClass $json
+     */
     public function __construct(\stdClass $json)
     {
         $this->uuid = $json->uuid;

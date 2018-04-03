@@ -1,19 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SSitdikov\ATOL\Request;
 
-use SSitdikov\ATOL\Code\ErrorCode;
 use SSitdikov\ATOL\Code\SuccessCode;
-use SSitdikov\ATOL\Exception\ErrorAuthBadRequestException;
-use SSitdikov\ATOL\Exception\ErrorAuthGenTokenException;
-use SSitdikov\ATOL\Exception\ErrorAuthWrongUserOrPasswordException;
 use SSitdikov\ATOL\Exception\ErrorFactoryResponse;
 use SSitdikov\ATOL\Response\TokenResponse;
 
+/**
+ * Class TokenRequest
+ * @package SSitdikov\ATOL\Request
+ */
 class TokenRequest implements RequestInterface
 {
-
+    /**
+     * @var string
+     */
     private $login;
+    /**
+     * @var string
+     */
     private $pass;
 
     /**
@@ -43,8 +50,8 @@ class TokenRequest implements RequestInterface
         return [
             'json' => [
                 'login' => $this->login,
-                'pass' => $this->pass,
-            ],
+                'pass' => $this->pass
+            ]
         ];
     }
 
@@ -61,9 +68,9 @@ class TokenRequest implements RequestInterface
      * @return TokenResponse
      * @throws \Exception
      */
-    public function getResponse($response)
+    public function getResponse($response): TokenResponse
     {
-        if (in_array(
+        if (\in_array(
             $response->code,
             [SuccessCode::GET_TOKEN_CODE, SuccessCode::ISSUED_OLD_TOKEN_CODE],
             false

@@ -1,7 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SSitdikov\ATOL\Object;
 
+/**
+ * Interface ReceiptSno
+ * @package SSitdikov\ATOL\Object
+ */
 interface ReceiptSno
 {
     const RECEIPT_SNO_OSN = 'osn';

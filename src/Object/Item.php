@@ -1,16 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SSitdikov\ATOL\Object;
 
+/**
+ * Class Item
+ * @package SSitdikov\ATOL\Object
+ */
 class Item implements \JsonSerializable
 {
 
-    const TAX_NONE = 'none';
-    const TAX_VAT0 = 'vat0';
-    const TAX_VAT10 = 'vat10';
-    const TAX_VAT18 = 'vat18';
-    const TAX_VAT110 = 'vat110';
-    const TAX_VAT118 = 'vat118';
+    public const TAX_NONE = 'none';
+    public const TAX_VAT0 = 'vat0';
+    public const TAX_VAT10 = 'vat10';
+    public const TAX_VAT18 = 'vat18';
+    public const TAX_VAT110 = 'vat110';
+    public const TAX_VAT118 = 'vat118';
 
     private $sum = 0.0;
     private $tax = 'none';
@@ -35,7 +41,10 @@ class Item implements \JsonSerializable
         $this->setSum($price * $quantity);
     }
 
-    public function jsonSerialize()
+    /**
+     * @return array
+     */
+    public function jsonSerialize(): array
     {
         return [
             'name' => $this->getName(),
@@ -43,7 +52,7 @@ class Item implements \JsonSerializable
             'quantity' => $this->getQuantity(),
             'sum' => $this->getSum(),
             'tax' => $this->getTax(),
-            'tax_sum' => $this->getTaxSum(),
+            'tax_sum' => $this->getTaxSum()
         ];
     }
 
@@ -58,7 +67,7 @@ class Item implements \JsonSerializable
     /**
      * @param string $name
      */
-    public function setName(string $name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -74,7 +83,7 @@ class Item implements \JsonSerializable
     /**
      * @param float $price
      */
-    public function setPrice(float $price)
+    public function setPrice(float $price): void
     {
         $this->price = $price;
     }
@@ -90,7 +99,7 @@ class Item implements \JsonSerializable
     /**
      * @param float $quantity
      */
-    public function setQuantity(float $quantity)
+    public function setQuantity(float $quantity): void
     {
         $this->quantity = $quantity;
     }
@@ -106,7 +115,7 @@ class Item implements \JsonSerializable
     /**
      * @param float $sum
      */
-    public function setSum(float $sum)
+    public function setSum(float $sum): void
     {
         $this->sum = $sum;
     }
@@ -122,7 +131,7 @@ class Item implements \JsonSerializable
     /**
      * @param string $tax
      */
-    public function setTax(string $tax)
+    public function setTax(string $tax): void
     {
         $this->tax = $tax;
         switch ($tax) {
@@ -156,7 +165,7 @@ class Item implements \JsonSerializable
     /**
      * @param float $taxSum
      */
-    public function setTaxSum(float $taxSum)
+    public function setTaxSum(float $taxSum): void
     {
         $this->taxSum = round($taxSum, 2);
     }

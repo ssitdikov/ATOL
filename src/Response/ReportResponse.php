@@ -1,13 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SSitdikov\ATOL\Response;
 
+/**
+ * Class ReportResponse
+ * @package SSitdikov\ATOL\Response
+ */
 class ReportResponse implements ResponseInterface
 {
 
-    const STATUS_DONE = 'done';
-    const STATUS_FAIL = 'fail';
-    const STATUS_WAIT = 'wait';
+    public const STATUS_DONE = 'done';
+    public const STATUS_FAIL = 'fail';
+    public const STATUS_WAIT = 'wait';
 
     /**
      * @var string
@@ -40,6 +46,10 @@ class ReportResponse implements ResponseInterface
      */
     private $callbackUrl;
 
+    /**
+     * ReportResponse constructor.
+     * @param \stdClass $json
+     */
     public function __construct(\stdClass $json)
     {
         $this->uuid = $json->uuid;
@@ -64,7 +74,7 @@ class ReportResponse implements ResponseInterface
     /**
      * @return null|ErrorResponse
      */
-    public function getError()
+    public function getError(): ?ErrorResponse
     {
         return $this->error;
     }

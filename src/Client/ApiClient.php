@@ -1,23 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SSitdikov\ATOL\Client;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
-use SSitdikov\ATOL\Request\CorrectionRequest;
-use SSitdikov\ATOL\Request\OperationRequest;
-use SSitdikov\ATOL\Request\ReportRequest;
-use SSitdikov\ATOL\Request\RequestInterface;
-use SSitdikov\ATOL\Request\TokenRequest;
-use SSitdikov\ATOL\Response\OperationResponse;
-use SSitdikov\ATOL\Response\ReportResponse;
-use SSitdikov\ATOL\Response\TokenResponse;
+use SSitdikov\ATOL\Request\{RequestInterface, CorrectionRequest, OperationRequest, ReportRequest, TokenRequest};
+use SSitdikov\ATOL\Response\{OperationResponse, ReportResponse, TokenResponse};
 
+/**
+ * Class ApiClient
+ * @package SSitdikov\ATOL\Client
+ */
 class ApiClient implements IClient
 {
-
     private $http;
 
+    /**
+     * ApiClient constructor.
+     * @param Client|null $client
+     */
     public function __construct(Client $client = null)
     {
         $this->http = $client;
@@ -26,6 +29,35 @@ class ApiClient implements IClient
                 'base_uri' => 'https://online.atol.ru/possystem/v3/',
             ]);
         }
+    }
+
+    /**
+     * @param RequestInterface $request
+     * @return string
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function makeRequest(RequestInterface $request): string
+    {
+        try {
+            $response = $this->http->request(
+                $request->getMethod(),
+                $request->getUrl(),
+                $request->getParams()
+            );
+
+            $message = $response->getBody()->getContents();
+        } catch (BadResponseException $exception) {
+            $message = $exception->getResponse()->getBody()->getContents();
+            \json_decode($message);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                $message = \json_encode([
+                    'text' => $exception->getResponse()->getReasonPhrase(),
+                    'code' => $exception->getCode(),
+                ]);
+            }
+        }
+
+        return $message;
     }
 
     /**
@@ -39,30 +71,6 @@ class ApiClient implements IClient
     public function getToken(TokenRequest $request): TokenResponse
     {
         return $request->getResponse(\json_decode($this->makeRequest($request)));
-    }
-
-    public function makeRequest(RequestInterface $request): string
-    {
-        try {
-            $response = $this->http->request(
-                $request->getMethod(),
-                $request->getUrl(),
-                $request->getParams()
-            );
-
-            return $response->getBody()->getContents();
-        } catch (BadResponseException $e) {
-            $response = $e->getResponse()->getBody()->getContents();
-            \json_decode($response);
-            if (json_last_error() === JSON_ERROR_NONE) {
-                return $response;
-            }
-
-            return \json_encode([
-                'text' => $e->getResponse()->getReasonPhrase(),
-                'code' => $e->getCode(),
-            ]);
-        }
     }
 
     /**

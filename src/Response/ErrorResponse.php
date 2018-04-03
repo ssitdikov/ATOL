@@ -1,7 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SSitdikov\ATOL\Response;
 
+/**
+ * Class ErrorResponse
+ * @package SSitdikov\ATOL\Response
+ */
 class ErrorResponse implements ResponseInterface
 {
 
@@ -20,6 +26,10 @@ class ErrorResponse implements ResponseInterface
      */
     private $type;
 
+    /**
+     * ErrorResponse constructor.
+     * @param \stdClass $json
+     */
     public function __construct(\stdClass $json)
     {
         $this->code = $json->code;

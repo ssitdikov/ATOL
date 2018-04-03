@@ -456,7 +456,7 @@ class OperationRequestTest extends TestCase
 
         $errorResponse = new ErrorResponse(
             \json_decode(
-                '{"code":"'.$code.'", "text":"'.$text.'", "type":"'.$type.'"}'
+                '{"code":'.$code.', "text":"'.$text.'", "type":"'.$type.'"}'
             )
         );
 

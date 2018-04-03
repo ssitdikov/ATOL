@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SSitdikov\ATOL\Request;
 
 use SSitdikov\ATOL\Exception\ErrorFactoryResponse;
@@ -16,8 +18,8 @@ use SSitdikov\ATOL\Response\TokenResponse;
 class CorrectionRequest implements RequestInterface
 {
 
-    const OPERATION_SELL_CORRECTION = 'sell_correction';
-    const OPERATION_BUY_CORRECTION = 'buy_correction';
+    public const OPERATION_SELL_CORRECTION = 'sell_correction';
+    public const OPERATION_BUY_CORRECTION = 'buy_correction';
 
     private $groupId;
     private $uuid;
@@ -26,6 +28,15 @@ class CorrectionRequest implements RequestInterface
     private $token;
     private $operation;
 
+    /**
+     * CorrectionRequest constructor.
+     * @param $groupId
+     * @param $operation
+     * @param $uuid
+     * @param Correction $correction
+     * @param Info $info
+     * @param TokenResponse $token
+     */
     public function __construct(
         $groupId,
         $operation,
@@ -42,11 +53,17 @@ class CorrectionRequest implements RequestInterface
         $this->token = $token->getToken();
     }
 
+    /**
+     * @return string
+     */
     public function getMethod(): string
     {
         return self::POST;
     }
 
+    /**
+     * @return array
+     */
     public function getParams(): array
     {
         return [
@@ -54,11 +71,14 @@ class CorrectionRequest implements RequestInterface
                 'timestamp' => date('d.m.Y H:i:s'),
                 'external_id' => $this->uuid,
                 'service' => $this->info,
-                'correction' => $this->correction,
-            ],
+                'correction' => $this->correction
+            ]
         ];
     }
 
+    /**
+     * @return string
+     */
     public function getUrl(): string
     {
         return $this->groupId.'/'.$this->operation.'?tokenid='.$this->token;

@@ -1,7 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SSitdikov\ATOL\Response;
 
+/**
+ * Class TokenResponse
+ * @package SSitdikov\ATOL\Response
+ */
 class TokenResponse implements ResponseInterface
 {
 
@@ -9,6 +15,10 @@ class TokenResponse implements ResponseInterface
     private $text;
     private $code;
 
+    /**
+     * TokenResponse constructor.
+     * @param \stdClass $json
+     */
     public function __construct(\stdClass $json)
     {
         $this->token = $json->token ?: '';

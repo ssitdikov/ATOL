@@ -1,7 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SSitdikov\ATOL\Object;
 
+/**
+ * Class Receipt
+ * @package SSitdikov\ATOL\Object
+ */
 class Receipt implements \JsonSerializable
 {
 
@@ -32,17 +38,20 @@ class Receipt implements \JsonSerializable
      */
     private $total = 0.0;
 
-    public function jsonSerialize()
+    /**
+     * @return array
+     */
+    public function jsonSerialize(): array
     {
         return [
             'attributes' => [
                 'sno' => $this->getSno(),
                 'email' => $this->getEmail(),
-                'phone' => $this->getPhone(),
+                'phone' => $this->getPhone()
             ],
             'items' => $this->getItems(),
             'total' => $this->getTotal(),
-            'payments' => $this->getPayments(),
+            'payments' => $this->getPayments()
         ];
     }
 
@@ -117,8 +126,8 @@ class Receipt implements \JsonSerializable
      */
     public function setItems(array $items): Receipt
     {
-        foreach ($items as $item) {
-            $this->addItem($item);
+        foreach ($items as $element) {
+            $this->addItem($element);
         }
 
         return $this;
@@ -151,7 +160,11 @@ class Receipt implements \JsonSerializable
         return $this->total;
     }
 
-    public function addItem(Item $item)
+    /**
+     * @param Item $item
+     * @return $this
+     */
+    public function addItem(Item $item): Receipt
     {
         $this->items[] = $item;
         $this->addTotal($item->getSum());
@@ -162,12 +175,16 @@ class Receipt implements \JsonSerializable
     /**
      * @param float $sum
      */
-    private function addTotal($sum)
+    private function addTotal($sum): void
     {
         $this->total += $sum;
     }
 
-    public function addPayment(Payment $payment)
+    /**
+     * @param Payment $payment
+     * @return $this
+     */
+    public function addPayment(Payment $payment): Receipt
     {
         $this->payments[] = $payment;
 
