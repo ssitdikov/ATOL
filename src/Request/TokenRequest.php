@@ -1,37 +1,40 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace SSitdikov\ATOL\Request;
 
-use SSitdikov\ATOL\Code\SuccessCode;
-use SSitdikov\ATOL\Exception\ErrorFactoryResponse;
+use SSitdikov\ATOL\Response\ResponseInterface;
 use SSitdikov\ATOL\Response\TokenResponse;
 
 /**
  * Class TokenRequest
+ *
  * @package SSitdikov\ATOL\Request
+ *
+ * @author Salavat Sitdikov <sitsalavat@gmail.com>
  */
 class TokenRequest implements RequestInterface
 {
     /**
-     * @var string
+     * @var string $login
      */
     private $login;
-    /**
-     * @var string
-     */
-    private $pass;
 
     /**
-     * GetTokenRequest constructor.
-     * @param $login
-     * @param $pass
+     * @var string $password
      */
-    public function __construct($login, $pass)
-    {
+    private $password;
+
+    /**
+     * TokenRequest constructor.
+     * @param string $login
+     * @param string $password
+     */
+    public function __construct(
+        string $login,
+        string $password
+    ) {
         $this->login = $login;
-        $this->pass = $pass;
+        $this->password = $password;
     }
 
     /**
@@ -39,7 +42,7 @@ class TokenRequest implements RequestInterface
      */
     public function getMethod(): string
     {
-        return self::POST;
+        return self::METHOD_POST;
     }
 
     /**
@@ -50,7 +53,7 @@ class TokenRequest implements RequestInterface
         return [
             'json' => [
                 'login' => $this->login,
-                'pass' => $this->pass
+                'pass' => $this->password
             ]
         ];
     }
@@ -66,17 +69,18 @@ class TokenRequest implements RequestInterface
     /**
      * @param $response
      * @return TokenResponse
+     *
      * @throws \Exception
      */
-    public function getResponse($response): TokenResponse
+    public function getResponse($response): ResponseInterface
     {
-        if (\in_array(
-            $response->code,
-            [SuccessCode::GET_TOKEN_CODE, SuccessCode::ISSUED_OLD_TOKEN_CODE],
-            false
-        )) {
-            return new TokenResponse($response);
+        if (isset($response->error)) {
+            throw new \Exception(
+                $response->error->text,
+                $response->error->code
+            );
         }
-        return ErrorFactoryResponse::getError($response->text, $response->code);
+        return new TokenResponse($response);
     }
+
 }

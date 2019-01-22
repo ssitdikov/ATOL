@@ -13,8 +13,8 @@ use SSitdikov\ATOL\Response\ResponseInterface;
 interface RequestInterface
 {
 
-    public const POST = 'POST';
-    public const GET = 'GET';
+    public const METHOD_POST = 'POST';
+    public const METHOD_GET = 'GET';
 
     /**
      * @return string
@@ -35,5 +35,5 @@ interface RequestInterface
      * @param $response
      * @return ResponseInterface
      */
-    public function getResponse($response);
+    public function getResponse($response): ResponseInterface;
 }

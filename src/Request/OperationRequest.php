@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace SSitdikov\ATOL\Request;
 
-use SSitdikov\ATOL\Code\ErrorCode;
-use SSitdikov\ATOL\Exception\ErrorFactoryResponse;
 use SSitdikov\ATOL\Object\Info;
 use SSitdikov\ATOL\Object\Receipt;
 use SSitdikov\ATOL\Response\OperationResponse;
+use SSitdikov\ATOL\Response\ResponseInterface;
 use SSitdikov\ATOL\Response\TokenResponse;
 
 /**
@@ -20,10 +19,10 @@ class OperationRequest implements RequestInterface
 
     public const OPERATION_SELL = 'sell';
     public const OPERATION_SELL_REFUND = 'sell_refund';
+    public const OPERATION_SELL_CORRECTION = 'sell_correction';
     public const OPERATION_BUY = 'buy';
     public const OPERATION_BUY_REFUND = 'buy_refund';
-
-    const UUID_TEXT_ID = "UUID=";
+    public const OPERATION_BUY_CORRECTION = 'buy_correction';
 
     private $groupId;
     private $uuid;
@@ -62,7 +61,7 @@ class OperationRequest implements RequestInterface
      */
     public function getMethod(): string
     {
-        return self::POST;
+        return self::METHOD_POST;
     }
 
     /**
@@ -85,40 +84,24 @@ class OperationRequest implements RequestInterface
      */
     public function getUrl(): string
     {
-        return $this->groupId.'/'.$this->operation.'?tokenid='.$this->token;
+        return $this->groupId.'/'.$this->operation.'?token='.$this->token;
     }
 
     /**
      * @param $response
      * @return OperationResponse
+     *
+     * @throws \Exception
      */
-    public function getResponse($response): OperationResponse
+    public function getResponse($response): ResponseInterface
     {
-        if (null !== $response->error) {
-            ErrorFactoryResponse::getError($this->getErrorMessage($response), $response->error->code);
+        if (isset($response->error)) {
+            throw new \Exception(
+                $response->error->text,
+                $response->error->code
+            );
         }
 
         return new OperationResponse($response);
-    }
-
-    /**
-     * @param $response
-     * @return string
-     */
-    private function getErrorMessage($response)
-    {
-        $message = null;
-        if ($response->error->code != ErrorCode::ERROR_INCOMING_EXIST_EXTERNAL_ID) {
-            $message = $response->error->text;
-        }
-
-        if (!$response->uuid) {
-            $message = $response->error->text;
-        }
-
-        return $message ?: implode(' ', [
-            $response->error->text,
-            self::UUID_TEXT_ID.$response->uuid,
-        ]);
     }
 }

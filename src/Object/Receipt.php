@@ -39,15 +39,42 @@ class Receipt implements \JsonSerializable
     private $total = 0.0;
 
     /**
+     * @var array
+     */
+    private $vats = [];
+
+    /**
+     * @var string
+     */
+    private $inn = '';
+
+    /**
+     * @var string
+     */
+    private $companyEmail = '';
+
+    /**
+     * @var string
+     */
+    private $paymentAddress = '';
+
+
+
+    /**
      * @return array
      */
     public function jsonSerialize(): array
     {
         return [
-            'attributes' => [
-                'sno' => $this->getSno(),
+            'client' => [
                 'email' => $this->getEmail(),
                 'phone' => $this->getPhone()
+            ],
+            'company' => [
+                'email' => $this->getCompanyEmail(),
+                'sno' => $this->getSno(),
+                'inn' => $this->getInn(),
+                'payment_address' => $this->getPaymentAddress()
             ],
             'items' => $this->getItems(),
             'total' => $this->getTotal(),
@@ -158,6 +185,60 @@ class Receipt implements \JsonSerializable
     public function getTotal(): float
     {
         return $this->total;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInn(): string
+    {
+        return $this->inn;
+    }
+
+    /**
+     * @param string $inn
+     *
+     * @return Receipt
+     */
+    public function setInn(string $inn): self
+    {
+        $this->inn = $inn;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCompanyEmail(): string
+    {
+        return $this->companyEmail;
+    }
+
+    /**
+     * @param string $companyEmail
+     */
+    public function setCompanyEmail(string $companyEmail): void
+    {
+        $this->companyEmail = $companyEmail;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentAddress(): string
+    {
+        return $this->paymentAddress;
+    }
+
+    /**
+     * @param string $paymentAddress
+     *
+     * @return Receipt
+     */
+    public function setPaymentAddress(string $paymentAddress): self
+    {
+        $this->paymentAddress = $paymentAddress;
+        return $this;
     }
 
     /**

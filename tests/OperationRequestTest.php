@@ -114,10 +114,15 @@ class OperationRequestTest extends TestCase
 
         $this->assertEquals(
             [
-                'attributes' => [
-                    'sno' => ReceiptSno::RECEIPT_SNO_USN_INCOME,
+                'client' => [
                     'email' => $email,
                     'phone' => $phone,
+                ],
+                'company' => [
+                    'sno' => ReceiptSno::RECEIPT_SNO_USN_INCOME,
+                    'inn' => $receipt->getInn(),
+                    'email' => $receipt->getCompanyEmail(),
+                    'payment_address' => $receipt->getPaymentAddress()
                 ],
                 'items' => [$item],
                 'total' => $payment->getSum(),
@@ -171,7 +176,7 @@ class OperationRequestTest extends TestCase
         $uuid = random_int(1, 100);
         $operationType = OperationRequest::OPERATION_SELL;
         $token = new TokenResponse(
-            json_decode('{"code":0, "text":null, "token": "'.md5($uuid).'"}')
+            json_decode('{"error":null, "timestamp":"", "token": "'.md5($uuid).'"}')
         );
         $operation = new OperationRequest(
             $groupId,
@@ -181,9 +186,9 @@ class OperationRequestTest extends TestCase
             $info,
             $token
         );
-        $this->assertEquals(RequestInterface::POST, $operation->getMethod());
+        $this->assertEquals(RequestInterface::METHOD_POST, $operation->getMethod());
         $this->assertEquals(
-            $groupId.'/'.$operationType.'?tokenid='.$token->getToken(),
+            $groupId.'/'.$operationType.'?token='.$token->getToken(),
             $operation->getUrl()
         );
         $this->assertEquals(
@@ -226,255 +231,5 @@ class OperationRequestTest extends TestCase
         );
         $this->isNull();
         $request->getResponse($response)->getError();
-    }
-
-    /**
-     * @test
-     * @depends doOperation
-     */
-    public function getError(OperationRequest $request)
-    {
-        $uuid = md5(time());
-        $timestamp = date('Y-m-d H:i:s');
-        $status = 'fail';
-
-        $response = \json_decode(
-            '{"uuid":"'.$uuid.'", "error": {"code":"1", "text":"", "type":""} , "status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
-        );
-
-        $this->expectException(ErrorException::class);
-        $request->getResponse($response);
-    }
-
-    /**
-     * @test
-     * @depends doOperation
-     */
-    public function getErrorIncomingBadRequest(OperationRequest $request)
-    {
-        $uuid = md5(time());
-        $timestamp = date('Y-m-d H:i:s');
-        $status = 'fail';
-
-        $response = \json_decode(
-            '{"uuid":"'.$uuid.'", "error": {"code":"2", "text":"", "type":""} , "status":"'.$status.
-            '", "timestamp":"'.$timestamp.'"}'
-        );
-
-        $this->expectException(ErrorIncomingBadRequestException::class);
-        $request->getResponse($response);
-    }
-
-    /**
-     * @test
-     * @depends doOperation
-     */
-    public function getErrorIncomingOperationNotSupport(
-        OperationRequest $request
-    ) {
-        $uuid = md5(time());
-        $timestamp = date('Y-m-d H:i:s');
-        $status = 'fail';
-
-        $response = \json_decode(
-            '{"uuid":"'.$uuid.'", "error": {"code":"3", "text":"", "type":""} , "status":"'.$status.
-            '", "timestamp":"'.$timestamp.'"}'
-        );
-
-        $this->expectException(
-            ErrorIncomingOperationNotSupportException::class
-        );
-        $request->getResponse($response);
-    }
-
-    /**
-     * @test
-     * @depends doOperation
-     */
-    public function getErrorIncomingMissingToken(OperationRequest $request)
-    {
-        $uuid = md5(time());
-        $timestamp = date('Y-m-d H:i:s');
-        $status = 'fail';
-
-        $response = \json_decode(
-            '{"uuid":"'.$uuid.'", "error": {"code":"4", "text":"", "type":""}' .
-            ', "status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
-        );
-
-        $this->expectException(ErrorIncomingMissingTokenException::class);
-        $request->getResponse($response);
-    }
-
-    /**
-     * @test
-     * @depends doOperation
-     */
-    public function getErrorIncomingNotExistToken(OperationRequest $request)
-    {
-        $uuid = md5(time());
-        $timestamp = date('Y-m-d H:i:s');
-        $status = 'fail';
-
-        $response = \json_decode(
-            '{"uuid":"'.$uuid.'", "error": {"code":"5", "text":"", "type":""} ,' .
-            '"status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
-        );
-
-        $this->expectException(ErrorIncomingNotExistTokenException::class);
-        $request->getResponse($response);
-    }
-
-    /**
-     * @test
-     * @depends doOperation
-     */
-    public function getErrorIncomingExpiredToken(OperationRequest $request)
-    {
-        $uuid = md5(time());
-        $timestamp = date('Y-m-d H:i:s');
-        $status = 'fail';
-
-        $response = \json_decode(
-            '{"uuid":"'.$uuid.'", "error": {"code":"6", "text":"", "type":""} ,' .
-            '"status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
-        );
-
-        $this->expectException(ErrorIncomingExpiredTokenException::class);
-        $request->getResponse($response);
-    }
-
-    /**
-     * @test
-     * @depends doOperation
-     */
-    public function getErrorIncomingExistExternalId(OperationRequest $request)
-    {
-        $uuid = md5(time());
-        $timestamp = date('Y-m-d H:i:s');
-        $status = 'fail';
-
-        $response = \json_decode(
-            '{"uuid":"'.$uuid.'", "error": {"code":"10", "text":"", "type":""} ,' .
-            '"status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
-        );
-
-        $this->expectException(ErrorIncomingExistExternalIdException::class);
-        $request->getResponse($response);
-    }
-
-    /**
-     * @test
-     * @depends doOperation
-     */
-    public function getErrorIncomingExistExternalIdWithoutUUID(OperationRequest $request)
-    {
-        $uuid = 0;
-        $timestamp = date('Y-m-d H:i:s');
-        $status = 'fail';
-
-        $response = \json_decode(
-            '{"uuid":"'.$uuid.'", "error": {"code":"10", "text":"", "type":""} ,' .
-            '"status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
-        );
-
-        $this->expectException(ErrorIncomingExistExternalIdException::class);
-        $request->getResponse($response);
-    }
-
-    /**
-     * @test
-     * @depends doOperation
-     */
-    public function getErrorGroupCodeToToken(OperationRequest $request)
-    {
-        $uuid = md5(time());
-        $timestamp = date('Y-m-d H:i:s');
-        $status = 'fail';
-
-        $response = \json_decode(
-            '{"uuid":"'.$uuid.'", "error": {"code":"22", "text":"", "type":""} ,' .
-            '"status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
-        );
-
-        $this->expectException(ErrorGroupCodeToTokenException::class);
-        $request->getResponse($response);
-    }
-
-    /**
-     * @test
-     * @depends doOperation
-     */
-    public function getErrorIsNullExternalId(OperationRequest $request)
-    {
-        $uuid = md5(time());
-        $timestamp = date('Y-m-d H:i:s');
-        $status = 'fail';
-
-        $response = \json_decode(
-            '{"uuid":"'.$uuid.'", "error": {"code":"23", "text":"", "type":""} ,' .
-            '"status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
-        );
-
-        $this->expectException(ErrorIsNullExternalIdException::class);
-        $request->getResponse($response);
-    }
-
-    /**
-     * @test
-     * @depends doOperation
-     */
-    public function getException(OperationRequest $request)
-    {
-        $uuid = md5(time());
-        $timestamp = date('Y-m-d H:i:s');
-        $status = 'fail';
-
-        $response = \json_decode(
-            '{"uuid":"'.$uuid.'", "error": {"code":"400", "text":"", "type":""} ,' .
-            '"status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
-        );
-
-        $this->expectException(\Exception::class);
-        $request->getResponse($response);
-    }
-
-    /**
-     * @test
-     * @depends doOperation
-     */
-    public function getErrorUndefined(OperationRequest $request)
-    {
-        $uuid = md5(time());
-        $timestamp = date('Y-m-d H:i:s');
-        $status = 'fail';
-
-        $response = \json_decode(
-            '{"uuid":"'.$uuid.'", "error": {"code":"26", "text":"", "type":""} ,' .
-            '"status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
-        );
-
-        $this->expectException(ErrorUndefinedException::class);
-        $request->getResponse($response);
-    }
-
-    /**
-     * @test
-     */
-    public function getErrorResponse()
-    {
-        $code = 400;
-        $type = 'system';
-        $text = 'test text';
-
-        $errorResponse = new ErrorResponse(
-            \json_decode(
-                '{"code":'.$code.', "text":"'.$text.'", "type":"'.$type.'"}'
-            )
-        );
-
-        $this->assertEquals($code, $errorResponse->getCode());
-        $this->assertEquals($text, $errorResponse->getText());
-        $this->assertEquals($type, $errorResponse->getType());
     }
 }

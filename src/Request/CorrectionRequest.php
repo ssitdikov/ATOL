@@ -8,6 +8,7 @@ use SSitdikov\ATOL\Exception\ErrorFactoryResponse;
 use SSitdikov\ATOL\Object\Correction;
 use SSitdikov\ATOL\Object\Info;
 use SSitdikov\ATOL\Response\OperationResponse;
+use SSitdikov\ATOL\Response\ResponseInterface;
 use SSitdikov\ATOL\Response\TokenResponse;
 
 /**
@@ -88,12 +89,8 @@ class CorrectionRequest implements RequestInterface
      * @param $response
      * @return OperationResponse
      */
-    public function getResponse($response): OperationResponse
+    public function getResponse($response): ResponseInterface
     {
-        if (null !== $response->error) {
-            ErrorFactoryResponse::getError($response->error->text, $response->error->code);
-        }
-
         return new OperationResponse($response);
     }
 }

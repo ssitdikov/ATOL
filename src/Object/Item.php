@@ -17,6 +17,8 @@ class Item implements \JsonSerializable
     public const TAX_VAT18 = 'vat18';
     public const TAX_VAT110 = 'vat110';
     public const TAX_VAT118 = 'vat118';
+    public const TAX_VAT20 = 'vat20';
+    public const TAX_VAT120 = 'vat120';
 
     private $sum = 0.0;
     private $tax = 'none';
@@ -146,6 +148,12 @@ class Item implements \JsonSerializable
                 break;
             case (self::TAX_VAT18):
                 $this->setTaxSum($this->getPrice() * $this->getQuantity() * 0.18);
+                break;
+            case (self::TAX_VAT20):
+                $this->setTaxSum($this->getPrice() * $this->getQuantity() * 0.2);
+                break;
+            case (self::TAX_VAT120):
+                $this->setTaxSum($this->getPrice() * $this->getQuantity() * 20 / 120);
                 break;
             case (self::TAX_VAT0):
             case (self::TAX_NONE):

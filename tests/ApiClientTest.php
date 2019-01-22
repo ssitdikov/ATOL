@@ -42,7 +42,7 @@ class ApiClientTest extends TestCase
             ->getMock();
 
         $apiMock->expects($this->once())->method('makeRequest')->willReturn(
-            '{"code":"", "text":"", "token":"token"}'
+            '{"error":null, "timestamp":"", "token":"token"}'
         );
 
         $response = $apiMock->makeRequest(
@@ -61,7 +61,7 @@ class ApiClientTest extends TestCase
         $client = $this->getMockBuilder(Client::class)->getMock();
 
         $token = md5(time());
-        $response = new Response(200, [], '{"code":0, "text":"", "token":"' . $token . '"}');
+        $response = new Response(200, [], '{"error":null, "timestamp":"", "token":"' . $token . '"}');
         $client->expects($this->once())
             ->method('request')->willReturn($response);
 
@@ -97,40 +97,9 @@ class ApiClientTest extends TestCase
             '',
             new Receipt(),
             new Info('', '', ''),
-            new TokenResponse(\json_decode('{"code":0, "text":"", "token":"token"}'))
+            new TokenResponse(\json_decode('{"error":null, "timestamp":"", "token":"token"}'))
         );
         $operationResponse = $api->doOperation($request);
-
-        $this->assertEquals($uuid, $operationResponse->getUuid());
-    }
-
-    /**
-     * @test
-     */
-    public function doCorrection()
-    {
-        $client = $this->getMockBuilder(Client::class)->getMock();
-
-        $uuid = md5(time());
-        $response = new Response(
-            200,
-            [],
-            '{"uuid":"'.$uuid.'", "error":null, "status":"", "timestamp":""}'
-        );
-        $client->expects($this->once())
-            ->method('request')->willReturn($response);
-
-        $api = new ApiClient($client);
-
-        $request = new CorrectionRequest(
-            '',
-            '',
-            '',
-            new Correction(),
-            new Info('', '', ''),
-            new TokenResponse(\json_decode('{"code":0, "text":"", "token":"token"}'))
-        );
-        $operationResponse = $api->doCorrection($request);
 
         $this->assertEquals($uuid, $operationResponse->getUuid());
     }
@@ -157,7 +126,7 @@ class ApiClientTest extends TestCase
         $request = new ReportRequest(
             '',
             '',
-            new TokenResponse(\json_decode('{"code":0, "text":"", "token":"token"}'))
+            new TokenResponse(\json_decode('{"error":null, "timestamp":"", "token":"token"}'))
         );
 
         $report = $api->getReport($request);
@@ -171,7 +140,7 @@ class ApiClientTest extends TestCase
     public function getClientException()
     {
         $mock = new MockHandler([
-            new RequestException('', new Request('', ''))
+            new \Exception()
         ]);
         $handler = HandlerStack::create($mock);
 
@@ -180,7 +149,7 @@ class ApiClientTest extends TestCase
         $api = new ApiClient($client);
 
         $request = new TokenRequest('', '');
-        $this->expectException(RequestException::class);
+        $this->expectException(\Exception::class);
         $api->makeRequest($request);
     }
 
@@ -193,12 +162,12 @@ class ApiClientTest extends TestCase
 
 
         $client->expects($this->once())
-            ->method('request')->willThrowException(new ErrorAuthBadRequestException());
+            ->method('request')->willThrowException(new \Exception());
 
         $api = new ApiClient($client);
 
         $request = new TokenRequest('', '');
-        $this->expectException(ErrorAuthBadRequestException::class);
+        $this->expectException(\Exception::class);
         $api->makeRequest($request);
     }
 
@@ -237,7 +206,7 @@ class ApiClientTest extends TestCase
             ->method('request')->willThrowException(new BadResponseException(
                 '',
                 new Request('', ''),
-                new Response(400, [], '{"code":1, "text":"", "token":"token"}')
+                new Response(400, [], '{"error":{"code":1,"text":"text"}, "timestamp":"", "token":"token"}')
             ));
 
         $api = new ApiClient($client);
@@ -246,8 +215,8 @@ class ApiClientTest extends TestCase
                 new TokenRequest('login', 'password')
             );
             $this->assertEquals('token', $token->getToken());
-        } catch (BadResponseException $e) {
-            $this->assertEquals('text', $e->getResponse()->getBody()->getContents());
+        } catch (\Exception $e) {
+            $this->assertEquals('text', $e->getMessage());
         }
     }
 }
