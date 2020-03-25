@@ -200,6 +200,9 @@ class OperationRequestTest extends TestCase
                     'service'     => $info,
                     'timestamp'   => date('d.m.Y H:i:s'),
                 ],
+                'headers' => [
+                    'Token' => $token->getToken(),
+                ],
             ],
             $operation->getParams()
         );
