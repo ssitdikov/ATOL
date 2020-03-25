@@ -15,6 +15,11 @@ class ErrorResponse implements ResponseInterface
 {
 
     /**
+     * @var string
+     */
+    private $error_id;
+
+    /**
      * @var int
      */
     private $code;
@@ -29,6 +34,7 @@ class ErrorResponse implements ResponseInterface
      */
     private $type;
 
+
     /**
      * ErrorResponse constructor.
      *
@@ -36,10 +42,21 @@ class ErrorResponse implements ResponseInterface
      */
     public function __construct(stdClass $json)
     {
+        $this->error_id = $json->error_id;
         $this->code = $json->code;
         $this->text = $json->text;
         $this->type = $json->type;
     }
+
+
+    /**
+     * @return string
+     */
+    public function getErrorId(): string
+    {
+        return $this->error_id;
+    }
+
 
     /**
      * @return int
@@ -49,6 +66,7 @@ class ErrorResponse implements ResponseInterface
         return $this->code;
     }
 
+
     /**
      * @return string
      */
@@ -56,6 +74,7 @@ class ErrorResponse implements ResponseInterface
     {
         return $this->text;
     }
+
 
     /**
      * @return string

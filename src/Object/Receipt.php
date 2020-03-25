@@ -8,6 +8,7 @@ use JsonSerializable;
 
 /**
  * Class Receipt.
+ *  «Приход», «Возврат прихода», «Расход», «Возврат расхода»
  *
  * @package SSitdikov\ATOL\Object
  */
@@ -61,6 +62,99 @@ class Receipt implements JsonSerializable
      */
     private $paymentAddress = '';
 
+    /**
+     * ФИО кассира.
+     * Максимальная длина строки – 64 символа.
+     *
+     * @var string
+     */
+    private $cashier = '';
+
+    /**
+     * Дополнительный реквизит пользователя
+     *
+     * @var UserProp
+     */
+    private $additional_user_props;
+
+    /**
+     * Дополнительный реквизит чека.
+     * Максимальная длина строки – 16 символов.
+     *
+     * @var string
+     */
+    private $additional_check_props;
+
+
+    /**
+     * @return UserProp
+     */
+    public function getAdditionalUserProps(): UserProp
+    {
+        return $this->additional_user_props;
+    }
+
+
+    /**
+     * @param string $name
+     * @param string $value
+     */
+    public function setAdditionalUserProps(string $name, string $value): void
+    {
+        $this->additional_user_props = new UserProp($name, $value);
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getAdditionalCheckProps(): string
+    {
+        return $this->additional_check_props;
+    }
+
+
+    /**
+     * @param string $additional_check_props
+     */
+    public function setAdditionalCheckProps(string $additional_check_props): void
+    {
+        $this->additional_check_props = $additional_check_props;
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getVats(): array
+    {
+        return $this->vats;
+    }
+
+
+    /**
+     * @param array $vats
+     *
+     * @return Receipt
+     */
+    public function setVats(array $vats): self
+    {
+        $this->vats = $vats;
+        return $this;
+    }
+
+
+    /**
+     * @param $vat
+     *
+     * @return Receipt
+     */
+    public function addVat($vat): self
+    {
+        $this->vats[] = $vat;
+        return $this;
+    }
+
 
     /**
      * @return array
@@ -81,8 +175,10 @@ class Receipt implements JsonSerializable
             'items'    => $this->getItems(),
             'total'    => $this->getTotal(),
             'payments' => $this->getPayments(),
+            'cashier ' => $this->getCashier(),
         ];
     }
+
 
     /**
      * @return string
@@ -92,6 +188,7 @@ class Receipt implements JsonSerializable
         return $this->email;
     }
 
+
     /**
      * @param string $email
      *
@@ -100,9 +197,9 @@ class Receipt implements JsonSerializable
     public function setEmail(string $email): Receipt
     {
         $this->email = $email;
-
         return $this;
     }
+
 
     /**
      * @return string
@@ -112,6 +209,7 @@ class Receipt implements JsonSerializable
         return $this->phone;
     }
 
+
     /**
      * @param string $phone
      *
@@ -120,9 +218,9 @@ class Receipt implements JsonSerializable
     public function setPhone(string $phone): Receipt
     {
         $this->phone = $phone;
-
         return $this;
     }
+
 
     /**
      * @return string
@@ -131,6 +229,7 @@ class Receipt implements JsonSerializable
     {
         return $this->companyEmail;
     }
+
 
     /**
      * @param string $companyEmail
@@ -143,6 +242,7 @@ class Receipt implements JsonSerializable
         return $this;
     }
 
+
     /**
      * @return string
      */
@@ -150,6 +250,7 @@ class Receipt implements JsonSerializable
     {
         return $this->sno;
     }
+
 
     /**
      * @param string $sno
@@ -159,9 +260,9 @@ class Receipt implements JsonSerializable
     public function setSno(string $sno): Receipt
     {
         $this->sno = $sno;
-
         return $this;
     }
+
 
     /**
      * @return string
@@ -170,6 +271,7 @@ class Receipt implements JsonSerializable
     {
         return $this->inn;
     }
+
 
     /**
      * @param string $inn
@@ -182,6 +284,7 @@ class Receipt implements JsonSerializable
         return $this;
     }
 
+
     /**
      * @return string
      */
@@ -189,6 +292,7 @@ class Receipt implements JsonSerializable
     {
         return $this->paymentAddress;
     }
+
 
     /**
      * @param string $paymentAddress
@@ -201,6 +305,7 @@ class Receipt implements JsonSerializable
         return $this;
     }
 
+
     /**
      * @return array
      */
@@ -208,6 +313,7 @@ class Receipt implements JsonSerializable
     {
         return $this->items;
     }
+
 
     /**
      * @param array $items
@@ -223,6 +329,7 @@ class Receipt implements JsonSerializable
         return $this;
     }
 
+
     /**
      * @return float
      */
@@ -230,6 +337,7 @@ class Receipt implements JsonSerializable
     {
         return $this->total;
     }
+
 
     /**
      * @return array
@@ -239,6 +347,7 @@ class Receipt implements JsonSerializable
         return $this->payments;
     }
 
+
     /**
      * @param array $payments
      *
@@ -247,9 +356,33 @@ class Receipt implements JsonSerializable
     public function setPayments(array $payments): Receipt
     {
         $this->payments = $payments;
-
         return $this;
     }
+
+
+    /**
+     * @return string
+     */
+    public function getCashier(): string
+    {
+        return $this->cashier;
+    }
+
+
+    /**
+     * ФИО кассира.
+     * Максимальная длина строки – 64 символа.
+     *
+     * @param string $cashier
+     *
+     * @return Receipt
+     */
+    public function setCashier(string $cashier): self
+    {
+        $this->cashier = mb_substr($cashier, 64);
+        return $this;
+    }
+
 
     /**
      * @param Item $item
@@ -264,6 +397,7 @@ class Receipt implements JsonSerializable
         return $this;
     }
 
+
     /**
      * @param float $sum
      */
@@ -271,6 +405,7 @@ class Receipt implements JsonSerializable
     {
         $this->total += $sum;
     }
+
 
     /**
      * @param Payment $payment

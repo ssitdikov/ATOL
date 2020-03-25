@@ -27,6 +27,7 @@ class TokenRequest implements RequestInterface
      */
     private $password;
 
+
     /**
      * TokenRequest constructor.
      *
@@ -42,6 +43,7 @@ class TokenRequest implements RequestInterface
         $this->password = $password;
     }
 
+
     /**
      * @return string
      */
@@ -49,6 +51,7 @@ class TokenRequest implements RequestInterface
     {
         return self::METHOD_POST;
     }
+
 
     /**
      * @return array
@@ -63,6 +66,7 @@ class TokenRequest implements RequestInterface
         ];
     }
 
+
     /**
      * @return string
      */
@@ -70,6 +74,7 @@ class TokenRequest implements RequestInterface
     {
         return 'getToken/';
     }
+
 
     /**
      * @param $response

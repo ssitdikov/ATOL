@@ -139,34 +139,58 @@ class Item implements JsonSerializable
      */
     public const PAYMENT_METHOD_CREDIT_PAYMENT = 'credit_payment';
 
+    /**
+     * @deprecated
+     */
     public const TAX_NONE = 'none';
+    /**
+     * @deprecated
+     */
     public const TAX_VAT0 = 'vat0';
+    /**
+     * @deprecated
+     */
     public const TAX_VAT10 = 'vat10';
+    /**
+     * @deprecated
+     */
     public const TAX_VAT18 = 'vat18';
+    /**
+     * @deprecated
+     */
     public const TAX_VAT110 = 'vat110';
+    /**
+     * @deprecated
+     */
     public const TAX_VAT118 = 'vat118';
 
     private $sum = 0.0;
+
     private $tax = 'none';
+
     private $taxSum = 0.0;
+
     private $name = '';
+
     private $price = 0.0;
+
     private $quantity = 1.0;
 
     /**
-     * @var string $payment_object Признак предмета расчета
+     * @var string Признак предмета расчета
      */
     private $payment_object = 'commodity';
 
     /**
-     * @var string $payment_method Признак способа расчета
+     * @var string Признак способа расчета
      */
     private $payment_method = 'full_prepayment';
 
     /**
-     * @var string $measurement_unit Единица измерения предмета расчета
+     * @var string Единица измерения предмета расчета
      */
     private $measurement_unit = 'шт.';
+
 
     /**
      * Продаваемый товар по чеку.
@@ -189,6 +213,7 @@ class Item implements JsonSerializable
         $this->setPaymentMethod($payment_method);
     }
 
+
     /**
      * @return array
      */
@@ -207,6 +232,7 @@ class Item implements JsonSerializable
         ];
     }
 
+
     /**
      * @return string
      */
@@ -214,6 +240,7 @@ class Item implements JsonSerializable
     {
         return $this->name;
     }
+
 
     /**
      * @param string $name
@@ -223,6 +250,7 @@ class Item implements JsonSerializable
         $this->name = $name;
     }
 
+
     /**
      * @return float
      */
@@ -230,6 +258,7 @@ class Item implements JsonSerializable
     {
         return $this->price;
     }
+
 
     /**
      * @param float $price
@@ -239,6 +268,7 @@ class Item implements JsonSerializable
         $this->price = $price;
     }
 
+
     /**
      * @return float
      */
@@ -246,6 +276,7 @@ class Item implements JsonSerializable
     {
         return $this->quantity;
     }
+
 
     /**
      * @param float $quantity
@@ -255,6 +286,7 @@ class Item implements JsonSerializable
         $this->quantity = $quantity;
     }
 
+
     /**
      * @return float
      */
@@ -262,6 +294,7 @@ class Item implements JsonSerializable
     {
         return $this->sum;
     }
+
 
     /**
      * @param float $sum
@@ -271,6 +304,7 @@ class Item implements JsonSerializable
         $this->sum = $sum;
     }
 
+
     /**
      * @return string
      */
@@ -279,6 +313,7 @@ class Item implements JsonSerializable
         return $this->tax;
     }
 
+
     /**
      * @param string $tax
      */
@@ -286,24 +321,31 @@ class Item implements JsonSerializable
     {
         $this->tax = $tax;
         switch ($tax) {
-            case (self::TAX_VAT110):
+            case (Vat::TAX_VAT110):
                 $this->setTaxSum($this->getPrice() * $this->getQuantity() * 10 / 110);
                 break;
-            case (self::TAX_VAT118):
+            case (Vat::TAX_VAT118):
                 $this->setTaxSum($this->getPrice() * $this->getQuantity() * 18 / 118);
                 break;
-            case (self::TAX_VAT10):
+            case (Vat::TAX_VAT10):
                 $this->setTaxSum($this->getPrice() * $this->getQuantity() * 0.1);
                 break;
-            case (self::TAX_VAT18):
+            case (Vat::TAX_VAT18):
                 $this->setTaxSum($this->getPrice() * $this->getQuantity() * 0.18);
                 break;
-            case (self::TAX_VAT0):
-            case (self::TAX_NONE):
+            case (Vat::TAX_VAT20):
+                $this->setTaxSum($this->getPrice() * $this->getQuantity() * 0.2);
+                break;
+            case (Vat::TAX_VAT120):
+                $this->setTaxSum($this->getPrice() * $this->getQuantity() * 20 / 120);
+                break;
+            case (Vat::TAX_VAT0):
+            case (Vat::TAX_NONE):
             default:
                 $this->setTaxSum(0);
         }
     }
+
 
     /**
      * @return float
@@ -313,6 +355,7 @@ class Item implements JsonSerializable
         return $this->taxSum;
     }
 
+
     /**
      * @param float $taxSum
      */
@@ -320,6 +363,7 @@ class Item implements JsonSerializable
     {
         $this->taxSum = round($taxSum, 2);
     }
+
 
     /**
      * @return string
@@ -329,6 +373,7 @@ class Item implements JsonSerializable
         return $this->payment_object;
     }
 
+
     /**
      * @param string $payment_object
      */
@@ -336,6 +381,7 @@ class Item implements JsonSerializable
     {
         $this->payment_object = $payment_object;
     }
+
 
     /**
      * @return string
@@ -345,6 +391,7 @@ class Item implements JsonSerializable
         return $this->payment_method;
     }
 
+
     /**
      * @param string $payment_method
      */
@@ -353,6 +400,7 @@ class Item implements JsonSerializable
         $this->payment_method = $payment_method;
     }
 
+
     /**
      * @return string
      */
@@ -360,6 +408,7 @@ class Item implements JsonSerializable
     {
         return $this->measurement_unit;
     }
+
 
     /**
      * @param string $measurement_unit

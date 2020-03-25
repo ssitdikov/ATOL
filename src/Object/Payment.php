@@ -33,6 +33,7 @@ class Payment implements JsonSerializable
      */
     private $sum = 0.0;
 
+
     /**
      * Payment constructor.
      *
@@ -45,6 +46,7 @@ class Payment implements JsonSerializable
         $this->setSum($sum);
     }
 
+
     /**
      * @return array
      */
@@ -56,6 +58,7 @@ class Payment implements JsonSerializable
         ];
     }
 
+
     /**
      * @return float
      */
@@ -63,6 +66,7 @@ class Payment implements JsonSerializable
     {
         return $this->sum;
     }
+
 
     /**
      * @param float $sum
@@ -72,6 +76,7 @@ class Payment implements JsonSerializable
         $this->sum = $sum;
     }
 
+
     /**
      * @return int
      */
@@ -79,6 +84,7 @@ class Payment implements JsonSerializable
     {
         return $this->type;
     }
+
 
     /**
      * @param int $type

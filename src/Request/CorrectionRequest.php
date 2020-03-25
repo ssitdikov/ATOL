@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SSitdikov\ATOL\Request;
 
-use SSitdikov\ATOL\Exception\ErrorFactoryResponse;
+use Exception;
 use SSitdikov\ATOL\Object\Correction;
 use SSitdikov\ATOL\Object\Info;
 use SSitdikov\ATOL\Response\OperationResponse;
@@ -15,20 +15,22 @@ use SSitdikov\ATOL\Response\TokenResponse;
  * Class CorrectionRequest.
  *
  * @package SSitdikov\ATOL\Request
- * @deprecated
  */
 class CorrectionRequest implements RequestInterface
 {
 
-    public const OPERATION_SELL_CORRECTION = 'sell_correction';
-    public const OPERATION_BUY_CORRECTION = 'buy_correction';
-
     private $groupId;
+
     private $uuid;
+
     private $info;
+
     private $correction;
+
     private $token;
+
     private $operation;
+
 
     /**
      * CorrectionRequest constructor.
@@ -57,13 +59,15 @@ class CorrectionRequest implements RequestInterface
         $this->token = $token->getToken();
     }
 
+
     /**
      * @return string
      */
     public function getMethod(): string
     {
-        return self::POST;
+        return self::METHOD_POST;
     }
+
 
     /**
      * @return array
@@ -71,14 +75,18 @@ class CorrectionRequest implements RequestInterface
     public function getParams(): array
     {
         return [
-            'json' => [
+            'json'    => [
                 'timestamp'   => date('d.m.Y H:i:s'),
                 'external_id' => $this->uuid,
                 'service'     => $this->info,
                 'correction'  => $this->correction,
             ],
+            'headers' => [
+                'Token' => $this->token,
+            ],
         ];
     }
+
 
     /**
      * @return string
@@ -88,13 +96,21 @@ class CorrectionRequest implements RequestInterface
         return $this->groupId . '/' . $this->operation . '?tokenid=' . $this->token;
     }
 
+
     /**
      * @param $response
      *
+     * @throws Exception
      * @return OperationResponse
      */
     public function getResponse($response): ResponseInterface
     {
+        if (isset($response->error) && (int)$response->error->code !== 33) {
+            throw new Exception(
+                $response->error->text,
+                $response->error->code
+            );
+        }
         return new OperationResponse($response);
     }
 }

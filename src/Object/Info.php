@@ -14,9 +14,21 @@ use JsonSerializable;
 class Info implements JsonSerializable
 {
 
+    /**
+     * @var string
+     */
     private $inn = '';
+
+    /**
+     * @var string
+     */
     private $paymentAddress = '';
+
+    /**
+     * @var string URL, на который необходимо ответить после обработки документ
+     */
     private $callbackUrl = '';
+
 
     /**
      * Сервисная часть чека, включает в себя ИНН, адрес сайта и callback_url (на него приходят POST, если указано).
@@ -34,6 +46,7 @@ class Info implements JsonSerializable
         }
     }
 
+
     /**
      * @return array
      */
@@ -46,6 +59,7 @@ class Info implements JsonSerializable
         ];
     }
 
+
     /**
      * @return string
      */
@@ -54,13 +68,21 @@ class Info implements JsonSerializable
         return $this->callbackUrl;
     }
 
+
     /**
      * @param string $callbackUrl
+     *
+     * @return Info
      */
-    public function setCallbackUrl(string $callbackUrl): void
+    public function setCallbackUrl(string $callbackUrl): self
     {
+        // TODO
+        //  Корректность заполненного поля определяется по регулярному выражению
+        //  ^http(s?)\:\/\/[0-9a-zA-Zа-яА-Я]([-.\w]*[0-9a-zA-Zа-яА-Я])*(:(0-9)*)*(\/?)([a-zAZ0-9а-яА-Я\-\.\?\,\'\/\\\+&=%\$#_]*)?$
         $this->callbackUrl = $callbackUrl;
+        return $this;
     }
+
 
     /**
      * @return string
@@ -70,13 +92,18 @@ class Info implements JsonSerializable
         return $this->inn;
     }
 
+
     /**
      * @param string $inn
+     *
+     * @return Info
      */
-    public function setInn(string $inn): void
+    public function setInn(string $inn): self
     {
         $this->inn = $inn;
+        return $this;
     }
+
 
     /**
      * @return string
@@ -86,11 +113,15 @@ class Info implements JsonSerializable
         return $this->paymentAddress;
     }
 
+
     /**
      * @param string $paymentAddress
+     *
+     * @return Info
      */
-    public function setPaymentAddress(string $paymentAddress): void
+    public function setPaymentAddress(string $paymentAddress): self
     {
         $this->paymentAddress = $paymentAddress;
+        return $this;
     }
 }

@@ -14,14 +14,23 @@ use stdClass;
 class PayloadResponse implements ResponseInterface
 {
     private $total;
+
     private $fnsSite;
+
     private $fnNumber;
+
     private $shiftNumber;
+
     private $receiptDatetime;
+
     private $fiscalReceiptNumber;
+
     private $fiscalDocumentNumber;
+
     private $fiscalDocumentAttribute;
+
     private $ecrRegistrationNumber;
+
 
     /**
      * PayloadResponse constructor.
@@ -41,6 +50,7 @@ class PayloadResponse implements ResponseInterface
         $this->ecrRegistrationNumber = $json->ecr_registration_number;
     }
 
+
     /**
      * @return mixed
      */
@@ -48,6 +58,7 @@ class PayloadResponse implements ResponseInterface
     {
         return $this->total;
     }
+
 
     /**
      * @return mixed
@@ -57,6 +68,7 @@ class PayloadResponse implements ResponseInterface
         return $this->fnsSite;
     }
 
+
     /**
      * @return mixed
      */
@@ -64,6 +76,7 @@ class PayloadResponse implements ResponseInterface
     {
         return $this->fnNumber;
     }
+
 
     /**
      * @return mixed
@@ -73,6 +86,7 @@ class PayloadResponse implements ResponseInterface
         return $this->shiftNumber;
     }
 
+
     /**
      * @return mixed
      */
@@ -80,6 +94,7 @@ class PayloadResponse implements ResponseInterface
     {
         return $this->receiptDatetime;
     }
+
 
     /**
      * @return mixed
@@ -89,6 +104,7 @@ class PayloadResponse implements ResponseInterface
         return $this->fiscalReceiptNumber;
     }
 
+
     /**
      * @return mixed
      */
@@ -97,6 +113,7 @@ class PayloadResponse implements ResponseInterface
         return $this->fiscalDocumentNumber;
     }
 
+
     /**
      * @return mixed
      */
@@ -104,6 +121,7 @@ class PayloadResponse implements ResponseInterface
     {
         return $this->fiscalDocumentAttribute;
     }
+
 
     /**
      * @return mixed

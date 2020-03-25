@@ -36,6 +36,7 @@ class ApiClient implements IClient
      */
     private $version = 'v4';
 
+
     /**
      * ApiClient constructor.
      *
@@ -53,6 +54,7 @@ class ApiClient implements IClient
         }
     }
 
+
     /**
      * @return string
      */
@@ -61,6 +63,7 @@ class ApiClient implements IClient
         return $this->version;
     }
 
+
     /**
      * @param string $version
      */
@@ -68,6 +71,7 @@ class ApiClient implements IClient
     {
         $this->version = $version;
     }
+
 
     /**
      * @param TokenRequest $request
@@ -85,6 +89,7 @@ class ApiClient implements IClient
             )
         );
     }
+
 
     /**
      * @param RequestInterface $request
@@ -140,6 +145,7 @@ class ApiClient implements IClient
         return $message;
     }
 
+
     /**
      * @param OperationRequest $request
      *
@@ -158,10 +164,18 @@ class ApiClient implements IClient
         );
     }
 
+
     public function doCorrection(CorrectionRequest $request): OperationResponse
     {
-        // TODO: Implement doCorrection() method.
+        return $request->getResponse(
+            json_decode(
+                $this->makeRequest(
+                    $request
+                )
+            )
+        );
     }
+
 
     /**
      * @param ReportRequest $request
