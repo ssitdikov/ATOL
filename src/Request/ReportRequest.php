@@ -10,7 +10,7 @@ use SSitdikov\ATOL\Response\ResponseInterface;
 use SSitdikov\ATOL\Response\TokenResponse;
 
 /**
- * Class ReportRequest
+ * Class ReportRequest.
  *
  * @package SSitdikov\ATOL\Request
  */
@@ -69,9 +69,10 @@ class ReportRequest implements RequestInterface
 
     /**
      * @param $response
-     * @return ReportResponse
      *
      * @throws Exception
+     * @return ReportResponse
+     *
      */
     public function getResponse($response): ResponseInterface
     {

@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 use SSitdikov\ATOL\Request\ReportRequest;
 use SSitdikov\ATOL\Request\RequestInterface;
 use SSitdikov\ATOL\Response\TokenResponse;
-use function json_decode;
 
 class ReportRequestTest extends TestCase
 {
@@ -75,7 +74,7 @@ class ReportRequestTest extends TestCase
 
         $this->assertEquals($timestamp, $request->getResponse($response)->getTimestamp());
         $this->assertEquals($uuid, $request->getResponse($response)->getUuid());
-        $this->isNull($request->getResponse($response)->getError());
+        $this->assertNull($request->getResponse($response)->getError());
         $this->assertEquals('done', $request->getResponse($response)->getStatus());
         $this->assertEquals($total, $request->getResponse($response)->getPayload()->getTotal());
         $this->assertEquals($fnsSite, $request->getResponse($response)->getPayload()->getFnsSite());

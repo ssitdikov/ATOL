@@ -7,7 +7,7 @@ namespace SSitdikov\ATOL\Object;
 use JsonSerializable;
 
 /**
- * Class Item
+ * Class Item.
  *
  * @package SSitdikov\ATOL\Object
  */
@@ -15,107 +15,107 @@ class Item implements JsonSerializable
 {
 
     /**
-     * товар
+     * товар.
      */
     public const PAYMENT_OBJECT_COMMODITY = 'commodity';
 
     /**
-     * подакцизный товар
+     * подакцизный товар.
      */
     public const PAYMENT_OBJECT_EXCISE = 'excise';
 
     /**
-     * работа
+     * работа.
      */
     public const PAYMENT_OBJECT_JOB = 'job';
 
     /**
-     * услуга
+     * услуга.
      */
     public const PAYMENT_OBJECT_SERVICE = 'service';
 
     /**
-     * ставка азартной игры
+     * ставка азартной игры.
      */
     public const PAYMENT_OBJECT_GAMBLING_BET = 'gambling_bet';
 
     /**
-     * выигрыш азартной игры
+     * выигрыш азартной игры.
      */
     public const PAYMENT_OBJECT_GAMBLING_PRIZE = 'gambling_prize';
 
     /**
-     * лотерейный билет
+     * лотерейный билет.
      */
     public const PAYMENT_OBJECT_LOTTERY = 'lottery';
 
     /**
-     * выигрыш лотереи
+     * выигрыш лотереи.
      */
     public const PAYMENT_OBJECT_LOTTERY_PRIZE = 'lottery_prize';
 
     /**
-     * предоставление результатов интеллектуальной деятельности
+     * предоставление результатов интеллектуальной деятельности.
      */
     public const PAYMENT_OBJECT_INTELLECTUAL_ACTIVITY = 'intellectual_activity';
 
     /**
-     * платеж
+     * платеж.
      */
     public const PAYMENT_OBJECT_PAYMENT = 'payment';
 
     /**
-     * агентское вознаграждение
+     * агентское вознаграждение.
      */
     public const PAYMENT_OBJECT_AGENT_COMMISSION = 'agent_commission';
 
     /**
-     * составной предмет расчета
+     * составной предмет расчета.
      */
     public const PAYMENT_OBJECT_COMPOSITE = 'composite';
 
     /**
-     * иной предмет расчета
+     * иной предмет расчета.
      */
     public const PAYMENT_OBJECT_ANOTHER = 'another';
 
     /**
-     * имущественное право
+     * имущественное право.
      */
     public const PAYMENT_OBJECT_PROPERTY_RIGHT = 'property_right';
 
     /**
-     * внереализационный доход
+     * внереализационный доход.
      */
     public const PAYMENT_OBJECT_NON_OPERATING_GAIN = 'non-operating_gain';
 
     /**
-     * страховые взносы
+     * страховые взносы.
      */
     public const PAYMENT_OBJECT_INSURANCE_PREMIUM = 'insurance_premium';
 
     /**
-     * торговый сбор
+     * торговый сбор.
      */
     public const PAYMENT_OBJECT_SALES_TAX = 'sales_tax';
 
     /**
-     * курортный сбор
+     * курортный сбор.
      */
     public const PAYMENT_OBJECT_RESORT_FEE = 'resort_fee';
 
     /**
-     *  предоплата 100%. Полная предварительная оплата до момента передачи предмета расчета
+     *  предоплата 100%. Полная предварительная оплата до момента передачи предмета расчета.
      */
     public const PAYMENT_METHOD_FULL_PREPAYMENT = 'full_prepayment';
 
     /**
-     * предоплата. Частичная предварительная оплата до момента передачи предмета расчета
+     * предоплата. Частичная предварительная оплата до момента передачи предмета расчета.
      */
     public const PAYMENT_METHOD_PREPAYMENT = 'prepayment';
 
     /**
-     * аванс
+     * аванс.
      */
     public const PAYMENT_METHOD_ADVANCE = 'advance';
 
@@ -130,12 +130,12 @@ class Item implements JsonSerializable
     public const PAYMENT_METHOD_PARTIAL_PAYMENT = 'partial_payment';
 
     /**
-     * передача в кредит. Передача предмета расчета без его оплаты в момент его передачи с последующей оплатой в кредит
+     * передача в кредит. Передача предмета расчета без его оплаты в момент его передачи с последующей оплатой в кредит.
      */
     public const PAYMENT_METHOD_CREDIT = 'credit';
 
     /**
-     * оплата кредита. Оплата предмета расчета после его передачи с оплатой в кредит (оплата кредита)
+     * оплата кредита. Оплата предмета расчета после его передачи с оплатой в кредит (оплата кредита).
      */
     public const PAYMENT_METHOD_CREDIT_PAYMENT = 'credit_payment';
 
@@ -152,21 +152,24 @@ class Item implements JsonSerializable
     private $name = '';
     private $price = 0.0;
     private $quantity = 1.0;
+
     /**
      * @var string $payment_object Признак предмета расчета
      */
     private $payment_object = 'commodity';
+
     /**
      * @var string $payment_method Признак способа расчета
      */
     private $payment_method = 'full_prepayment';
+
     /**
      * @var string $measurement_unit Единица измерения предмета расчета
      */
     private $measurement_unit = 'шт.';
 
     /**
-     * Продаваемый товар по чеку
+     * Продаваемый товар по чеку.
      *
      * @param string $name
      * @param float  $price

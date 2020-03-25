@@ -7,7 +7,7 @@ namespace SSitdikov\ATOL\Response;
 use stdClass;
 
 /**
- * Class PayloadResponse
+ * Class PayloadResponse.
  *
  * @package SSitdikov\ATOL\Response
  */

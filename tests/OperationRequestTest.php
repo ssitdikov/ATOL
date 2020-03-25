@@ -11,8 +11,6 @@ use SSitdikov\ATOL\Object\ReceiptSno;
 use SSitdikov\ATOL\Request\OperationRequest;
 use SSitdikov\ATOL\Request\RequestInterface;
 use SSitdikov\ATOL\Response\TokenResponse;
-use function json_decode;
-use function json_encode;
 
 class OperationRequestTest extends TestCase
 {

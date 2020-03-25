@@ -48,7 +48,8 @@ class TokenRequestTest extends TestCase
             'json' => [
                 'login' => 'login',
                 'pass'  => 'password',
-            ]], $this->request->getParams());
+            ],
+        ], $this->request->getParams());
     }
 
     /**
@@ -73,5 +74,4 @@ class TokenRequestTest extends TestCase
             self::TOKEN
         );
     }
-
 }

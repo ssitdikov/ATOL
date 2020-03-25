@@ -12,7 +12,7 @@ use SSitdikov\ATOL\Response\ResponseInterface;
 use SSitdikov\ATOL\Response\TokenResponse;
 
 /**
- * Class OperationRequest
+ * Class OperationRequest.
  *
  * @package SSitdikov\ATOL\Request
  */
@@ -93,9 +93,10 @@ class OperationRequest implements RequestInterface
 
     /**
      * @param $response
-     * @return OperationResponse
      *
      * @throws Exception
+     * @return OperationResponse
+     *
      */
     public function getResponse($response): ResponseInterface
     {

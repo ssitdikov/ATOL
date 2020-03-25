@@ -1,12 +1,15 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace SSitdikov\ATOL\Response;
 
 use DateTime;
+use Exception;
 use stdClass;
 
 /**
- * Class TokenResponse
+ * Class TokenResponse.
  *
  * @package SSitdikov\ATOL\Response
  *
@@ -31,6 +34,8 @@ class TokenResponse implements ResponseInterface
      * TokenResponse constructor.
      *
      * @param stdClass $json
+     *
+     * @throws Exception
      */
     public function __construct(stdClass $json)
     {

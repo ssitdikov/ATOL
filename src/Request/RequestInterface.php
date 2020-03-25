@@ -7,7 +7,7 @@ namespace SSitdikov\ATOL\Request;
 use SSitdikov\ATOL\Response\ResponseInterface;
 
 /**
- * Interface RequestInterface
+ * Interface RequestInterface.
  *
  * @package SSitdikov\ATOL\Request
  */
@@ -34,6 +34,7 @@ interface RequestInterface
 
     /**
      * @param $response
+     *
      * @return ResponseInterface
      */
     public function getResponse($response): ResponseInterface;

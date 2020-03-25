@@ -7,7 +7,7 @@ namespace SSitdikov\ATOL\Object;
 use JsonSerializable;
 
 /**
- * Class Receipt
+ * Class Receipt.
  *
  * @package SSitdikov\ATOL\Object
  */
@@ -94,6 +94,7 @@ class Receipt implements JsonSerializable
 
     /**
      * @param string $email
+     *
      * @return Receipt
      */
     public function setEmail(string $email): Receipt
@@ -113,6 +114,7 @@ class Receipt implements JsonSerializable
 
     /**
      * @param string $phone
+     *
      * @return Receipt
      */
     public function setPhone(string $phone): Receipt
@@ -132,6 +134,8 @@ class Receipt implements JsonSerializable
 
     /**
      * @param string $companyEmail
+     *
+     * @return Receipt
      */
     public function setCompanyEmail(string $companyEmail): self
     {
@@ -149,6 +153,7 @@ class Receipt implements JsonSerializable
 
     /**
      * @param string $sno
+     *
      * @return Receipt
      */
     public function setSno(string $sno): Receipt
@@ -206,6 +211,7 @@ class Receipt implements JsonSerializable
 
     /**
      * @param array $items
+     *
      * @return Receipt
      */
     public function setItems(array $items): Receipt
@@ -235,6 +241,7 @@ class Receipt implements JsonSerializable
 
     /**
      * @param array $payments
+     *
      * @return Receipt
      */
     public function setPayments(array $payments): Receipt
@@ -246,6 +253,7 @@ class Receipt implements JsonSerializable
 
     /**
      * @param Item $item
+     *
      * @return $this
      */
     public function addItem(Item $item): Receipt
@@ -266,6 +274,7 @@ class Receipt implements JsonSerializable
 
     /**
      * @param Payment $payment
+     *
      * @return $this
      */
     public function addPayment(Payment $payment): Receipt

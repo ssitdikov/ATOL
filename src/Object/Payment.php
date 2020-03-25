@@ -7,7 +7,7 @@ namespace SSitdikov\ATOL\Object;
 use JsonSerializable;
 
 /**
- * Class Payment
+ * Class Payment.
  *
  * @package SSitdikov\ATOL\Object
  */
@@ -19,7 +19,7 @@ class Payment implements JsonSerializable
     public const PAYMENT_TYPE_PREPAID = 2;
     public const PAYMENT_TYPE_CREDIT = 3;
     public const PAYMENT_TYPE_OTHER = 4;
-    /**
+    /*
      * 5 - 9 расширенные типы оплаты, устанавливаются отдельно
      */
 

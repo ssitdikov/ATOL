@@ -1,11 +1,13 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace SSitdikov\ATOL\Response;
 
 use stdClass;
 
 /**
- * Interface ResponseInterface
+ * Interface ResponseInterface.
  *
  * @package SSitdikov\ATOL\Response
  */

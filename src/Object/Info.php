@@ -7,7 +7,7 @@ namespace SSitdikov\ATOL\Object;
 use JsonSerializable;
 
 /**
- * Class Info
+ * Class Info.
  *
  * @package SSitdikov\ATOL\Object
  */
@@ -19,7 +19,7 @@ class Info implements JsonSerializable
     private $callbackUrl = '';
 
     /**
-     * Сервисная часть чека, включает в себя ИНН, адрес сайта и callback_url (на него приходят POST, если указано)
+     * Сервисная часть чека, включает в себя ИНН, адрес сайта и callback_url (на него приходят POST, если указано).
      *
      * @param string $inn
      * @param string $paymentAddress

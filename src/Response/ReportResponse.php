@@ -7,7 +7,7 @@ namespace SSitdikov\ATOL\Response;
 use stdClass;
 
 /**
- * Class ReportResponse
+ * Class ReportResponse.
  *
  * @package SSitdikov\ATOL\Response
  */

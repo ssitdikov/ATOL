@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace SSitdikov\ATOL\Client;
 
@@ -19,7 +21,7 @@ use function json_encode;
 use function json_last_error;
 
 /**
- * Class ApiClient
+ * Class ApiClient.
  *
  * @package SSitdikov\ATOL\Client
  *
@@ -30,7 +32,7 @@ class ApiClient implements IClient
     private $http;
 
     /**
-     * @var string $version
+     * @var string
      */
     private $version = 'v4';
 
@@ -69,9 +71,9 @@ class ApiClient implements IClient
 
     /**
      * @param TokenRequest $request
-     * @return TokenResponse
      *
      * @throws Exception
+     * @return TokenResponse
      */
     public function getToken(TokenRequest $request): TokenResponse
     {
@@ -86,6 +88,7 @@ class ApiClient implements IClient
 
     /**
      * @param RequestInterface $request
+     *
      * @return string
      */
     public function makeRequest(RequestInterface $request): string
@@ -139,9 +142,10 @@ class ApiClient implements IClient
 
     /**
      * @param OperationRequest $request
-     * @return OperationResponse
      *
      * @throws Exception
+     * @return OperationResponse
+     *
      */
     public function doOperation(OperationRequest $request): OperationResponse
     {
@@ -161,9 +165,9 @@ class ApiClient implements IClient
 
     /**
      * @param ReportRequest $request
-     * @return ReportResponse
      *
      * @throws Exception
+     * @return ReportResponse
      */
     public function getReport(ReportRequest $request): ReportResponse
     {

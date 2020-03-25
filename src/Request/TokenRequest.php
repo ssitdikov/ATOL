@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace SSitdikov\ATOL\Request;
 
@@ -7,7 +9,7 @@ use SSitdikov\ATOL\Response\ResponseInterface;
 use SSitdikov\ATOL\Response\TokenResponse;
 
 /**
- * Class TokenRequest
+ * Class TokenRequest.
  *
  * @package SSitdikov\ATOL\Request
  *
@@ -71,9 +73,10 @@ class TokenRequest implements RequestInterface
 
     /**
      * @param $response
-     * @return TokenResponse
      *
      * @throws Exception
+     * @return TokenResponse
+     *
      */
     public function getResponse($response): ResponseInterface
     {

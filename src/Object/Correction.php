@@ -7,7 +7,7 @@ namespace SSitdikov\ATOL\Object;
 use JsonSerializable;
 
 /**
- * Class Correction
+ * Class Correction.
  *
  * @package SSitdikov\ATOL\Object
  */

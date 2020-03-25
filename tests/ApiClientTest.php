@@ -23,7 +23,6 @@ use SSitdikov\ATOL\Request\OperationRequest;
 use SSitdikov\ATOL\Request\ReportRequest;
 use SSitdikov\ATOL\Request\TokenRequest;
 use SSitdikov\ATOL\Response\TokenResponse;
-use function json_decode;
 
 class ApiClientTest extends TestCase
 {
