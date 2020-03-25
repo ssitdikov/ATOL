@@ -61,7 +61,6 @@ class Receipt implements JsonSerializable
      */
     private $paymentAddress = '';
 
-
     /**
      * @return array
      */
@@ -80,7 +79,7 @@ class Receipt implements JsonSerializable
             ],
             'items'    => $this->getItems(),
             'total'    => $this->getTotal(),
-            'payments' => $this->getPayments(),
+            'payments' => $this->getPayments()
         ];
     }
 
@@ -248,6 +247,69 @@ class Receipt implements JsonSerializable
     {
         $this->payments = $payments;
 
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getTotal(): float
+    {
+        return $this->total;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInn(): string
+    {
+        return $this->inn;
+    }
+
+    /**
+     * @param string $inn
+     *
+     * @return Receipt
+     */
+    public function setInn(string $inn): self
+    {
+        $this->inn = $inn;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCompanyEmail(): string
+    {
+        return $this->companyEmail;
+    }
+
+    /**
+     * @param string $companyEmail
+     */
+    public function setCompanyEmail(string $companyEmail): self
+    {
+        $this->companyEmail = $companyEmail;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentAddress(): string
+    {
+        return $this->paymentAddress;
+    }
+
+    /**
+     * @param string $paymentAddress
+     *
+     * @return Receipt
+     */
+    public function setPaymentAddress(string $paymentAddress): self
+    {
+        $this->paymentAddress = $paymentAddress;
         return $this;
     }
 
