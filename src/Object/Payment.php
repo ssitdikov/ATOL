@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace SSitdikov\ATOL\Object;
 
+use JsonSerializable;
+
 /**
  * Class Payment
+ *
  * @package SSitdikov\ATOL\Object
  */
-class Payment implements \JsonSerializable
+class Payment implements JsonSerializable
 {
 
     public const PAYMENT_TYPE_CASH = 0;
@@ -32,7 +35,8 @@ class Payment implements \JsonSerializable
 
     /**
      * Payment constructor.
-     * @param int $type
+     *
+     * @param int   $type
      * @param float $sum
      */
     public function __construct($type = self::PAYMENT_TYPE_ELECTR, $sum = 0.0)
@@ -47,8 +51,8 @@ class Payment implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'sum' => $this->getSum(),
-            'type' => $this->getType()
+            'sum'  => $this->getSum(),
+            'type' => $this->getType(),
         ];
     }
 

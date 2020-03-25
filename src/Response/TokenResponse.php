@@ -2,12 +2,15 @@
 
 namespace SSitdikov\ATOL\Response;
 
+use DateTime;
+use stdClass;
+
 /**
  * Class TokenResponse
  *
  * @package SSitdikov\ATOL\Response
  *
- * @author Salavat Sitdikov <sitsalavat@gmail.com>
+ * @author  Salavat Sitdikov <sitsalavat@gmail.com>
  */
 class TokenResponse implements ResponseInterface
 {
@@ -20,19 +23,20 @@ class TokenResponse implements ResponseInterface
      */
     private $token;
     /**
-     * @var \DateTime $timestamp
+     * @var DateTime $timestamp
      */
     private $timestamp;
 
     /**
      * TokenResponse constructor.
-     * @param \stdClass $json
+     *
+     * @param stdClass $json
      */
-    public function __construct(\stdClass $json)
+    public function __construct(stdClass $json)
     {
         $this->error = $json->error;
         $this->token = $json->token;
-        $this->timestamp = new \DateTime($json->timestamp);
+        $this->timestamp = new DateTime($json->timestamp);
     }
 
     /**
@@ -52,9 +56,9 @@ class TokenResponse implements ResponseInterface
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getTimestamp(): \DateTime
+    public function getTimestamp(): DateTime
     {
         return $this->timestamp;
     }

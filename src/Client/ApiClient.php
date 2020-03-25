@@ -2,6 +2,7 @@
 
 namespace SSitdikov\ATOL\Client;
 
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\GuzzleException;
@@ -13,13 +14,16 @@ use SSitdikov\ATOL\Request\TokenRequest;
 use SSitdikov\ATOL\Response\OperationResponse;
 use SSitdikov\ATOL\Response\ReportResponse;
 use SSitdikov\ATOL\Response\TokenResponse;
+use function json_decode;
+use function json_encode;
+use function json_last_error;
 
 /**
  * Class ApiClient
  *
  * @package SSitdikov\ATOL\Client
  *
- * @author Salavat Sitdikov <sitsalavat@gmail.com>
+ * @author  Salavat Sitdikov <sitsalavat@gmail.com>
  */
 class ApiClient implements IClient
 {
@@ -32,6 +36,7 @@ class ApiClient implements IClient
 
     /**
      * ApiClient constructor.
+     *
      * @param Client|null $client
      */
     public function __construct(Client $client = null)
@@ -40,7 +45,7 @@ class ApiClient implements IClient
         if (null === $client) {
             $this->http = new Client(
                 [
-                    'base_uri' => 'https://online.atol.ru/possystem/' . $this->getVersion() . '/'
+                    'base_uri' => 'https://online.atol.ru/possystem/' . $this->getVersion() . '/',
                 ]
             );
         }
@@ -63,6 +68,23 @@ class ApiClient implements IClient
     }
 
     /**
+     * @param TokenRequest $request
+     * @return TokenResponse
+     *
+     * @throws Exception
+     */
+    public function getToken(TokenRequest $request): TokenResponse
+    {
+        return $request->getResponse(
+            json_decode(
+                $this->makeRequest(
+                    $request
+                )
+            )
+        );
+    }
+
+    /**
      * @param RequestInterface $request
      * @return string
      */
@@ -80,34 +102,34 @@ class ApiClient implements IClient
             $response = $exception->getResponse();
             if ($response) {
                 $message = $response->getBody()->getContents();
-                \json_decode($message);
-                if (\json_last_error() !== JSON_ERROR_NONE) {
-                    $message = \json_encode(
+                json_decode($message);
+                if (json_last_error() !== JSON_ERROR_NONE) {
+                    $message = json_encode(
                         [
                             'error' => [
                                 'code' => $exception->getCode(),
-                                'text' => $exception->getMessage()
-                            ]
+                                'text' => $exception->getMessage(),
+                            ],
                         ]
                     );
                 }
             } else {
-                $message = \json_encode(
+                $message = json_encode(
                     [
                         'error' => [
                             'code' => $exception->getCode(),
-                            'text' => $exception->getMessage()
-                        ]
+                            'text' => $exception->getMessage(),
+                        ],
                     ]
                 );
             }
         } catch (GuzzleException $exception) {
-            $message = \json_encode(
+            $message = json_encode(
                 [
                     'error' => [
                         'code' => $exception->getCode(),
-                        'text' => $exception->getMessage()
-                    ]
+                        'text' => $exception->getMessage(),
+                    ],
                 ]
             );
         }
@@ -116,37 +138,21 @@ class ApiClient implements IClient
     }
 
     /**
-     * @param TokenRequest $request
-     * @return TokenResponse
+     * @param OperationRequest $request
+     * @return OperationResponse
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function getToken(TokenRequest $request): TokenResponse
+    public function doOperation(OperationRequest $request): OperationResponse
     {
         return $request->getResponse(
-            \json_decode(
+            json_decode(
                 $this->makeRequest(
                     $request
                 )
             )
         );
     }
-
-    /**
-     * @param OperationRequest $request
-     * @return OperationResponse
-     *
-     * @throws \Exception
-     */
-    public function doOperation(OperationRequest $request): OperationResponse
-    {
-        return $request->getResponse(
-            \json_decode(
-                $this->makeRequest(
-                    $request
-                )
-            )
-        );    }
 
     public function doCorrection(CorrectionRequest $request): OperationResponse
     {
@@ -157,12 +163,12 @@ class ApiClient implements IClient
      * @param ReportRequest $request
      * @return ReportResponse
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getReport(ReportRequest $request): ReportResponse
     {
         return $request->getResponse(
-            \json_decode(
+            json_decode(
                 $this->makeRequest(
                     $request
                 )

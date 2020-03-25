@@ -13,6 +13,7 @@ use SSitdikov\ATOL\Response\TokenResponse;
 
 /**
  * Interface IClient
+ *
  * @package SSitdikov\ATOL\Client
  */
 interface IClient

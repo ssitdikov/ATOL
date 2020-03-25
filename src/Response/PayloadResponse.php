@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace SSitdikov\ATOL\Response;
 
+use stdClass;
+
 /**
  * Class PayloadResponse
+ *
  * @package SSitdikov\ATOL\Response
  */
 class PayloadResponse implements ResponseInterface
@@ -22,9 +25,10 @@ class PayloadResponse implements ResponseInterface
 
     /**
      * PayloadResponse constructor.
-     * @param \stdClass $json
+     *
+     * @param stdClass $json
      */
-    public function __construct(\stdClass $json)
+    public function __construct(stdClass $json)
     {
         $this->total = $json->total;
         $this->fnsSite = $json->fns_site;

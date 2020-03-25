@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace SSitdikov\ATOL\Object;
 
+use JsonSerializable;
+
 /**
  * Class Info
+ *
  * @package SSitdikov\ATOL\Object
  */
-class Info implements \JsonSerializable
+class Info implements JsonSerializable
 {
 
     private $inn = '';
@@ -17,6 +20,7 @@ class Info implements \JsonSerializable
 
     /**
      * Сервисная часть чека, включает в себя ИНН, адрес сайта и callback_url (на него приходят POST, если указано)
+     *
      * @param string $inn
      * @param string $paymentAddress
      * @param string $callbackUrl
@@ -36,8 +40,8 @@ class Info implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'callback_url' => $this->getCallbackUrl(),
-            'inn' => $this->getInn(),
+            'callback_url'    => $this->getCallbackUrl(),
+            'inn'             => $this->getInn(),
             'payment_address' => $this->getPaymentAddress(),
         ];
     }

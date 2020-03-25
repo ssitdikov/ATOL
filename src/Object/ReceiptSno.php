@@ -6,6 +6,7 @@ namespace SSitdikov\ATOL\Object;
 
 /**
  * Interface ReceiptSno
+ *
  * @package SSitdikov\ATOL\Object
  */
 interface ReceiptSno

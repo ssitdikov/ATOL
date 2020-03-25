@@ -2,22 +2,11 @@
 
 namespace SSitdikov\ATOL\Tests;
 
-use SSitdikov\ATOL\Code\ErrorCode;
-use SSitdikov\ATOL\Exception\ErrorIncomingBadRequestException;
-use SSitdikov\ATOL\Exception\ErrorIncomingQueueException;
-use SSitdikov\ATOL\Exception\ErrorIncomingQueueTimeoutException;
-use SSitdikov\ATOL\Exception\ErrorIncomingValidationException;
-use SSitdikov\ATOL\Exception\ErrorStateBadRequestException;
-use SSitdikov\ATOL\Exception\ErrorStateExpiredTokenException;
-use SSitdikov\ATOL\Exception\ErrorStateMissingTokenException;
-use SSitdikov\ATOL\Exception\ErrorStateMissingUuidException;
-use SSitdikov\ATOL\Exception\ErrorStateNotExistTokenException;
-use SSitdikov\ATOL\Exception\ErrorStateNotFoundException;
-use SSitdikov\ATOL\Request\ReportRequest;
 use PHPUnit\Framework\TestCase;
+use SSitdikov\ATOL\Request\ReportRequest;
 use SSitdikov\ATOL\Request\RequestInterface;
-use SSitdikov\ATOL\Response\PayloadResponse;
 use SSitdikov\ATOL\Response\TokenResponse;
+use function json_decode;
 
 class ReportRequestTest extends TestCase
 {
@@ -30,7 +19,7 @@ class ReportRequestTest extends TestCase
         $groupId = 'test';
         $uuid = random_int(1000, 9999);
         $token = md5(time());
-        $token = new TokenResponse(\json_decode('{"error":null, "timestamp":"", "token":"' . $token . '"}'));
+        $token = new TokenResponse(json_decode('{"error":null, "timestamp":"", "token":"' . $token . '"}'));
         $report = new ReportRequest($groupId, $uuid, $token);
 
         $this->assertEquals(RequestInterface::METHOD_GET, $report->getMethod());
@@ -82,7 +71,7 @@ class ReportRequestTest extends TestCase
             "device_code":"' . $deviceCode . '",
             "callback_url":"' . $callbackUrl . '"
         }';
-        $response = \json_decode($json);
+        $response = json_decode($json);
 
         $this->assertEquals($timestamp, $request->getResponse($response)->getTimestamp());
         $this->assertEquals($uuid, $request->getResponse($response)->getUuid());

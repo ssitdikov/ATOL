@@ -8,6 +8,7 @@ use SSitdikov\ATOL\Response\ResponseInterface;
 
 /**
  * Interface RequestInterface
+ *
  * @package SSitdikov\ATOL\Request
  */
 interface RequestInterface

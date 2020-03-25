@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace SSitdikov\ATOL\Response;
 
+use stdClass;
+
 /**
  * Class ReportResponse
+ *
  * @package SSitdikov\ATOL\Response
  */
 class ReportResponse implements ResponseInterface
@@ -48,9 +51,10 @@ class ReportResponse implements ResponseInterface
 
     /**
      * ReportResponse constructor.
-     * @param \stdClass $json
+     *
+     * @param stdClass $json
      */
-    public function __construct(\stdClass $json)
+    public function __construct(stdClass $json)
     {
         $this->uuid = $json->uuid;
         $this->error = $json->error ? new ErrorResponse($json->error) : null;

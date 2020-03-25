@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace SSitdikov\ATOL\Response;
 
+use stdClass;
+
 /**
  * Class OperationResponse
+ *
  * @package SSitdikov\ATOL\Response
  */
 class OperationResponse implements ResponseInterface
@@ -37,9 +40,10 @@ class OperationResponse implements ResponseInterface
 
     /**
      * OperationResponse constructor.
-     * @param \stdClass $json
+     *
+     * @param stdClass $json
      */
-    public function __construct(\stdClass $json)
+    public function __construct(stdClass $json)
     {
         $this->uuid = $json->uuid;
         $this->timestamp = $json->timestamp;

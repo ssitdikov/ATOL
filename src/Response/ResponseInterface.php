@@ -2,15 +2,19 @@
 
 namespace SSitdikov\ATOL\Response;
 
+use stdClass;
+
 /**
  * Interface ResponseInterface
+ *
  * @package SSitdikov\ATOL\Response
  */
 interface ResponseInterface
 {
     /**
      * ResponseInterface constructor.
-     * @param \stdClass $json
+     *
+     * @param stdClass $json
      */
-    public function __construct(\stdClass $json);
+    public function __construct(stdClass $json);
 }

@@ -13,6 +13,7 @@ use SSitdikov\ATOL\Response\TokenResponse;
 
 /**
  * Class CorrectionRequest
+ *
  * @package SSitdikov\ATOL\Request
  * @deprecated
  */
@@ -31,11 +32,12 @@ class CorrectionRequest implements RequestInterface
 
     /**
      * CorrectionRequest constructor.
-     * @param $groupId
-     * @param $operation
-     * @param $uuid
-     * @param Correction $correction
-     * @param Info $info
+     *
+     * @param               $groupId
+     * @param               $operation
+     * @param               $uuid
+     * @param Correction    $correction
+     * @param Info          $info
      * @param TokenResponse $token
      */
     public function __construct(
@@ -45,7 +47,8 @@ class CorrectionRequest implements RequestInterface
         Correction $correction,
         Info $info,
         TokenResponse $token
-    ) {
+    )
+    {
         $this->groupId = $groupId;
         $this->operation = $operation;
         $this->uuid = $uuid;
@@ -69,11 +72,11 @@ class CorrectionRequest implements RequestInterface
     {
         return [
             'json' => [
-                'timestamp' => date('d.m.Y H:i:s'),
+                'timestamp'   => date('d.m.Y H:i:s'),
                 'external_id' => $this->uuid,
-                'service' => $this->info,
-                'correction' => $this->correction
-            ]
+                'service'     => $this->info,
+                'correction'  => $this->correction,
+            ],
         ];
     }
 
@@ -82,7 +85,7 @@ class CorrectionRequest implements RequestInterface
      */
     public function getUrl(): string
     {
-        return $this->groupId.'/'.$this->operation.'?tokenid='.$this->token;
+        return $this->groupId . '/' . $this->operation . '?tokenid=' . $this->token;
     }
 
     /**

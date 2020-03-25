@@ -2,6 +2,7 @@
 
 namespace SSitdikov\ATOL\Request;
 
+use Exception;
 use SSitdikov\ATOL\Response\ResponseInterface;
 use SSitdikov\ATOL\Response\TokenResponse;
 
@@ -10,7 +11,7 @@ use SSitdikov\ATOL\Response\TokenResponse;
  *
  * @package SSitdikov\ATOL\Request
  *
- * @author Salavat Sitdikov <sitsalavat@gmail.com>
+ * @author  Salavat Sitdikov <sitsalavat@gmail.com>
  */
 class TokenRequest implements RequestInterface
 {
@@ -26,13 +27,15 @@ class TokenRequest implements RequestInterface
 
     /**
      * TokenRequest constructor.
+     *
      * @param string $login
      * @param string $password
      */
     public function __construct(
         string $login,
         string $password
-    ) {
+    )
+    {
         $this->login = $login;
         $this->password = $password;
     }
@@ -53,8 +56,8 @@ class TokenRequest implements RequestInterface
         return [
             'json' => [
                 'login' => $this->login,
-                'pass' => $this->password
-            ]
+                'pass'  => $this->password,
+            ],
         ];
     }
 
@@ -70,12 +73,12 @@ class TokenRequest implements RequestInterface
      * @param $response
      * @return TokenResponse
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getResponse($response): ResponseInterface
     {
         if (isset($response->error)) {
-            throw new \Exception(
+            throw new Exception(
                 $response->error->text,
                 $response->error->code
             );

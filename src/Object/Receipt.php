@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace SSitdikov\ATOL\Object;
 
+use JsonSerializable;
+
 /**
  * Class Receipt
+ *
  * @package SSitdikov\ATOL\Object
  */
-class Receipt implements \JsonSerializable
+class Receipt implements JsonSerializable
 {
 
     private $sno = ReceiptSno::RECEIPT_SNO_USN_INCOME;
@@ -59,46 +62,26 @@ class Receipt implements \JsonSerializable
     private $paymentAddress = '';
 
 
-
     /**
      * @return array
      */
     public function jsonSerialize(): array
     {
         return [
-            'client' => [
+            'client'   => [
                 'email' => $this->getEmail(),
-                'phone' => $this->getPhone()
+                'phone' => $this->getPhone(),
             ],
-            'company' => [
-                'email' => $this->getCompanyEmail(),
-                'sno' => $this->getSno(),
-                'inn' => $this->getInn(),
-                'payment_address' => $this->getPaymentAddress()
+            'company'  => [
+                'email'           => $this->getCompanyEmail(),
+                'sno'             => $this->getSno(),
+                'inn'             => $this->getInn(),
+                'payment_address' => $this->getPaymentAddress(),
             ],
-            'items' => $this->getItems(),
-            'total' => $this->getTotal(),
-            'payments' => $this->getPayments()
+            'items'    => $this->getItems(),
+            'total'    => $this->getTotal(),
+            'payments' => $this->getPayments(),
         ];
-    }
-
-    /**
-     * @return string
-     */
-    public function getSno(): string
-    {
-        return $this->sno;
-    }
-
-    /**
-     * @param string $sno
-     * @return Receipt
-     */
-    public function setSno(string $sno): Receipt
-    {
-        $this->sno = $sno;
-
-        return $this;
     }
 
     /**
@@ -140,51 +123,39 @@ class Receipt implements \JsonSerializable
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function getItems(): array
+    public function getCompanyEmail(): string
     {
-        return $this->items;
+        return $this->companyEmail;
     }
 
     /**
-     * @param array $items
-     * @return Receipt
+     * @param string $companyEmail
      */
-    public function setItems(array $items): Receipt
+    public function setCompanyEmail(string $companyEmail): self
     {
-        foreach ($items as $element) {
-            $this->addItem($element);
-        }
-
+        $this->companyEmail = $companyEmail;
         return $this;
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function getPayments(): array
+    public function getSno(): string
     {
-        return $this->payments;
+        return $this->sno;
     }
 
     /**
-     * @param array $payments
+     * @param string $sno
      * @return Receipt
      */
-    public function setPayments(array $payments): Receipt
+    public function setSno(string $sno): Receipt
     {
-        $this->payments = $payments;
+        $this->sno = $sno;
 
         return $this;
-    }
-
-    /**
-     * @return float
-     */
-    public function getTotal(): float
-    {
-        return $this->total;
     }
 
     /**
@@ -209,22 +180,6 @@ class Receipt implements \JsonSerializable
     /**
      * @return string
      */
-    public function getCompanyEmail(): string
-    {
-        return $this->companyEmail;
-    }
-
-    /**
-     * @param string $companyEmail
-     */
-    public function setCompanyEmail(string $companyEmail): void
-    {
-        $this->companyEmail = $companyEmail;
-    }
-
-    /**
-     * @return string
-     */
     public function getPaymentAddress(): string
     {
         return $this->paymentAddress;
@@ -238,6 +193,54 @@ class Receipt implements \JsonSerializable
     public function setPaymentAddress(string $paymentAddress): self
     {
         $this->paymentAddress = $paymentAddress;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getItems(): array
+    {
+        return $this->items;
+    }
+
+    /**
+     * @param array $items
+     * @return Receipt
+     */
+    public function setItems(array $items): Receipt
+    {
+        foreach ($items as $element) {
+            $this->addItem($element);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getTotal(): float
+    {
+        return $this->total;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPayments(): array
+    {
+        return $this->payments;
+    }
+
+    /**
+     * @param array $payments
+     * @return Receipt
+     */
+    public function setPayments(array $payments): Receipt
+    {
+        $this->payments = $payments;
+
         return $this;
     }
 

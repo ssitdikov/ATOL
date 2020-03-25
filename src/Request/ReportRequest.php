@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace SSitdikov\ATOL\Request;
 
+use Exception;
 use SSitdikov\ATOL\Response\ReportResponse;
 use SSitdikov\ATOL\Response\ResponseInterface;
 use SSitdikov\ATOL\Response\TokenResponse;
 
 /**
  * Class ReportRequest
+ *
  * @package SSitdikov\ATOL\Request
  */
 class ReportRequest implements RequestInterface
@@ -29,8 +31,9 @@ class ReportRequest implements RequestInterface
 
     /**
      * ReportRequest constructor.
-     * @param $groupId
-     * @param $uuid
+     *
+     * @param               $groupId
+     * @param               $uuid
      * @param TokenResponse $token
      */
     public function __construct($groupId, $uuid, TokenResponse $token)
@@ -61,19 +64,19 @@ class ReportRequest implements RequestInterface
      */
     public function getUrl(): string
     {
-        return $this->groupId.'/report/'.$this->uuid.'?token='.$this->token;
+        return $this->groupId . '/report/' . $this->uuid . '?token=' . $this->token;
     }
 
     /**
      * @param $response
      * @return ReportResponse
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getResponse($response): ResponseInterface
     {
         if (isset($response->error)) {
-            throw new \Exception(
+            throw new Exception(
                 $response->error->text,
                 $response->error->code
             );

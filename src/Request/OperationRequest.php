@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SSitdikov\ATOL\Request;
 
+use Exception;
 use SSitdikov\ATOL\Object\Info;
 use SSitdikov\ATOL\Object\Receipt;
 use SSitdikov\ATOL\Response\OperationResponse;
@@ -12,6 +13,7 @@ use SSitdikov\ATOL\Response\TokenResponse;
 
 /**
  * Class OperationRequest
+ *
  * @package SSitdikov\ATOL\Request
  */
 class OperationRequest implements RequestInterface
@@ -33,11 +35,12 @@ class OperationRequest implements RequestInterface
 
     /**
      * OperationRequest constructor.
-     * @param $groupId
-     * @param $operation
-     * @param $uuid
-     * @param Receipt $receipt
-     * @param Info $info
+     *
+     * @param               $groupId
+     * @param               $operation
+     * @param               $uuid
+     * @param Receipt       $receipt
+     * @param Info          $info
      * @param TokenResponse $token
      */
     public function __construct(
@@ -47,7 +50,8 @@ class OperationRequest implements RequestInterface
         Receipt $receipt,
         Info $info,
         TokenResponse $token
-    ) {
+    )
+    {
         $this->groupId = $groupId;
         $this->operation = $operation;
         $this->uuid = $uuid;
@@ -72,10 +76,10 @@ class OperationRequest implements RequestInterface
         return [
             'json' => [
                 'external_id' => $this->uuid,
-                'receipt' => $this->receipt,
-                'service' => $this->info,
-                'timestamp' => date('d.m.Y H:i:s')
-            ]
+                'receipt'     => $this->receipt,
+                'service'     => $this->info,
+                'timestamp'   => date('d.m.Y H:i:s'),
+            ],
         ];
     }
 
@@ -84,19 +88,19 @@ class OperationRequest implements RequestInterface
      */
     public function getUrl(): string
     {
-        return $this->groupId.'/'.$this->operation.'?token='.$this->token;
+        return $this->groupId . '/' . $this->operation . '?token=' . $this->token;
     }
 
     /**
      * @param $response
      * @return OperationResponse
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getResponse($response): ResponseInterface
     {
         if (isset($response->error)) {
-            throw new \Exception(
+            throw new Exception(
                 $response->error->text,
                 $response->error->code
             );

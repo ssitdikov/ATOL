@@ -2,12 +2,10 @@
 
 namespace SSitdikov\ATOL\Tests;
 
-use SSitdikov\ATOL\Exception\ErrorAuthBadRequestException;
-use SSitdikov\ATOL\Exception\ErrorAuthGenTokenException;
-use SSitdikov\ATOL\Exception\ErrorAuthWrongUserOrPasswordException;
+use PHPUnit\Framework\TestCase;
 use SSitdikov\ATOL\Request\RequestInterface;
 use SSitdikov\ATOL\Request\TokenRequest;
-use PHPUnit\Framework\TestCase;
+use function json_decode;
 
 class TokenRequestTest extends TestCase
 {
@@ -24,12 +22,12 @@ class TokenRequestTest extends TestCase
     {
         $this->request = new TokenRequest('login', 'password');
         $this->responses = [
-            \json_decode('{"error": null, "timestamp": "", "token": "' . self::TOKEN . '"}'),
-            \json_decode('{"error": null, "timestamp": "", "token": "' . self::TOKEN . '"}'),
-            \json_decode('{"error": 17, "timestamp": "", "token": ""}'),
-            \json_decode('{"error": 18, "timestamp": "", "token": ""}'),
-            \json_decode('{"error": 19, "timestamp": "", "token": ""}'),
-            \json_decode('{"error": 404, "timestamp": "", "token": ""}'),
+            json_decode('{"error": null, "timestamp": "", "token": "' . self::TOKEN . '"}'),
+            json_decode('{"error": null, "timestamp": "", "token": "' . self::TOKEN . '"}'),
+            json_decode('{"error": 17, "timestamp": "", "token": ""}'),
+            json_decode('{"error": 18, "timestamp": "", "token": ""}'),
+            json_decode('{"error": 19, "timestamp": "", "token": ""}'),
+            json_decode('{"error": 404, "timestamp": "", "token": ""}'),
         ];
     }
 
@@ -46,10 +44,11 @@ class TokenRequestTest extends TestCase
      */
     public function getParams()
     {
-        $this->assertEquals(['json' => [
-            'login' => 'login',
-            'pass' => 'password',
-        ]], $this->request->getParams());
+        $this->assertEquals([
+            'json' => [
+                'login' => 'login',
+                'pass'  => 'password',
+            ]], $this->request->getParams());
     }
 
     /**

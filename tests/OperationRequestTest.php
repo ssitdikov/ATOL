@@ -3,16 +3,6 @@
 namespace SSitdikov\ATOL\Tests;
 
 use PHPUnit\Framework\TestCase;
-use SSitdikov\ATOL\Exception\ErrorException;
-use SSitdikov\ATOL\Exception\ErrorGroupCodeToTokenException;
-use SSitdikov\ATOL\Exception\ErrorIncomingBadRequestException;
-use SSitdikov\ATOL\Exception\ErrorIncomingExistExternalIdException;
-use SSitdikov\ATOL\Exception\ErrorIncomingExpiredTokenException;
-use SSitdikov\ATOL\Exception\ErrorIncomingMissingTokenException;
-use SSitdikov\ATOL\Exception\ErrorIncomingNotExistTokenException;
-use SSitdikov\ATOL\Exception\ErrorIncomingOperationNotSupportException;
-use SSitdikov\ATOL\Exception\ErrorIsNullExternalIdException;
-use SSitdikov\ATOL\Exception\ErrorUndefinedException;
 use SSitdikov\ATOL\Object\Info;
 use SSitdikov\ATOL\Object\Item;
 use SSitdikov\ATOL\Object\Payment;
@@ -20,8 +10,9 @@ use SSitdikov\ATOL\Object\Receipt;
 use SSitdikov\ATOL\Object\ReceiptSno;
 use SSitdikov\ATOL\Request\OperationRequest;
 use SSitdikov\ATOL\Request\RequestInterface;
-use SSitdikov\ATOL\Response\ErrorResponse;
 use SSitdikov\ATOL\Response\TokenResponse;
+use function json_decode;
+use function json_encode;
 
 class OperationRequestTest extends TestCase
 {
@@ -37,6 +28,9 @@ class OperationRequestTest extends TestCase
         $tax = Item::TAX_NONE;
         $sum = $price * $quantity;
         $taxSum = 0;
+        $payment_object = 'commodity';
+        $payment_method = 'full_payment';
+        $measurement_unit = 'шт.';
 
         $item = new Item($title, $price, $quantity, $tax);
 
@@ -47,14 +41,17 @@ class OperationRequestTest extends TestCase
         $this->assertEquals(Item::TAX_NONE, $item->getTax());
         $this->assertEquals($taxSum, $item->getTaxSum());
         $this->assertEquals(
-                [
-                    'name' => $title,
-                    'price' => $price,
-                    'quantity' => $quantity,
-                    'sum' => $sum,
-                    'tax' => $tax,
-                    'tax_sum' => $taxSum,
-                ],
+            [
+                'name'             => $title,
+                'price'            => $price,
+                'quantity'         => $quantity,
+                'sum'              => $sum,
+                'tax'              => $tax,
+                'tax_sum'          => $taxSum,
+                'payment_object'   => $payment_object,
+                'payment_method'   => $payment_method,
+                'measurement_unit' => $measurement_unit,
+            ],
             $item->jsonSerialize()
         );
 
@@ -80,7 +77,7 @@ class OperationRequestTest extends TestCase
 
         $this->assertEquals(3600, $payment->getSum());
         $this->assertEquals(Payment::PAYMENT_TYPE_CASH, $payment->getType());
-        $this->assertEquals(\json_decode('{"sum":3600, "type": 0}', true), $payment->jsonSerialize());
+        $this->assertEquals(json_decode('{"sum":3600, "type": 0}', true), $payment->jsonSerialize());
 
         return $payment;
     }
@@ -114,18 +111,18 @@ class OperationRequestTest extends TestCase
 
         $this->assertEquals(
             [
-                'client' => [
+                'client'   => [
                     'email' => $email,
                     'phone' => $phone,
                 ],
-                'company' => [
-                    'sno' => ReceiptSno::RECEIPT_SNO_USN_INCOME,
-                    'inn' => $receipt->getInn(),
-                    'email' => $receipt->getCompanyEmail(),
-                    'payment_address' => $receipt->getPaymentAddress()
+                'company'  => [
+                    'sno'             => ReceiptSno::RECEIPT_SNO_USN_INCOME,
+                    'inn'             => $receipt->getInn(),
+                    'email'           => $receipt->getCompanyEmail(),
+                    'payment_address' => $receipt->getPaymentAddress(),
                 ],
-                'items' => [$item],
-                'total' => $payment->getSum(),
+                'items'    => [$item],
+                'total'    => $payment->getSum(),
                 'payments' => [$payment],
             ],
             $receipt->jsonSerialize()
@@ -154,12 +151,12 @@ class OperationRequestTest extends TestCase
         $this->assertEquals($paymentAddress, $info->getPaymentAddress());
         $this->assertEquals($callbackUrl, $info->getCallbackUrl());
         $this->assertJson(
-            \json_encode([
-                'callbackUrl' => $callbackUrl,
-                'inn' => $inn,
+            json_encode([
+                'callbackUrl'     => $callbackUrl,
+                'inn'             => $inn,
                 'payment_address' => $paymentAddress,
             ]),
-            \json_encode($info->jsonSerialize())
+            json_encode($info->jsonSerialize())
         );
 
         return $info;
@@ -176,7 +173,7 @@ class OperationRequestTest extends TestCase
         $uuid = random_int(1, 100);
         $operationType = OperationRequest::OPERATION_SELL;
         $token = new TokenResponse(
-            json_decode('{"error":null, "timestamp":"", "token": "'.md5($uuid).'"}')
+            json_decode('{"error":null, "timestamp":"", "token": "' . md5($uuid) . '"}')
         );
         $operation = new OperationRequest(
             $groupId,
@@ -188,16 +185,16 @@ class OperationRequestTest extends TestCase
         );
         $this->assertEquals(RequestInterface::METHOD_POST, $operation->getMethod());
         $this->assertEquals(
-            $groupId.'/'.$operationType.'?token='.$token->getToken(),
+            $groupId . '/' . $operationType . '?token=' . $token->getToken(),
             $operation->getUrl()
         );
         $this->assertEquals(
             [
                 'json' => [
                     'external_id' => $uuid,
-                    'receipt' => $receipt,
-                    'service' => $info,
-                    'timestamp' => date('d.m.Y H:i:s'),
+                    'receipt'     => $receipt,
+                    'service'     => $info,
+                    'timestamp'   => date('d.m.Y H:i:s'),
                 ],
             ],
             $operation->getParams()
@@ -216,8 +213,8 @@ class OperationRequestTest extends TestCase
         $timestamp = date('Y-m-d H:i:s');
         $status = 'wait';
 
-        $response = \json_decode(
-            '{"uuid":"'.$uuid.'", "error":null, "status":"'.$status.'", "timestamp":"'.$timestamp.'"}'
+        $response = json_decode(
+            '{"uuid":"' . $uuid . '", "error":null, "status":"' . $status . '", "timestamp":"' . $timestamp . '"}'
         );
 
         $this->assertEquals($uuid, $request->getResponse($response)->getUuid());

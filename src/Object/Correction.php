@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace SSitdikov\ATOL\Object;
 
+use JsonSerializable;
+
 /**
  * Class Correction
+ *
  * @package SSitdikov\ATOL\Object
  */
-class Correction implements \JsonSerializable
+class Correction implements JsonSerializable
 {
     /**
      * @var string
@@ -38,10 +41,10 @@ class Correction implements \JsonSerializable
     {
         return [
             'attributes' => [
-                'sno' => $this->getSno(),
-                'tax' => $this->getTax(),
-                'payments' => $this->getPayments()
-            ]
+                'sno'      => $this->getSno(),
+                'tax'      => $this->getTax(),
+                'payments' => $this->getPayments(),
+            ],
         ];
     }
 
