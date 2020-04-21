@@ -27,11 +27,17 @@ class OperationRequest implements RequestInterface
     public const OPERATION_BUY_CORRECTION = 'buy_correction';
 
     private $groupId;
+
     private $uuid;
+
     private $receipt;
+
     private $info;
+
     private $token;
+
     private $operation;
+
 
     /**
      * OperationRequest constructor.
@@ -60,6 +66,7 @@ class OperationRequest implements RequestInterface
         $this->token = $token->getToken();
     }
 
+
     /**
      * @return string
      */
@@ -68,6 +75,7 @@ class OperationRequest implements RequestInterface
         return self::METHOD_POST;
     }
 
+
     /**
      * @return array
      */
@@ -75,13 +83,17 @@ class OperationRequest implements RequestInterface
     {
         return [
             'json' => [
-                'external_id' => $this->uuid,
-                'receipt'     => $this->receipt,
-                'service'     => $this->info,
                 'timestamp'   => date('d.m.Y H:i:s'),
+                'external_id' => $this->uuid,
+                'service'     => $this->info,
+                'receipt'     => $this->receipt,
+            ],
+            'headers' => [
+                'Token' => $this->token,
             ],
         ];
     }
+
 
     /**
      * @return string
@@ -90,6 +102,7 @@ class OperationRequest implements RequestInterface
     {
         return $this->groupId . '/' . $this->operation . '?token=' . $this->token;
     }
+
 
     /**
      * @param $response
@@ -100,7 +113,9 @@ class OperationRequest implements RequestInterface
      */
     public function getResponse($response): ResponseInterface
     {
-        if (isset($response->error)) {
+        // при попытке повторной регистрации чека, АТОЛ возвращает код ошибки 33 и UUID чека,
+        // который можно вернуть как нормальный ответ, вместо исключения
+        if (isset($response->error) && (int)$response->error->code !== 33) {
             throw new Exception(
                 $response->error->text,
                 $response->error->code

@@ -20,14 +20,17 @@ class ReportRequest implements RequestInterface
      * @var string
      */
     private $groupId;
+
     /**
      * @var string
      */
     private $uuid;
+
     /**
      * @var string
      */
     private $token;
+
 
     /**
      * ReportRequest constructor.
@@ -43,6 +46,7 @@ class ReportRequest implements RequestInterface
         $this->token = $token->getToken();
     }
 
+
     /**
      * @return string
      */
@@ -50,6 +54,7 @@ class ReportRequest implements RequestInterface
     {
         return self::METHOD_GET;
     }
+
 
     /**
      * @return array
@@ -59,6 +64,7 @@ class ReportRequest implements RequestInterface
         return [];
     }
 
+
     /**
      * @return string
      */
@@ -66,6 +72,7 @@ class ReportRequest implements RequestInterface
     {
         return $this->groupId . '/report/' . $this->uuid . '?token=' . $this->token;
     }
+
 
     /**
      * @param $response

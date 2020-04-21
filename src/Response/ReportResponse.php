@@ -22,32 +22,41 @@ class ReportResponse implements ResponseInterface
      * @var string
      */
     private $uuid;
+
     private $error;
+
     /**
      * @var string
      */
     private $status;
+
     private $payload;
+
     /**
      * @var string
      */
     private $timestamp;
+
     /**
      * @var string
      */
     private $groupCode;
+
     /**
      * @var string
      */
     private $daemonCode;
+
     /**
      * @var string
      */
     private $deviceCode;
+
     /**
      * @var string
      */
     private $callbackUrl;
+
 
     /**
      * ReportResponse constructor.
@@ -67,6 +76,7 @@ class ReportResponse implements ResponseInterface
         $this->callbackUrl = $json->callback_url;
     }
 
+
     /**
      * @return string
      */
@@ -74,6 +84,7 @@ class ReportResponse implements ResponseInterface
     {
         return $this->uuid;
     }
+
 
     /**
      * @return null|ErrorResponse
@@ -83,6 +94,7 @@ class ReportResponse implements ResponseInterface
         return $this->error;
     }
 
+
     /**
      * @return string
      */
@@ -90,6 +102,7 @@ class ReportResponse implements ResponseInterface
     {
         return $this->status;
     }
+
 
     /**
      * @return null|PayloadResponse
@@ -99,6 +112,7 @@ class ReportResponse implements ResponseInterface
         return $this->payload;
     }
 
+
     /**
      * @return string
      */
@@ -106,6 +120,7 @@ class ReportResponse implements ResponseInterface
     {
         return $this->timestamp;
     }
+
 
     /**
      * @return string
@@ -115,6 +130,7 @@ class ReportResponse implements ResponseInterface
         return $this->groupCode;
     }
 
+
     /**
      * @return string
      */
@@ -123,6 +139,7 @@ class ReportResponse implements ResponseInterface
         return $this->daemonCode;
     }
 
+
     /**
      * @return string
      */
@@ -130,6 +147,7 @@ class ReportResponse implements ResponseInterface
     {
         return $this->deviceCode;
     }
+
 
     /**
      * @return string

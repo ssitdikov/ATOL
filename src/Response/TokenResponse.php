@@ -21,14 +21,17 @@ class TokenResponse implements ResponseInterface
      * @var array|null $error
      */
     private $error;
+
     /**
      * @var string $token
      */
     private $token;
+
     /**
      * @var DateTime $timestamp
      */
     private $timestamp;
+
 
     /**
      * TokenResponse constructor.
@@ -44,6 +47,7 @@ class TokenResponse implements ResponseInterface
         $this->timestamp = new DateTime($json->timestamp);
     }
 
+
     /**
      * @return array|null
      */
@@ -52,6 +56,7 @@ class TokenResponse implements ResponseInterface
         return $this->error;
     }
 
+
     /**
      * @return string
      */
@@ -59,6 +64,7 @@ class TokenResponse implements ResponseInterface
     {
         return $this->token;
     }
+
 
     /**
      * @return DateTime

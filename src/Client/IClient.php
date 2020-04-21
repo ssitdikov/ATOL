@@ -27,12 +27,14 @@ interface IClient
      */
     public function makeRequest(RequestInterface $request): string;
 
+
     /**
      * @param TokenRequest $request
      *
      * @return TokenResponse
      */
     public function getToken(TokenRequest $request): TokenResponse;
+
 
     /**
      * @param OperationRequest $request
@@ -41,12 +43,14 @@ interface IClient
      */
     public function doOperation(OperationRequest $request): OperationResponse;
 
+
     /**
      * @param CorrectionRequest $request
      *
      * @return OperationResponse
      */
     public function doCorrection(CorrectionRequest $request): OperationResponse;
+
 
     /**
      * @param ReportRequest $request

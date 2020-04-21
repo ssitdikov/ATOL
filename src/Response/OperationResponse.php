@@ -38,6 +38,7 @@ class OperationResponse implements ResponseInterface
      */
     private $error;
 
+
     /**
      * OperationResponse constructor.
      *
@@ -51,6 +52,7 @@ class OperationResponse implements ResponseInterface
         $this->error = $json->error ? new ErrorResponse($json->error) : null;
     }
 
+
     /**
      * @return string
      */
@@ -58,6 +60,7 @@ class OperationResponse implements ResponseInterface
     {
         return $this->uuid;
     }
+
 
     /**
      * @return string
@@ -67,6 +70,7 @@ class OperationResponse implements ResponseInterface
         return $this->timestamp;
     }
 
+
     /**
      * @return string
      */
@@ -74,6 +78,7 @@ class OperationResponse implements ResponseInterface
     {
         return $this->status;
     }
+
 
     /**
      * @return null|ErrorResponse

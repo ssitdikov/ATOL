@@ -17,20 +17,24 @@ interface RequestInterface
     public const METHOD_POST = 'POST';
     public const METHOD_GET = 'GET';
 
+
     /**
      * @return string
      */
     public function getMethod(): string;
+
 
     /**
      * @return array
      */
     public function getParams(): array;
 
+
     /**
      * @return string
      */
     public function getUrl(): string;
+
 
     /**
      * @param $response

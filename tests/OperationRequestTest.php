@@ -8,6 +8,7 @@ use SSitdikov\ATOL\Object\Item;
 use SSitdikov\ATOL\Object\Payment;
 use SSitdikov\ATOL\Object\Receipt;
 use SSitdikov\ATOL\Object\ReceiptSno;
+use SSitdikov\ATOL\Object\Vat;
 use SSitdikov\ATOL\Request\OperationRequest;
 use SSitdikov\ATOL\Request\RequestInterface;
 use SSitdikov\ATOL\Response\TokenResponse;
@@ -23,7 +24,7 @@ class OperationRequestTest extends TestCase
         $title = 'Title';
         $price = 1200.00;
         $quantity = 3;
-        $tax = Item::TAX_NONE;
+        $tax = Vat::TAX_NONE;
         $sum = $price * $quantity;
         $taxSum = 0;
         $payment_object = 'commodity';
@@ -36,7 +37,7 @@ class OperationRequestTest extends TestCase
         $this->assertEquals($price, $item->getPrice());
         $this->assertEquals($quantity, $item->getQuantity());
         $this->assertEquals($sum, $item->getSum());
-        $this->assertEquals(Item::TAX_NONE, $item->getTax());
+        $this->assertEquals(Vat::TAX_NONE, $item->getTax());
         $this->assertEquals($taxSum, $item->getTaxSum());
         $this->assertEquals(
             [
@@ -53,14 +54,18 @@ class OperationRequestTest extends TestCase
             $item->jsonSerialize()
         );
 
-        $item->setTax(Item::TAX_VAT18);
+        $item->setTax(Vat::TAX_VAT18);
         $this->assertEquals(round($price * $quantity * 0.18, 2), $item->getTaxSum());
-        $item->setTax(Item::TAX_VAT10);
+        $item->setTax(Vat::TAX_VAT10);
         $this->assertEquals(round($price * $quantity * 0.10, 2), $item->getTaxSum());
-        $item->setTax(Item::TAX_VAT110);
+        $item->setTax(Vat::TAX_VAT20);
+        $this->assertEquals(round($price * $quantity * 0.2, 2), $item->getTaxSum());
+        $item->setTax(Vat::TAX_VAT110);
         $this->assertEquals(round($price * $quantity * 10 / 110, 2), $item->getTaxSum());
-        $item->setTax(Item::TAX_VAT118);
+        $item->setTax(Vat::TAX_VAT118);
         $this->assertEquals(round($price * $quantity * 18 / 118, 2), $item->getTaxSum());
+        $item->setTax(Vat::TAX_VAT120);
+        $this->assertEquals(round($price * $quantity * 20 / 120, 2), $item->getTaxSum());
         $item->setTax($tax);
 
         return $item;
@@ -122,6 +127,7 @@ class OperationRequestTest extends TestCase
                 'items'    => [$item],
                 'total'    => $payment->getSum(),
                 'payments' => [$payment],
+                'cashier ' => ''
             ],
             $receipt->jsonSerialize()
         );
@@ -193,6 +199,9 @@ class OperationRequestTest extends TestCase
                     'receipt'     => $receipt,
                     'service'     => $info,
                     'timestamp'   => date('d.m.Y H:i:s'),
+                ],
+                'headers' => [
+                    'Token' => $token->getToken(),
                 ],
             ],
             $operation->getParams()
