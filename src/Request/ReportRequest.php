@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace SSitdikov\ATOL\Request;
 
-use SSitdikov\ATOL\Exception\ErrorFactoryResponse;
+use Exception;
 use SSitdikov\ATOL\Response\ReportResponse;
+use SSitdikov\ATOL\Response\ResponseInterface;
 use SSitdikov\ATOL\Response\TokenResponse;
 
 /**
- * Class ReportRequest
+ * Class ReportRequest.
+ *
  * @package SSitdikov\ATOL\Request
  */
 class ReportRequest implements RequestInterface
@@ -18,19 +20,23 @@ class ReportRequest implements RequestInterface
      * @var string
      */
     private $groupId;
+
     /**
      * @var string
      */
     private $uuid;
+
     /**
      * @var string
      */
     private $token;
 
+
     /**
      * ReportRequest constructor.
-     * @param $groupId
-     * @param $uuid
+     *
+     * @param               $groupId
+     * @param               $uuid
      * @param TokenResponse $token
      */
     public function __construct($groupId, $uuid, TokenResponse $token)
@@ -40,13 +46,15 @@ class ReportRequest implements RequestInterface
         $this->token = $token->getToken();
     }
 
+
     /**
      * @return string
      */
     public function getMethod(): string
     {
-        return self::GET;
+        return self::METHOD_GET;
     }
+
 
     /**
      * @return array
@@ -56,22 +64,30 @@ class ReportRequest implements RequestInterface
         return [];
     }
 
+
     /**
      * @return string
      */
     public function getUrl(): string
     {
-        return $this->groupId.'/report/'.$this->uuid.'?tokenid='.$this->token;
+        return $this->groupId . '/report/' . $this->uuid . '?token=' . $this->token;
     }
+
 
     /**
      * @param $response
+     *
+     * @throws Exception
      * @return ReportResponse
+     *
      */
-    public function getResponse($response): ReportResponse
+    public function getResponse($response): ResponseInterface
     {
-        if (null !== $response->error) {
-            ErrorFactoryResponse::getError($response->error->text, $response->error->code);
+        if (isset($response->error)) {
+            throw new Exception(
+                $response->error->text,
+                $response->error->code
+            );
         }
 
         return new ReportResponse($response);

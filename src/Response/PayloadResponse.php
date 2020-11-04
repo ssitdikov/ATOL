@@ -4,27 +4,40 @@ declare(strict_types=1);
 
 namespace SSitdikov\ATOL\Response;
 
+use stdClass;
+
 /**
- * Class PayloadResponse
+ * Class PayloadResponse.
+ *
  * @package SSitdikov\ATOL\Response
  */
 class PayloadResponse implements ResponseInterface
 {
     private $total;
+
     private $fnsSite;
+
     private $fnNumber;
+
     private $shiftNumber;
+
     private $receiptDatetime;
+
     private $fiscalReceiptNumber;
+
     private $fiscalDocumentNumber;
+
     private $fiscalDocumentAttribute;
+
     private $ecrRegistrationNumber;
+
 
     /**
      * PayloadResponse constructor.
-     * @param \stdClass $json
+     *
+     * @param stdClass $json
      */
-    public function __construct(\stdClass $json)
+    public function __construct(stdClass $json)
     {
         $this->total = $json->total;
         $this->fnsSite = $json->fns_site;
@@ -37,6 +50,7 @@ class PayloadResponse implements ResponseInterface
         $this->ecrRegistrationNumber = $json->ecr_registration_number;
     }
 
+
     /**
      * @return mixed
      */
@@ -44,6 +58,7 @@ class PayloadResponse implements ResponseInterface
     {
         return $this->total;
     }
+
 
     /**
      * @return mixed
@@ -53,6 +68,7 @@ class PayloadResponse implements ResponseInterface
         return $this->fnsSite;
     }
 
+
     /**
      * @return mixed
      */
@@ -60,6 +76,7 @@ class PayloadResponse implements ResponseInterface
     {
         return $this->fnNumber;
     }
+
 
     /**
      * @return mixed
@@ -69,6 +86,7 @@ class PayloadResponse implements ResponseInterface
         return $this->shiftNumber;
     }
 
+
     /**
      * @return mixed
      */
@@ -76,6 +94,7 @@ class PayloadResponse implements ResponseInterface
     {
         return $this->receiptDatetime;
     }
+
 
     /**
      * @return mixed
@@ -85,6 +104,7 @@ class PayloadResponse implements ResponseInterface
         return $this->fiscalReceiptNumber;
     }
 
+
     /**
      * @return mixed
      */
@@ -93,6 +113,7 @@ class PayloadResponse implements ResponseInterface
         return $this->fiscalDocumentNumber;
     }
 
+
     /**
      * @return mixed
      */
@@ -100,6 +121,7 @@ class PayloadResponse implements ResponseInterface
     {
         return $this->fiscalDocumentAttribute;
     }
+
 
     /**
      * @return mixed

@@ -40,8 +40,8 @@ try {
     $uuid = '00001/11-2017'; // Уникальный id заказа
     $groupId = 'GroupId'; // Выдается АТОЛ
     
-    $itemA = new Item('Товар 1', 1200.50, 1, Item::TAX_NONE);
-    $itemB = new Item('Товар 2', 3200.50, 1, Item::TAX_NONE);
+    $itemA = new Item('Товар 1', 1200.50, 1, Vat::TAX_NONE);
+    $itemB = new Item('Товар 2', 3200.50, 1, Vat::TAX_NONE);
     
     $paymentElectr = new Payment(Payment::PAYMENT_TYPE_ELECTR, 4400.00);
     $paymentCredit = new Payment(Payment::PAYMENT_TYPE_CREDIT, 1.00);

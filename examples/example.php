@@ -3,7 +3,7 @@
 use \SSitdikov\ATOL\Client\ApiClient;
 use \SSitdikov\ATOL\Response\{OperationResponse, TokenResponse, ReportResponse};
 use \SSitdikov\ATOL\Request\{TokenRequest, OperationRequest, ReportRequest};
-use \SSitdikov\ATOL\Object\{Info, Item, Payment, Receipt, ReceiptSno};
+use \SSitdikov\ATOL\Object\{Info, Item, Payment, Receipt, ReceiptSno, Vat};
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -21,8 +21,8 @@ try {
         $uuid = '00001/11-2017';
         $groupId = 'GroupId';
 
-        $itemA = new Item('Товар 1', 1200.50, 1, Item::TAX_NONE);
-        $itemB = new Item('Товар 2', 3200.50, 1, Item::TAX_NONE);
+        $itemA = new Item('Товар 1', 1200.50, 1, Vat::TAX_NONE);
+        $itemB = new Item('Товар 2', 3200.50, 1, Vat::TAX_NONE);
 
         $paymentElectr = new Payment(Payment::PAYMENT_TYPE_ELECTR, 4400.00);
         $paymentCredit = new Payment(Payment::PAYMENT_TYPE_CREDIT, 1.00);
@@ -60,8 +60,6 @@ try {
     } catch (\Exception $e) {
         // ...
     }
-} catch (\SSitdikov\ATOL\Exception\ErrorAuthWrongUserOrPasswordException $e) {
-    // wrong user or password Exception
 } catch (\Exception $e) {
-    // ...
+    // wrong user or password Exception
 }

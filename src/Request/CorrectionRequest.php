@@ -4,37 +4,42 @@ declare(strict_types=1);
 
 namespace SSitdikov\ATOL\Request;
 
-use SSitdikov\ATOL\Exception\ErrorFactoryResponse;
+use Exception;
 use SSitdikov\ATOL\Object\Correction;
 use SSitdikov\ATOL\Object\Info;
 use SSitdikov\ATOL\Response\OperationResponse;
+use SSitdikov\ATOL\Response\ResponseInterface;
 use SSitdikov\ATOL\Response\TokenResponse;
 
 /**
- * Class CorrectionRequest
+ * Class CorrectionRequest.
+ *
  * @package SSitdikov\ATOL\Request
- * @deprecated
  */
 class CorrectionRequest implements RequestInterface
 {
 
-    public const OPERATION_SELL_CORRECTION = 'sell_correction';
-    public const OPERATION_BUY_CORRECTION = 'buy_correction';
-
     private $groupId;
+
     private $uuid;
+
     private $info;
+
     private $correction;
+
     private $token;
+
     private $operation;
+
 
     /**
      * CorrectionRequest constructor.
-     * @param $groupId
-     * @param $operation
-     * @param $uuid
-     * @param Correction $correction
-     * @param Info $info
+     *
+     * @param               $groupId
+     * @param               $operation
+     * @param               $uuid
+     * @param Correction    $correction
+     * @param Info          $info
      * @param TokenResponse $token
      */
     public function __construct(
@@ -44,7 +49,8 @@ class CorrectionRequest implements RequestInterface
         Correction $correction,
         Info $info,
         TokenResponse $token
-    ) {
+    )
+    {
         $this->groupId = $groupId;
         $this->operation = $operation;
         $this->uuid = $uuid;
@@ -53,13 +59,15 @@ class CorrectionRequest implements RequestInterface
         $this->token = $token->getToken();
     }
 
+
     /**
      * @return string
      */
     public function getMethod(): string
     {
-        return self::POST;
+        return self::METHOD_POST;
     }
+
 
     /**
      * @return array
@@ -67,33 +75,42 @@ class CorrectionRequest implements RequestInterface
     public function getParams(): array
     {
         return [
-            'json' => [
-                'timestamp' => date('d.m.Y H:i:s'),
+            'json'    => [
+                'timestamp'   => date('d.m.Y H:i:s'),
                 'external_id' => $this->uuid,
-                'service' => $this->info,
-                'correction' => $this->correction
-            ]
+                'service'     => $this->info,
+                'correction'  => $this->correction,
+            ],
+            'headers' => [
+                'Token' => $this->token,
+            ],
         ];
     }
+
 
     /**
      * @return string
      */
     public function getUrl(): string
     {
-        return $this->groupId.'/'.$this->operation.'?tokenid='.$this->token;
+        return $this->groupId . '/' . $this->operation . '?tokenid=' . $this->token;
     }
+
 
     /**
      * @param $response
+     *
+     * @throws Exception
      * @return OperationResponse
      */
-    public function getResponse($response): OperationResponse
+    public function getResponse($response): ResponseInterface
     {
-        if (null !== $response->error) {
-            ErrorFactoryResponse::getError($response->error->text, $response->error->code);
+        if (isset($response->error) && (int)$response->error->code !== 33) {
+            throw new Exception(
+                $response->error->text,
+                $response->error->code
+            );
         }
-
         return new OperationResponse($response);
     }
 }

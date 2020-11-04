@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace SSitdikov\ATOL\Request;
 
-use SSitdikov\ATOL\Code\ErrorCode;
-use SSitdikov\ATOL\Exception\ErrorFactoryResponse;
+use Exception;
 use SSitdikov\ATOL\Object\Info;
 use SSitdikov\ATOL\Object\Receipt;
 use SSitdikov\ATOL\Response\OperationResponse;
+use SSitdikov\ATOL\Response\ResponseInterface;
 use SSitdikov\ATOL\Response\TokenResponse;
 
 /**
- * Class OperationRequest
+ * Class OperationRequest.
+ *
  * @package SSitdikov\ATOL\Request
  */
 class OperationRequest implements RequestInterface
@@ -20,25 +21,32 @@ class OperationRequest implements RequestInterface
 
     public const OPERATION_SELL = 'sell';
     public const OPERATION_SELL_REFUND = 'sell_refund';
+    public const OPERATION_SELL_CORRECTION = 'sell_correction';
     public const OPERATION_BUY = 'buy';
     public const OPERATION_BUY_REFUND = 'buy_refund';
-
-    const UUID_TEXT_ID = "UUID=";
+    public const OPERATION_BUY_CORRECTION = 'buy_correction';
 
     private $groupId;
+
     private $uuid;
+
     private $receipt;
+
     private $info;
+
     private $token;
+
     private $operation;
+
 
     /**
      * OperationRequest constructor.
-     * @param $groupId
-     * @param $operation
-     * @param $uuid
-     * @param Receipt $receipt
-     * @param Info $info
+     *
+     * @param               $groupId
+     * @param               $operation
+     * @param               $uuid
+     * @param Receipt       $receipt
+     * @param Info          $info
      * @param TokenResponse $token
      */
     public function __construct(
@@ -48,7 +56,8 @@ class OperationRequest implements RequestInterface
         Receipt $receipt,
         Info $info,
         TokenResponse $token
-    ) {
+    )
+    {
         $this->groupId = $groupId;
         $this->operation = $operation;
         $this->uuid = $uuid;
@@ -57,13 +66,15 @@ class OperationRequest implements RequestInterface
         $this->token = $token->getToken();
     }
 
+
     /**
      * @return string
      */
     public function getMethod(): string
     {
-        return self::POST;
+        return self::METHOD_POST;
     }
+
 
     /**
      * @return array
@@ -72,53 +83,45 @@ class OperationRequest implements RequestInterface
     {
         return [
             'json' => [
+                'timestamp'   => date('d.m.Y H:i:s'),
                 'external_id' => $this->uuid,
-                'receipt' => $this->receipt,
-                'service' => $this->info,
-                'timestamp' => date('d.m.Y H:i:s')
-            ]
+                'service'     => $this->info,
+                'receipt'     => $this->receipt,
+            ],
+            'headers' => [
+                'Token' => $this->token,
+            ],
         ];
     }
+
 
     /**
      * @return string
      */
     public function getUrl(): string
     {
-        return $this->groupId.'/'.$this->operation.'?tokenid='.$this->token;
+        return $this->groupId . '/' . $this->operation . '?token=' . $this->token;
     }
+
 
     /**
      * @param $response
+     *
+     * @throws Exception
      * @return OperationResponse
+     *
      */
-    public function getResponse($response): OperationResponse
+    public function getResponse($response): ResponseInterface
     {
-        if (null !== $response->error) {
-            ErrorFactoryResponse::getError($this->getErrorMessage($response), $response->error->code);
+        // при попытке повторной регистрации чека, АТОЛ возвращает код ошибки 33 и UUID чека,
+        // который можно вернуть как нормальный ответ, вместо исключения
+        if (isset($response->error) && (int)$response->error->code !== 33) {
+            throw new Exception(
+                $response->error->text,
+                $response->error->code
+            );
         }
 
         return new OperationResponse($response);
-    }
-
-    /**
-     * @param $response
-     * @return string
-     */
-    private function getErrorMessage($response)
-    {
-        $message = null;
-        if ($response->error->code != ErrorCode::ERROR_INCOMING_EXIST_EXTERNAL_ID) {
-            $message = $response->error->text;
-        }
-
-        if (!$response->uuid) {
-            $message = $response->error->text;
-        }
-
-        return $message ?: implode(' ', [
-            $response->error->text,
-            self::UUID_TEXT_ID.$response->uuid,
-        ]);
     }
 }

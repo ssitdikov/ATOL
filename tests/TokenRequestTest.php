@@ -2,12 +2,10 @@
 
 namespace SSitdikov\ATOL\Tests;
 
-use SSitdikov\ATOL\Exception\ErrorAuthBadRequestException;
-use SSitdikov\ATOL\Exception\ErrorAuthGenTokenException;
-use SSitdikov\ATOL\Exception\ErrorAuthWrongUserOrPasswordException;
+use PHPUnit\Framework\TestCase;
 use SSitdikov\ATOL\Request\RequestInterface;
 use SSitdikov\ATOL\Request\TokenRequest;
-use PHPUnit\Framework\TestCase;
+use function json_decode;
 
 class TokenRequestTest extends TestCase
 {
@@ -24,12 +22,12 @@ class TokenRequestTest extends TestCase
     {
         $this->request = new TokenRequest('login', 'password');
         $this->responses = [
-            \json_decode('{"code": 0, "text": null, "token": "' . self::TOKEN . '"}'),
-            \json_decode('{"code": 1, "text": null, "token": "' . self::TOKEN . '"}'),
-            \json_decode('{"code": 17, "text": "", "token": ""}'),
-            \json_decode('{"code": 18, "text": "", "token": ""}'),
-            \json_decode('{"code": 19, "text": "", "token": ""}'),
-            \json_decode('{"code": 404, "text": "", "token": ""}'),
+            json_decode('{"error": null, "timestamp": "", "token": "' . self::TOKEN . '"}'),
+            json_decode('{"error": null, "timestamp": "", "token": "' . self::TOKEN . '"}'),
+            json_decode('{"error": 17, "timestamp": "", "token": ""}'),
+            json_decode('{"error": 18, "timestamp": "", "token": ""}'),
+            json_decode('{"error": 19, "timestamp": "", "token": ""}'),
+            json_decode('{"error": 404, "timestamp": "", "token": ""}'),
         ];
     }
 
@@ -38,7 +36,7 @@ class TokenRequestTest extends TestCase
      */
     public function getMethod()
     {
-        $this->assertEquals(RequestInterface::POST, $this->request->getMethod());
+        $this->assertEquals(RequestInterface::METHOD_POST, $this->request->getMethod());
     }
 
     /**
@@ -46,10 +44,12 @@ class TokenRequestTest extends TestCase
      */
     public function getParams()
     {
-        $this->assertEquals(['json' => [
-            'login' => 'login',
-            'pass' => 'password',
-        ]], $this->request->getParams());
+        $this->assertEquals([
+            'json' => [
+                'login' => 'login',
+                'pass'  => 'password',
+            ],
+        ], $this->request->getParams());
     }
 
     /**
@@ -70,60 +70,8 @@ class TokenRequestTest extends TestCase
             self::TOKEN
         );
         $this->assertEquals(
-            $this->request->getResponse($this->responses[0])->getCode(),
-            0
-        );
-        $this->assertEquals(
-            '',
-            $this->request->getResponse($this->responses[0])->getText()
-        );
-        $this->assertEquals(
             $this->request->getResponse($this->responses[1])->getToken(),
             self::TOKEN
         );
-        $this->assertEquals(
-            $this->request->getResponse($this->responses[1])->getCode(),
-            1
-        );
-        $this->assertEquals(
-            '',
-            $this->request->getResponse($this->responses[1])->getText()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function getExceptionErrorAuthBadRequest()
-    {
-        $this->expectException(ErrorAuthBadRequestException::class);
-        $this->request->getResponse($this->responses[2]);
-    }
-
-    /**
-     * @test
-     */
-    public function getExceptionAuthGenToken()
-    {
-        $this->expectException(ErrorAuthGenTokenException::class);
-        $this->request->getResponse($this->responses[3]);
-    }
-
-    /**
-     * @test
-     */
-    public function getExceptionAuthWrongUserOrPassword()
-    {
-        $this->expectException(ErrorAuthWrongUserOrPasswordException::class);
-        $this->request->getResponse($this->responses[4]);
-    }
-
-    /**
-     * @test
-     */
-    public function getException()
-    {
-        $this->expectException(\Exception::class);
-        $this->request->getResponse($this->responses[5]);
     }
 }
