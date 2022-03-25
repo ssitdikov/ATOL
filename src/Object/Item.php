@@ -322,7 +322,7 @@ class Item implements \JsonSerializable
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getVat(): array
     {

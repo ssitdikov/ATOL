@@ -65,7 +65,7 @@ try {
 
         // Куда АТОЛу стучаться с результатом
         $callback_url = 'http://test.mystore.dev/callback/api/url';
-        $info = new Info($inn, $payment_address, $callback_url);
+        $info = new Info($callback_url);
 
         /**
          * @var OperationResponse $operation

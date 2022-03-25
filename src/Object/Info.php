@@ -21,8 +21,6 @@ class Info implements \JsonSerializable
     /**
      * Сервисная часть чека, включает в себя ИНН, адрес сайта и callback_url (на него приходят POST, если указано).
      *
-     * @param string $inn
-     * @param string $paymentAddress
      * @param string $callbackUrl
      */
     public function __construct($callbackUrl = '')
@@ -39,7 +37,7 @@ class Info implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'callback_url'    => $this->getCallbackUrl()
+            'callback_url' => $this->getCallbackUrl()
         ];
     }
 

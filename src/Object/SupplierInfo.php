@@ -46,7 +46,9 @@ class SupplierInfo implements \JsonSerializable
             'name' => $this->getName(),
             'phones' => $this->getPhones(),
             'inn' => $this->getINN()
-        ], function($property) { return !is_null($property); });
+        ], function ($property) {
+            return !is_null($property);
+        });
     }
 
     /**
@@ -89,7 +91,7 @@ class SupplierInfo implements \JsonSerializable
      *
      * @return SupplierInfo
      */
-    public function setPhones(array $phones): self 
+    public function setPhones(array $phones): self
     {
         $this->phones = $phones;
         return $this;
@@ -102,32 +104,9 @@ class SupplierInfo implements \JsonSerializable
      *
      * @return SupplierInfo
      */
-    public function addPhone(string  $phone): self 
+    public function addPhone(string  $phone): self
     {
         $this->phones[] = $phone;
-        return $this;
-    }
-
-    /**
-     * Возвращает адрес поставщика.
-     * 
-     * @return string
-     */
-    public function getAddress()
-    {
-        return $this->address;
-    }
-
-    /**
-     * Устанавлиает адрес поставщика.
-     * 
-     * @param string $address
-     *
-     * @return SupplierInfo
-     */
-    public function setAddress(string $address): self
-    {
-        $this->address = $address;
         return $this;
     }
 

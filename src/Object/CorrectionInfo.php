@@ -111,7 +111,7 @@ class CorrectionInfo implements \JsonSerializable
 
 
     /**
-     * @param string|DateTime $base_date
+     * @param string|\DateTime $base_date
      *
      * @throws Exception
      * @return self
