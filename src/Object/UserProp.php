@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace SSitdikov\ATOL\Object;
 
-use JsonSerializable;
-
 /**
  * Class UserProp.
  *
  * @package SSitdikov\ATOL\Object
  */
-class UserProp implements JsonSerializable
+class UserProp implements \JsonSerializable
 {
 
     /**
@@ -31,7 +29,7 @@ class UserProp implements JsonSerializable
     private $value;
 
 
-    /**
+    /** 
      * UserProp constructor.
      *
      * @param $name
@@ -39,15 +37,15 @@ class UserProp implements JsonSerializable
      */
     public function __construct($name, $value)
     {
-        $this->name = $this->setName($name);
-        $this->value = $this->setValue($value);
+        $this->setName($name);
+        $this->setValue($value);
     }
 
 
     /**
      * @inheritDoc
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'name'  => $this->getName(),

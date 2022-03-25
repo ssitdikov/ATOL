@@ -56,8 +56,7 @@ class OperationRequest implements RequestInterface
         Receipt $receipt,
         Info $info,
         TokenResponse $token
-    )
-    {
+    ) {
         $this->groupId = $groupId;
         $this->operation = $operation;
         $this->uuid = $uuid;
@@ -81,6 +80,17 @@ class OperationRequest implements RequestInterface
      */
     public function getParams(): array
     {
+        print_r(json_encode([
+            'json' => [
+                'timestamp'   => date('d.m.Y H:i:s'),
+                'external_id' => $this->uuid,
+                'service'     => $this->info,
+                'receipt'     => $this->receipt,
+            ],
+            'headers' => [
+                'Token' => $this->token,
+            ],
+        ]));
         return [
             'json' => [
                 'timestamp'   => date('d.m.Y H:i:s'),

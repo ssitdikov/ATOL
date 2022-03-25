@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace SSitdikov\ATOL\Object;
 
-use JsonSerializable;
-
 /**
  * Class Payment.
  *
  * @package SSitdikov\ATOL\Object
  */
-class Payment implements JsonSerializable
+class Payment implements \JsonSerializable
 {
 
     public const PAYMENT_TYPE_CASH = 0;
@@ -70,10 +68,13 @@ class Payment implements JsonSerializable
 
     /**
      * @param float $sum
+     * 
+     * @return Payment
      */
-    public function setSum(float $sum): void
+    public function setSum(float $sum): self
     {
         $this->sum = $sum;
+        return $this;
     }
 
 
@@ -88,9 +89,12 @@ class Payment implements JsonSerializable
 
     /**
      * @param int $type
+     * 
+     * @return Payment
      */
-    public function setType(int $type): void
+    public function setType(int $type): self
     {
         $this->type = $type;
+        return $this;
     }
 }

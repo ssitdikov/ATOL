@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace SSitdikov\ATOL\Object;
 
-use JsonSerializable;
-
 /**
  * Class Item.
  *
  * @package SSitdikov\ATOL\Object
  */
-class Item implements JsonSerializable
+class Item implements \JsonSerializable
 {
 
     /**
@@ -139,36 +137,9 @@ class Item implements JsonSerializable
      */
     public const PAYMENT_METHOD_CREDIT_PAYMENT = 'credit_payment';
 
-    /**
-     * @deprecated
-     */
-    public const TAX_NONE = 'none';
-    /**
-     * @deprecated
-     */
-    public const TAX_VAT0 = 'vat0';
-    /**
-     * @deprecated
-     */
-    public const TAX_VAT10 = 'vat10';
-    /**
-     * @deprecated
-     */
-    public const TAX_VAT18 = 'vat18';
-    /**
-     * @deprecated
-     */
-    public const TAX_VAT110 = 'vat110';
-    /**
-     * @deprecated
-     */
-    public const TAX_VAT118 = 'vat118';
-
     private $sum = 0.0;
 
-    private $tax = 'none';
-
-    private $taxSum = 0.0;
+    private $vat = 'none';
 
     private $name = '';
 
@@ -188,24 +159,38 @@ class Item implements JsonSerializable
      */
     private $measurement_unit = 'шт.';
 
+    /**
+     * Информация об агенте
+     *
+     * @var AgentInfo
+     */
+    private $agent_info;
+
+    /**
+     * Информация о поставщике
+     *
+     * @var SupplierInfo
+     */
+    private $supplier_info;
+
 
     /**
      * Продаваемый товар по чеку.
      *
      * @param  string  $name
-     * @param  float  $price
-     * @param  float  $quantity
-     * @param  string  $tax
+     * @param  float   $price
+     * @param  float   $quantity
+     * @param  string  $vat
      * @param  string  $payment_object
      * @param  string  $payment_method
      */
-    public function __construct($name, $price, $quantity, $tax, $payment_object = 'commodity', $payment_method = 'full_payment')
+    public function __construct($name, $price, $quantity, $vat, $payment_object = 'commodity', $payment_method = 'full_payment')
     {
         $this->setName($name);
         $this->setPrice($price);
         $this->setQuantity($quantity);
-        $this->setTax($tax);
-        $this->setSum($price * $quantity);
+        $this->setVat($vat);
+        $this->setSum(round($price * $quantity, 2));
         $this->setPaymentObject($payment_object);
         $this->setPaymentMethod($payment_method);
     }
@@ -216,19 +201,63 @@ class Item implements JsonSerializable
      */
     public function jsonSerialize(): array
     {
-        return [
-            'name'             => $this->getName(),
-            'price'            => $this->getPrice(),
-            'quantity'         => $this->getQuantity(),
-            'sum'              => $this->getSum(),
-            'tax'              => $this->getTax(),
-            'tax_sum'          => $this->getTaxSum(),
-            'payment_object'   => $this->getPaymentObject(),
-            'payment_method'   => $this->getPaymentMethod(),
-            'measurement_unit' => $this->getMeasurementUnit(),
-        ];
+        return array_filter([
+            'name'              => $this->getName(),
+            'price'             => $this->getPrice(),
+            'quantity'          => $this->getQuantity(),
+            'sum'               => $this->getSum(),
+            'vat'               => $this->getVat(),
+            'payment_object'    => $this->getPaymentObject(),
+            'payment_method'    => $this->getPaymentMethod(),
+            'measurement_unit'  => $this->getMeasurementUnit(),
+            'agent_info'        => $this->getAgentInfo(),
+            'supplier_info'     => $this->getSupplierInfo(),
+        ], function ($property) {
+            return !is_null($property);
+        });
     }
 
+
+    /**
+     * @return AgentInfo
+     */
+    public function getAgentInfo()
+    {
+        return $this->agent_info;
+    }
+
+
+    /**
+     * @param AgentInfo $agent_info
+     *
+     * @return Item
+     */
+    public function setAgentInfo(AgentInfo $agent_info): self
+    {
+        $this->agent_info = $agent_info;
+        return $this;
+    }
+
+
+    /**
+     * @return SupplierInfo
+     */
+    public function getSupplierInfo()
+    {
+        return $this->supplier_info;
+    }
+
+
+    /**
+     * @param SupplierInfo $supplier_info
+     *
+     * @return Item
+     */
+    public function setSupplierInfo(SupplierInfo $supplier_info): self
+    {
+        $this->supplier_info = $supplier_info;
+        return $this;
+    }
 
     /**
      * @return string
@@ -241,10 +270,13 @@ class Item implements JsonSerializable
 
     /**
      * @param  string  $name
+     * 
+     * @return Item
      */
-    public function setName(string $name): void
+    public function setName(string $name): self
     {
         $this->name = $name;
+        return $this;
     }
 
 
@@ -259,10 +291,13 @@ class Item implements JsonSerializable
 
     /**
      * @param  float  $price
+     * 
+     * @return Item
      */
-    public function setPrice(float $price): void
+    public function setPrice(float $price): self
     {
         $this->price = $price;
+        return $this;
     }
 
 
@@ -277,10 +312,30 @@ class Item implements JsonSerializable
 
     /**
      * @param  float  $quantity
+     * 
+     * @return Item
      */
-    public function setQuantity(float $quantity): void
+    public function setQuantity(float $quantity): self
     {
         $this->quantity = $quantity;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVat(): array
+    {
+        return ["type" => $this->vat];
+    }
+
+    /**
+     * @param string $vat
+     */
+    public function setVat(string $vat): self
+    {
+        $this->vat = $vat;
+        return $this;
     }
 
 
@@ -295,70 +350,13 @@ class Item implements JsonSerializable
 
     /**
      * @param  float  $sum
+     * 
+     * @return Item
      */
-    public function setSum(float $sum): void
+    public function setSum(float $sum): self
     {
         $this->sum = $sum;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getTax(): string
-    {
-        return $this->tax;
-    }
-
-
-    /**
-     * @param  string  $tax
-     */
-    public function setTax(string $tax): void
-    {
-        $this->tax = $tax;
-        switch ($tax) {
-            case (Vat::TAX_VAT110):
-                $this->setTaxSum($this->getPrice() * $this->getQuantity() * 10 / 110);
-                break;
-            case (Vat::TAX_VAT118):
-                $this->setTaxSum($this->getPrice() * $this->getQuantity() * 18 / 118);
-                break;
-            case (Vat::TAX_VAT10):
-                $this->setTaxSum($this->getPrice() * $this->getQuantity() * 0.1);
-                break;
-            case (Vat::TAX_VAT18):
-                $this->setTaxSum($this->getPrice() * $this->getQuantity() * 0.18);
-                break;
-            case (Vat::TAX_VAT20):
-                $this->setTaxSum($this->getPrice() * $this->getQuantity() * 0.2);
-                break;
-            case (Vat::TAX_VAT120):
-                $this->setTaxSum($this->getPrice() * $this->getQuantity() * 20 / 120);
-                break;
-            case (Vat::TAX_VAT0):
-            case (Vat::TAX_NONE):
-            default:
-                $this->setTaxSum(0);
-        }
-    }
-
-
-    /**
-     * @return float
-     */
-    public function getTaxSum(): float
-    {
-        return $this->taxSum;
-    }
-
-
-    /**
-     * @param  float  $taxSum
-     */
-    public function setTaxSum(float $taxSum): void
-    {
-        $this->taxSum = round($taxSum, 2);
+        return $this;
     }
 
 
@@ -373,10 +371,13 @@ class Item implements JsonSerializable
 
     /**
      * @param  string  $payment_object
+     * 
+     * @return Item
      */
-    public function setPaymentObject(string $payment_object): void
+    public function setPaymentObject(string $payment_object): self
     {
         $this->payment_object = $payment_object;
+        return $this;
     }
 
 
@@ -391,10 +392,13 @@ class Item implements JsonSerializable
 
     /**
      * @param  string  $payment_method
+     * 
+     * @return Item
      */
-    public function setPaymentMethod(string $payment_method): void
+    public function setPaymentMethod(string $payment_method): self
     {
         $this->payment_method = $payment_method;
+        return $this;
     }
 
 
@@ -409,9 +413,12 @@ class Item implements JsonSerializable
 
     /**
      * @param  string  $measurement_unit
+     * 
+     * @return Item
      */
-    public function setMeasurementUnit(string $measurement_unit): void
+    public function setMeasurementUnit(string $measurement_unit): self
     {
         $this->measurement_unit = $measurement_unit;
+        return $this;
     }
 }
