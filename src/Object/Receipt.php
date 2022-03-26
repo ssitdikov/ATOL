@@ -41,7 +41,7 @@ class Receipt implements \JsonSerializable
     /**
      * @var array
      */
-    private $vats = [];
+    private $vats = null;
 
     /**
      * Информация об агенте
@@ -122,9 +122,9 @@ class Receipt implements \JsonSerializable
 
 
     /**
-     * @return array
+     * @return array|null
      */
-    public function getVats(): array
+    public function getVats()
     {
         return $this->vats;
     }
