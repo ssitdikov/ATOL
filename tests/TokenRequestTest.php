@@ -18,8 +18,9 @@ class TokenRequestTest extends TestCase
     private $request;
     private $responses = [];
 
-    public function setUp()
+    public function setUp(): void
     {
+        parent::setUp();
         $this->request = new TokenRequest('login', 'password');
         $this->responses = [
             json_decode('{"error": null, "timestamp": "", "token": "' . self::TOKEN . '"}'),

@@ -36,8 +36,9 @@ try {
         $groupId = 'group_code';
 
         // Позиции чека
-        $itemA = new Item('Товар 1', 1200.50, 1, Vat::TAX_NONE);
-        $itemB = new Item('Товар 2', 3200.50, 1, Vat::TAX_NONE);
+        $itemA = new Item('Товар 1', 1200.50, 1, new Vat(Vat::TAX_NONE), Item::PAYMENT_OBJECT_COMMODITY, Item::PAYMENT_METHOD_FULL_PREPAYMENT);
+        // Или так (по умолчанию будет установлено Item::PAYMENT_OBJECT_COMMODITY и  Item::PAYMENT_METHOD_FULL_PAYMENT)
+        $itemB = new Item('Товар 2', 3200.50, 1, new Vat(Vat::TAX_NONE));
         $totalSum = 4401.00;
 
         // Виды оплат
@@ -46,6 +47,8 @@ try {
 
         // Налоги
         $vat = new Vat(Vat::TAX_VAT20, round($totalSum * 20 / 120, 2));
+        // Или так (АТОЛ сам посчитает значение)
+        // $vat = new Vat(Vat::TAX_VAT20);
 
         // Заполнение данных по агенту
 

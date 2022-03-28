@@ -139,7 +139,7 @@ class Item implements \JsonSerializable
 
     private $sum = 0.0;
 
-    private $vat = 'none';
+    private $vat = null;
 
     private $name = '';
 
@@ -180,7 +180,7 @@ class Item implements \JsonSerializable
      * @param  string  $name
      * @param  float   $price
      * @param  float   $quantity
-     * @param  string  $vat
+     * @param  Vat     $vat
      * @param  string  $payment_object
      * @param  string  $payment_method
      */
@@ -322,17 +322,17 @@ class Item implements \JsonSerializable
     }
 
     /**
-     * @return array
+     * @return Vat|null
      */
-    public function getVat(): array
+    public function getVat()
     {
-        return ["type" => $this->vat];
+        return $this->vat;
     }
 
     /**
-     * @param string $vat
+     * @param Vat $vat
      */
-    public function setVat(string $vat): self
+    public function setVat(Vat $vat): self
     {
         $this->vat = $vat;
         return $this;

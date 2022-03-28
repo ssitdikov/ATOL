@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: user
@@ -110,7 +111,7 @@ class ApiClientTest extends TestCase
             200,
             [],
             '{"uuid":"' . $uuid . '", "error":null, "status":"", "payload":null, "timestamp":"", "group_code":"",' .
-            '"daemon_code":"", "device_code":"", "callback_url":""}'
+                '"daemon_code":"", "device_code":"", "callback_url":""}'
         );
         $client->expects($this->once())
             ->method('request')->willReturn($response);

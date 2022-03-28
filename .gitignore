@@ -1,5 +1,6 @@
 .DS_Store
 .idea
+.phpunit.result.cache
 build
 composer.lock
 composer.phar

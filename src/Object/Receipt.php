@@ -312,7 +312,7 @@ class Receipt implements \JsonSerializable
     /**
      * @return Company
      */
-    public function getCompany(): Company
+    public function getCompany()
     {
         return $this->company;
     }
@@ -330,7 +330,7 @@ class Receipt implements \JsonSerializable
     /**
      * @return Client
      */
-    public function getClient(): Client
+    public function getClient()
     {
         return $this->client;
     }
