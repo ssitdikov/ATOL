@@ -27,8 +27,10 @@ class ReceivePaymentsOperator implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return array_filter([
-            'phones' => $this->getPhones()
-        ], function($property) { return !is_null($property); });
+            'phones'    =>  $this->getPhones()
+        ], function ($property) {
+            return !is_null($property);
+        });
     }
 
     /**
@@ -48,7 +50,7 @@ class ReceivePaymentsOperator implements \JsonSerializable
      *
      * @return ReceivePaymentsOperator
      */
-    public function setPhones(array $phones): self 
+    public function setPhones(array $phones): self
     {
         $this->phones = $phones;
         return $this;
@@ -61,7 +63,7 @@ class ReceivePaymentsOperator implements \JsonSerializable
      *
      * @return ReceivePaymentsOperator
      */
-    public function addPhone(string  $phone): self 
+    public function addPhone(string  $phone): self
     {
         $this->phones[] = $phone;
         return $this;

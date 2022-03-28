@@ -1,18 +1,19 @@
 <?php
 
 use \SSitdikov\ATOL\Client\ApiClient;
-use \SSitdikov\ATOL\Response\{OperationResponse, TokenResponse, ReportResponse};
-use \SSitdikov\ATOL\Request\{TokenRequest, OperationRequest, ReportRequest};
-use \SSitdikov\ATOL\Object\{
-    Info,
-    Item,
-    Payment,
-    Receipt,
-    ReceiptSno,
-    Vat,
-    Company,
-    Client
-};
+use \SSitdikov\ATOL\Response\OperationResponse;
+use \SSitdikov\ATOL\Response\TokenResponse;
+use \SSitdikov\ATOL\Request\TokenRequest;
+use \SSitdikov\ATOL\Request\OperationRequest;
+use \SSitdikov\ATOL\Request\ReportRequest;
+use \SSitdikov\ATOL\Object\Info;
+use \SSitdikov\ATOL\Object\Item;
+use \SSitdikov\ATOL\Object\Payment;
+use \SSitdikov\ATOL\Object\Receipt;
+use \SSitdikov\ATOL\Object\ReceiptSno;
+use \SSitdikov\ATOL\Object\Vat;
+use \SSitdikov\ATOL\Object\Company;
+use \SSitdikov\ATOL\Object\Client;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -44,16 +45,16 @@ try {
         $vat = new Vat(Vat::TAX_VAT20, round($totalSum * 20 / 120, 2));
 
         // Организация
-        $companyINN = "1111111111";
+        $companyINN = '1111111111';
         // Адрес магазина
         // В случае мобильного приложения URL приложения в кабинете (см что указано в кабинете АТОЛ)
-        $companyAddress = "test.mystore.dev";
-        $companyEmail = "company@mail.ru";
+        $companyAddress = 'test.mystore.dev';
+        $companyEmail = 'company@mail.ru';
         $company = new Company($companyINN, $companyAddress, $companyEmail, ReceiptSno::RECEIPT_SNO_OSN);
 
         // Покупатель
-        $buyerEmail = "buyer@mail.ru";
-        $buyerPhone = "+79170123456";
+        $buyerEmail = 'buyer@mail.ru';
+        $buyerPhone = '+79170123456';
         $buyer = new Client($buyerEmail, $buyerPhone);
 
         // Формирование чека

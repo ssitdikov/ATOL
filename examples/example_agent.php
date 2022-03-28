@@ -1,23 +1,25 @@
 <?php
 
 use \SSitdikov\ATOL\Client\ApiClient;
-use \SSitdikov\ATOL\Response\{OperationResponse, TokenResponse, ReportResponse};
-use \SSitdikov\ATOL\Request\{TokenRequest, OperationRequest, ReportRequest};
-use \SSitdikov\ATOL\Object\{
-    Info,
-    Item,
-    Payment,
-    Receipt,
-    ReceiptSno,
-    Vat,
-    AgentInfo,
-    SupplierInfo,
-    PayingAgent,
-    MoneyTransferOperator,
-    ReceivePaymentsOperator,
-    Company,
-    Client
-};
+use \SSitdikov\ATOL\Response\OperationResponse;
+use \SSitdikov\ATOL\Response\TokenResponse;
+use \SSitdikov\ATOL\Response\ReportResponse;
+use \SSitdikov\ATOL\Request\TokenRequest;
+use \SSitdikov\ATOL\Request\OperationRequest;
+use \SSitdikov\ATOL\Request\ReportRequest;
+use \SSitdikov\ATOL\Object\Info;
+use \SSitdikov\ATOL\Object\Item;
+use \SSitdikov\ATOL\Object\Payment;
+use \SSitdikov\ATOL\Object\Receipt;
+use \SSitdikov\ATOL\Object\ReceiptSno;
+use \SSitdikov\ATOL\Object\Vat;
+use \SSitdikov\ATOL\Object\AgentInfo;
+use \SSitdikov\ATOL\Object\SupplierInfo;
+use \SSitdikov\ATOL\Object\PayingAgent;
+use \SSitdikov\ATOL\Object\MoneyTransferOperator;
+use \SSitdikov\ATOL\Object\ReceivePaymentsOperator;
+use \SSitdikov\ATOL\Object\Company;
+use \SSitdikov\ATOL\Object\Client;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -52,11 +54,11 @@ try {
 
         // Заполнение данных по агенту
 
-        // Атрибуты оператора перевода. 
-        $moneyTransferOperatorName = "ООО Оператор-Перевода";
-        $moneyTransferOperatorPhones = ["+79170123456"];
-        $moneyTransferOperatorAddress = "г. Москва";
-        $moneyTransferOperatorINN = "3333333333";
+        // Атрибуты оператора перевода.
+        $moneyTransferOperatorName = 'ООО Оператор-Перевода';
+        $moneyTransferOperatorPhones = ['+79170123456'];
+        $moneyTransferOperatorAddress = 'г. Москва';
+        $moneyTransferOperatorINN = '3333333333';
         $moneyTransferOperator = new MoneyTransferOperator(
             $moneyTransferOperatorName,
             $moneyTransferOperatorPhones,
@@ -64,21 +66,21 @@ try {
             $moneyTransferOperatorINN
         );
 
-        // Атрибуты оператора по приему платежей. 
-        $receivePaymentsOperatorPhones = ["+79170123456"];
+        // Атрибуты оператора по приему платежей.
+        $receivePaymentsOperatorPhones = ['+79170123456'];
         $receivePaymentsOperator = new ReceivePaymentsOperator($receivePaymentsOperatorPhones);
 
-        // Атрибуты платежного агента. 
+        // Атрибуты платежного агента.
         // Наименование операции. Максимальная длина строки – 24 символа.
-        $payingAgentOperation = "ООО Агент";
-        $payingAgentPhones = ["+79170123456"];
+        $payingAgentOperation = 'ООО Агент';
+        $payingAgentPhones = ['+79170123456'];
         $payingAgent = new PayingAgent($payingAgentOperation, $payingAgentPhones);
 
         // Атрибуты поставщика.
         // Обязателен если указывается AgentInfo
-        $supplierInfoName = "ООО Поставщик";
-        $supplierInfoPhones = ["+79170123456"];
-        $supplierInfoINN = "2222222222";
+        $supplierInfoName = 'ООО Поставщик';
+        $supplierInfoPhones = ['+79170123456'];
+        $supplierInfoINN = '2222222222';
         $supplierInfo = new SupplierInfo($supplierInfoName, $supplierInfoPhones, $supplierInfoINN);
 
         // Агент
@@ -89,16 +91,16 @@ try {
             ->setMoneyTransferOperator($moneyTransferOperator);
 
         // Организация
-        $companyINN = "1111111111";
+        $companyINN = '1111111111';
         // Адрес магазина
         // В случае мобильного приложения URL приложения в кабинете (см что указано в кабинете АТОЛ)
-        $companyAddress = "test.mystore.dev";
-        $companyEmail = "company@mail.ru";
+        $companyAddress = 'test.mystore.dev';
+        $companyEmail = 'company@mail.ru';
         $company = new Company($companyINN, $companyAddress, $companyEmail, ReceiptSno::RECEIPT_SNO_OSN);
 
         // Покупатель
-        $buyerEmail = "buyer@mail.ru";
-        $buyerPhone = "+79170123456";
+        $buyerEmail = 'buyer@mail.ru';
+        $buyerPhone = '+79170123456';
         $buyer = new Client($buyerEmail, $buyerPhone);
 
         // Важно! Агент применяется или ко всему чеку ИЛИ к позициям.

@@ -270,7 +270,7 @@ class Item implements \JsonSerializable
 
     /**
      * @param  string  $name
-     * 
+     *
      * @return Item
      */
     public function setName(string $name): self
@@ -291,7 +291,7 @@ class Item implements \JsonSerializable
 
     /**
      * @param  float  $price
-     * 
+     *
      * @return Item
      */
     public function setPrice(float $price): self
@@ -312,7 +312,7 @@ class Item implements \JsonSerializable
 
     /**
      * @param  float  $quantity
-     * 
+     *
      * @return Item
      */
     public function setQuantity(float $quantity): self
@@ -350,7 +350,7 @@ class Item implements \JsonSerializable
 
     /**
      * @param  float  $sum
-     * 
+     *
      * @return Item
      */
     public function setSum(float $sum): self
@@ -371,7 +371,7 @@ class Item implements \JsonSerializable
 
     /**
      * @param  string  $payment_object
-     * 
+     *
      * @return Item
      */
     public function setPaymentObject(string $payment_object): self
@@ -392,7 +392,7 @@ class Item implements \JsonSerializable
 
     /**
      * @param  string  $payment_method
-     * 
+     *
      * @return Item
      */
     public function setPaymentMethod(string $payment_method): self
@@ -413,7 +413,7 @@ class Item implements \JsonSerializable
 
     /**
      * @param  string  $measurement_unit
-     * 
+     *
      * @return Item
      */
     public function setMeasurementUnit(string $measurement_unit): self

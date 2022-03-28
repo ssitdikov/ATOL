@@ -14,7 +14,7 @@ class SupplierInfo implements \JsonSerializable
 {
     /**
      * Наименование поставщика.
-     * 
+     *
      * @var string
      */
     public $name;
@@ -28,7 +28,7 @@ class SupplierInfo implements \JsonSerializable
 
     /**
      * ИНН поставщика
-     * 
+     *
      * @var string
      */
     public $inn;
@@ -43,9 +43,9 @@ class SupplierInfo implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return array_filter([
-            'name' => $this->getName(),
-            'phones' => $this->getPhones(),
-            'inn' => $this->getINN()
+            'name'      => $this->getName(),
+            'phones'    => $this->getPhones(),
+            'inn'       => $this->getINN()
         ], function ($property) {
             return !is_null($property);
         });
@@ -53,7 +53,7 @@ class SupplierInfo implements \JsonSerializable
 
     /**
      * Возвращает наименование поставщика.
-     * 
+     *
      * @return string
      */
     public function getName()
@@ -63,7 +63,7 @@ class SupplierInfo implements \JsonSerializable
 
     /**
      * Устанавлиает наименование поставщика.
-     * 
+     *
      * @param string $name
      *
      * @return SupplierInfo
@@ -112,7 +112,7 @@ class SupplierInfo implements \JsonSerializable
 
     /**
      * Возвращает ИНН поставщика.
-     * 
+     *
      * @return string
      */
     public function getINN()
@@ -122,7 +122,7 @@ class SupplierInfo implements \JsonSerializable
 
     /**
      * Устанавлиает ИНН оператора перевода.
-     * 
+     *
      * @param string $inn
      *
      * @return SupplierInfo

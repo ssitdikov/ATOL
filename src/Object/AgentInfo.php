@@ -17,7 +17,7 @@ class AgentInfo implements \JsonSerializable
      * агент. Оказание услуг покупателю (клиенту)
      * пользователем, являющимся банковским
      * платежным агентом банковским платежным
-     * агентом. 
+     * агентом.
      */
     public const BANK_PAYING_AGENT = 'bank_paying_agent';
 
@@ -73,7 +73,7 @@ class AgentInfo implements \JsonSerializable
     /**
      * Признак агента по предмету расчёта (ограничен
      * агентами, введенными в ККТ при фискализации).
-     * 
+     *
      * @var string
      */
     public $type = self::ANOTHER;
@@ -93,7 +93,7 @@ class AgentInfo implements \JsonSerializable
     public $receive_payments_operator;
 
     /**
-     * Атрибуты оператора перевода. 
+     * Атрибуты оператора перевода.
      *
      * @var MoneyTransferOperator
      */
@@ -103,30 +103,32 @@ class AgentInfo implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return array_filter([
-            'type' => $this->getType(),
-            'paying_agent' => $this->getPayingAgent(),
-            'receive_payments_operator' => $this->getReceivePaymentsOperator(),
-            'money_transfer_operator' => $this->getMoneyTransferOperator()
-        ], function($property) { return !is_null($property); });
+            'type'                          => $this->getType(),
+            'paying_agent'                  => $this->getPayingAgent(),
+            'receive_payments_operator'     => $this->getReceivePaymentsOperator(),
+            'money_transfer_operator'       => $this->getMoneyTransferOperator()
+        ], function ($property) {
+            return !is_null($property);
+        });
     }
 
     /**
-     * Get Признак агента по предмету расчёта 
+     * Get Признак агента по предмету расчёта
      *
      * @return  string
-     */ 
+     */
     public function getType()
     {
         return $this->type;
     }
 
     /**
-     * Set Признак агента по предмету расчёта 
+     * Set Признак агента по предмету расчёта
      *
-     * @param  string  $type  Признак агента по предмету расчёта 
+     * @param  string  $type  Признак агента по предмету расчёта
      *
      * @return  AgentInfo
-     */ 
+     */
     public function setType(string $type): self
     {
         $this->type = $type;
@@ -137,7 +139,7 @@ class AgentInfo implements \JsonSerializable
      * Get атрибуты платежного агента.
      *
      * @return  PayingAgent
-     */ 
+     */
     public function getPayingAgent()
     {
         return $this->paying_agent;
@@ -149,7 +151,7 @@ class AgentInfo implements \JsonSerializable
      * @param  PayingAgent  $paying_agent  Атрибуты платежного агента.
      *
      * @return  self
-     */ 
+     */
     public function setPayingAgent(PayingAgent $paying_agent): self
     {
         $this->paying_agent = $paying_agent;
@@ -160,7 +162,7 @@ class AgentInfo implements \JsonSerializable
      * Get атрибуты оператора по приему платежей.
      *
      * @return  ReceivePaymentsOperator
-     */ 
+     */
     public function getReceivePaymentsOperator()
     {
         return $this->receive_payments_operator;
@@ -172,7 +174,7 @@ class AgentInfo implements \JsonSerializable
      * @param  ReceivePaymentsOperator  $receive_payments_operator  Атрибуты оператора по приему платежей.
      *
      * @return  AgentInfo
-     */ 
+     */
     public function setReceivePaymentsOperator(ReceivePaymentsOperator $receive_payments_operator): self
     {
         $this->receive_payments_operator = $receive_payments_operator;
@@ -183,7 +185,7 @@ class AgentInfo implements \JsonSerializable
      * Get атрибуты оператора перевода.
      *
      * @return  MoneyTransferOperator
-     */ 
+     */
     public function getMoneyTransferOperator()
     {
         return $this->money_transfer_operator;
@@ -195,7 +197,7 @@ class AgentInfo implements \JsonSerializable
      * @param  MoneyTransferOperator  $money_transfer_operator  Атрибуты оператора перевода.
      *
      * @return  AgentInfo
-     */ 
+     */
     public function setMoneyTransferOperator(MoneyTransferOperator $money_transfer_operator): self
     {
         $this->money_transfer_operator = $money_transfer_operator;

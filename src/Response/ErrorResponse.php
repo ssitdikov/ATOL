@@ -43,9 +43,9 @@ class ErrorResponse implements ResponseInterface
     public function __construct(stdClass $json)
     {
         $this->error_id = $json->error_id;
-        $this->code = $json->code;
-        $this->text = $json->text;
-        $this->type = $json->type;
+        $this->code     = $json->code;
+        $this->text     = $json->text;
+        $this->type     = $json->type;
     }
 
 

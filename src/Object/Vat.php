@@ -10,7 +10,7 @@ namespace SSitdikov\ATOL\Object;
  *
  * @package SSitdikov\ATOL\Object
  */
-class Vat  implements \JsonSerializable
+class Vat implements \JsonSerializable
 {
     /**
      * без НДС.
@@ -77,8 +77,8 @@ class Vat  implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'type' => $this->type,
-            'sum' => $this->sum
+            'type'  => $this->type,
+            'sum'   => $this->sum
         ];
     }
 

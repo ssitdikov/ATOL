@@ -13,7 +13,6 @@ use stdClass;
  */
 class ReportResponse implements ResponseInterface
 {
-
     public const STATUS_DONE = 'done';
     public const STATUS_FAIL = 'fail';
     public const STATUS_WAIT = 'wait';
@@ -65,15 +64,15 @@ class ReportResponse implements ResponseInterface
      */
     public function __construct(stdClass $json)
     {
-        $this->uuid = $json->uuid;
-        $this->error = $json->error ? new ErrorResponse($json->error) : null;
-        $this->payload = $json->payload ? new PayloadResponse($json->payload) : null;
-        $this->status = $json->status;
-        $this->timestamp = $json->timestamp;
-        $this->groupCode = $json->group_code;
-        $this->daemonCode = $json->daemon_code;
-        $this->deviceCode = $json->device_code;
-        $this->callbackUrl = $json->callback_url;
+        $this->uuid             = $json->uuid;
+        $this->error            = $json->error ? new ErrorResponse($json->error) : null;
+        $this->payload          = $json->payload ? new PayloadResponse($json->payload) : null;
+        $this->status           = $json->status;
+        $this->timestamp        = $json->timestamp;
+        $this->groupCode        = $json->group_code;
+        $this->daemonCode       = $json->daemon_code;
+        $this->deviceCode       = $json->device_code;
+        $this->callbackUrl      = $json->callback_url;
     }
 
 

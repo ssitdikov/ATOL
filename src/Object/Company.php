@@ -12,7 +12,6 @@ namespace SSitdikov\ATOL\Object;
  */
 class Company implements \JsonSerializable
 {
-
     private $email = '';
     private $payment_address = '';
     private $sno = ReceiptSno::RECEIPT_SNO_USN_INCOME;
@@ -29,10 +28,10 @@ class Company implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'sno' => $this->getSno(),
-            'email' => $this->getEmail(),
-            'inn' => $this->getInn(),
-            'payment_address' => $this->getPaymentAddress()
+            'sno'               => $this->getSno(),
+            'email'             => $this->getEmail(),
+            'inn'               => $this->getInn(),
+            'payment_address'   => $this->getPaymentAddress()
         ];
     }
 

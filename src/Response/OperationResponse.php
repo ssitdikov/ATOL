@@ -13,7 +13,6 @@ use stdClass;
  */
 class OperationResponse implements ResponseInterface
 {
-
     const SELL_STATUS_WAIT = 'wait';
     const SELL_STATUS_DONE = 'done';
     const SELL_STATUS_FAIL = 'fail';
@@ -46,10 +45,10 @@ class OperationResponse implements ResponseInterface
      */
     public function __construct(stdClass $json)
     {
-        $this->uuid = $json->uuid;
-        $this->timestamp = $json->timestamp;
-        $this->status = $json->status;
-        $this->error = $json->error ? new ErrorResponse($json->error) : null;
+        $this->uuid         = $json->uuid;
+        $this->timestamp    = $json->timestamp;
+        $this->status       = $json->status;
+        $this->error        = $json->error ? new ErrorResponse($json->error) : null;
     }
 
 

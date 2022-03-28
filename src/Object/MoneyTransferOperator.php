@@ -15,7 +15,7 @@ class MoneyTransferOperator implements \JsonSerializable
 
     /**
      * Наименование оператора перевода.
-     * 
+     *
      * @var string
      */
     public $name;
@@ -29,14 +29,14 @@ class MoneyTransferOperator implements \JsonSerializable
 
     /**
      * Адрес оператора перевода
-     * 
+     *
      * @var string
      */
     public $address;
 
     /**
      * ИНН оператора перевода
-     * 
+     *
      * @var string
      */
     public $inn;
@@ -52,16 +52,18 @@ class MoneyTransferOperator implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return array_filter([
-            'name' => $this->getName(),
-            'phones' => $this->getPhones(),
-            'address' => $this->getAddress(),
-            'inn' => $this->getINN()
-        ], function($property) { return !is_null($property); });
+            'name'      => $this->getName(),
+            'phones'    => $this->getPhones(),
+            'address'   => $this->getAddress(),
+            'inn'       => $this->getINN()
+        ], function ($property) {
+            return !is_null($property);
+        });
     }
 
     /**
      * Возвращает наименование оператора перевода.
-     * 
+     *
      * @return string
      */
     public function getName()
@@ -71,7 +73,7 @@ class MoneyTransferOperator implements \JsonSerializable
 
     /**
      * Устанавлиает наименование оператора перевода.
-     * 
+     *
      * @param string $name
      *
      * @return MoneyTransferOperator
@@ -99,7 +101,7 @@ class MoneyTransferOperator implements \JsonSerializable
      *
      * @return MoneyTransferOperator
      */
-    public function setPhones(array $phones): self 
+    public function setPhones(array $phones): self
     {
         $this->phones = $phones;
         return $this;
@@ -112,7 +114,7 @@ class MoneyTransferOperator implements \JsonSerializable
      *
      * @return MoneyTransferOperator
      */
-    public function addPhone(string  $phone): self 
+    public function addPhone(string  $phone): self
     {
         $this->phones[] = $phone;
         return $this;
@@ -120,7 +122,7 @@ class MoneyTransferOperator implements \JsonSerializable
 
     /**
      * Возвращает адрес оператора перевода.
-     * 
+     *
      * @return string
      */
     public function getAddress()
@@ -130,7 +132,7 @@ class MoneyTransferOperator implements \JsonSerializable
 
     /**
      * Устанавлиает адрес оператора перевода.
-     * 
+     *
      * @param string $address
      *
      * @return MoneyTransferOperator
@@ -143,7 +145,7 @@ class MoneyTransferOperator implements \JsonSerializable
 
     /**
      * Возвращает ИНН оператора перевода.
-     * 
+     *
      * @return string
      */
     public function getINN()
@@ -153,7 +155,7 @@ class MoneyTransferOperator implements \JsonSerializable
 
     /**
      * Устанавлиает ИНН оператора перевода.
-     * 
+     *
      * @param string $inn
      *
      * @return MoneyTransferOperator

@@ -15,14 +15,14 @@ class Client implements \JsonSerializable
 
     /**
      * Email покупателя
-     * 
+     *
      * @var string
      */
     private $email = '';
 
     /**
      * Телефон покупателя
-     * 
+     *
      * @var string
      */
     private $phone = '';
@@ -42,10 +42,10 @@ class Client implements \JsonSerializable
         ];
     }
 
-  
+
     /**
      * Получить email клиента
-     * 
+     *
      * @return string
      */
     public function getEmail(): string
@@ -56,9 +56,9 @@ class Client implements \JsonSerializable
 
     /**
      * Задать email клиента
-     * 
+     *
      * @param string $email
-     * 
+     *
      * @return Client
      */
     public function setEmail(string $email): self
@@ -66,10 +66,10 @@ class Client implements \JsonSerializable
         $this->email = $email;
         return $this;
     }
-    
-    
+
+
     /**
-      * Получить телефон клиента
+     * Получить телефон клиента
 
      * @return string
      */
@@ -81,9 +81,9 @@ class Client implements \JsonSerializable
 
     /**
      * Задать телефон клиента
-     * 
+     *
      * @param string $phone
-     * 
+     *
      * @return Client
      */
     public function setPhone(string $phone): self

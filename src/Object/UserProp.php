@@ -29,7 +29,7 @@ class UserProp implements \JsonSerializable
     private $value;
 
 
-    /** 
+    /**
      * UserProp constructor.
      *
      * @param $name

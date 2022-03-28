@@ -18,7 +18,6 @@ use SSitdikov\ATOL\Response\TokenResponse;
  */
 class OperationRequest implements RequestInterface
 {
-
     public const OPERATION_SELL = 'sell';
     public const OPERATION_SELL_REFUND = 'sell_refund';
     public const OPERATION_SELL_CORRECTION = 'sell_correction';

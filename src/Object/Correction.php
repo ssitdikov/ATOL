@@ -56,10 +56,10 @@ class Correction implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'company'         => $this->getCompany(),
-            'correction_info' => $this->getCorrectionInfo(),
-            'payments'        => $this->getPayments(),
-            'vats'            => $this->getVats(),
+            'company'           => $this->getCompany(),
+            'correction_info'   => $this->getCorrectionInfo(),
+            'payments'          => $this->getPayments(),
+            'vats'              => $this->getVats(),
         ];
     }
 
@@ -162,5 +162,4 @@ class Correction implements \JsonSerializable
         $this->vats[] = new Vat($type, $sum);
         return $this;
     }
-
 }

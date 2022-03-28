@@ -37,8 +37,7 @@ class TokenRequest implements RequestInterface
     public function __construct(
         string $login,
         string $password
-    )
-    {
+    ) {
         $this->login = $login;
         $this->password = $password;
     }
@@ -93,5 +92,4 @@ class TokenRequest implements RequestInterface
         }
         return new TokenResponse($response);
     }
-
 }

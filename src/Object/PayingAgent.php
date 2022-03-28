@@ -16,7 +16,7 @@ class PayingAgent implements \JsonSerializable
     /**
      * Наименование операции.
      * Максимальная длина строки – 24 символа.
-     * 
+     *
      * @var string
      */
     public $operation;
@@ -37,8 +37,8 @@ class PayingAgent implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return array_filter([
-            'operation' => $this->getOperation(),
-            'phones' => $this->getPhones()
+            'operation'     => $this->getOperation(),
+            'phones'        => $this->getPhones()
         ], function ($property) {
             return !is_null($property);
         });
@@ -46,7 +46,7 @@ class PayingAgent implements \JsonSerializable
 
     /**
      * Возвращает наименование операции.
-     * 
+     *
      * @return string
      */
     public function getOperation()
@@ -57,7 +57,7 @@ class PayingAgent implements \JsonSerializable
     /**
      * Устанавлиает наименование операции.
      * Максимальная длина строки – 24 символа.
-     * 
+     *
      * @param string $operation
      *
      * @return PayingAgent
