@@ -4,28 +4,24 @@ declare(strict_types=1);
 
 namespace SSitdikov\ATOL\Object;
 
-use JsonSerializable;
-
 /**
  * Class Receipt.
  *  «Приход», «Возврат прихода», «Расход», «Возврат расхода»
  *
  * @package SSitdikov\ATOL\Object
  */
-class Receipt implements JsonSerializable
+class Receipt implements \JsonSerializable
 {
 
-    private $sno = ReceiptSno::RECEIPT_SNO_USN_INCOME;
+    /**
+     * @var Client
+     */
+    private $client;
 
     /**
-     * @var string
+     * @var Company
      */
-    private $email = '';
-
-    /**
-     * @var string
-     */
-    private $phone = '';
+    private $company;
 
     /**
      * @var array
@@ -45,26 +41,26 @@ class Receipt implements JsonSerializable
     /**
      * @var array
      */
-    private $vats = [];
+    private $vats = null;
 
     /**
-     * @var string
+     * Информация об агенте
+     *
+     * @var AgentInfo
      */
-    private $inn = '';
+    private $agent_info;
 
     /**
-     * @var string
+     * Информация о поставщике
+     *
+     * @var SupplierInfo
      */
-    private $companyEmail = '';
-
-    /**
-     * @var string
-     */
-    private $paymentAddress = '';
+    private $supplier_info;
 
     /**
      * ФИО кассира.
      * Максимальная длина строки – 64 символа.
+     * @todo Убрать? В v4 отсутствует в документации
      *
      * @var string
      */
@@ -72,6 +68,7 @@ class Receipt implements JsonSerializable
 
     /**
      * Дополнительный реквизит пользователя
+     * @todo Убрать? В v4 отсутствует в документации
      *
      * @var UserProp
      */
@@ -80,6 +77,7 @@ class Receipt implements JsonSerializable
     /**
      * Дополнительный реквизит чека.
      * Максимальная длина строки – 16 символов.
+     * @todo Убрать? В v4 отсутствует в документации
      *
      * @var string
      */
@@ -124,9 +122,9 @@ class Receipt implements JsonSerializable
 
 
     /**
-     * @return array
+     * @return array|null
      */
-    public function getVats(): array
+    public function getVats()
     {
         return $this->vats;
     }
@@ -157,151 +155,43 @@ class Receipt implements JsonSerializable
 
 
     /**
-     * @return array
+     * @return AgentInfo
      */
-    public function jsonSerialize(): array
+    public function getAgentInfo()
     {
-        return [
-            'client'   => [
-                'email' => $this->getEmail(),
-                'phone' => $this->getPhone(),
-            ],
-            'company'  => [
-                'email'           => $this->getCompanyEmail(),
-                'sno'             => $this->getSno(),
-                'inn'             => $this->getInn(),
-                'payment_address' => $this->getPaymentAddress(),
-            ],
-            'items'    => $this->getItems(),
-            'total'    => $this->getTotal(),
-            'payments' => $this->getPayments(),
-            'cashier ' => $this->getCashier(),
-        ];
+        return $this->agent_info;
     }
 
 
     /**
-     * @return string
-     */
-    public function getEmail(): string
-    {
-        return $this->email;
-    }
-
-
-    /**
-     * @param string $email
+     * @param AgentInfo $agent_info
      *
      * @return Receipt
      */
-    public function setEmail(string $email): Receipt
+    public function setAgentInfo(AgentInfo $agent_info): self
     {
-        $this->email = $email;
+        $this->agent_info = $agent_info;
         return $this;
     }
 
 
     /**
-     * @return string
+     * @return SupplierInfo
      */
-    public function getPhone(): string
+    public function getSupplierInfo()
     {
-        return $this->phone;
+        return $this->supplier_info;
     }
 
 
     /**
-     * @param string $phone
+     * @param SupplierInfo $supplier_info
      *
      * @return Receipt
      */
-    public function setPhone(string $phone): Receipt
+    public function setSupplierInfo(SupplierInfo $supplier_info): self
     {
-        $this->phone = $phone;
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getCompanyEmail(): string
-    {
-        return $this->companyEmail;
-    }
-
-
-    /**
-     * @param string $companyEmail
-     *
-     * @return Receipt
-     */
-    public function setCompanyEmail(string $companyEmail): self
-    {
-        $this->companyEmail = $companyEmail;
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getSno(): string
-    {
-        return $this->sno;
-    }
-
-
-    /**
-     * @param string $sno
-     *
-     * @return Receipt
-     */
-    public function setSno(string $sno): Receipt
-    {
-        $this->sno = $sno;
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getInn(): string
-    {
-        return $this->inn;
-    }
-
-
-    /**
-     * @param string $inn
-     *
-     * @return Receipt
-     */
-    public function setInn(string $inn): self
-    {
-        $this->inn = $inn;
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getPaymentAddress(): string
-    {
-        return $this->paymentAddress;
-    }
-
-
-    /**
-     * @param string $paymentAddress
-     *
-     * @return Receipt
-     */
-    public function setPaymentAddress(string $paymentAddress): self
-    {
-        $this->paymentAddress = $paymentAddress;
+        $this->supplier_info = $supplier_info;
         return $this;
     }
 
@@ -387,13 +277,12 @@ class Receipt implements JsonSerializable
     /**
      * @param Item $item
      *
-     * @return $this
+     * @return Receipt
      */
-    public function addItem(Item $item): Receipt
+    public function addItem(Item $item): self
     {
         $this->items[] = $item;
         $this->addTotal($item->getSum());
-
         return $this;
     }
 
@@ -401,21 +290,78 @@ class Receipt implements JsonSerializable
     /**
      * @param float $sum
      */
-    private function addTotal($sum): void
+    private function addTotal($sum): self
     {
         $this->total += $sum;
+        return $this;
     }
 
 
     /**
      * @param Payment $payment
      *
-     * @return $this
+     * @return Receipt;
      */
-    public function addPayment(Payment $payment): Receipt
+    public function addPayment(Payment $payment): self
     {
         $this->payments[] = $payment;
-
         return $this;
+    }
+
+
+    /**
+     * @return Company
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
+     * @param Company $company
+     * @return Receipt
+     */
+    public function setCompany(Company $company): self
+    {
+        $this->company = $company;
+        return $this;
+    }
+
+    /**
+     * @return Client
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
+     * @param Client $client
+     * @return Receipt
+     */
+    public function setClient(Client $client): self
+    {
+        $this->client = $client;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize(): array
+    {
+        return array_filter([
+            'client'            => $this->getClient(),
+            'company'           => $this->getCompany(),
+            'items'             => $this->getItems(),
+            'total'             => $this->getTotal(),
+            'payments'          => $this->getPayments(),
+            'cashier '          => $this->getCashier(),
+            'vats'              => $this->getVats(),
+            'agent_info'        => $this->getAgentInfo(),
+            'supplier_info'     => $this->getSupplierInfo()
+        ], function ($property) {
+            return !is_null($property);
+        });
     }
 }

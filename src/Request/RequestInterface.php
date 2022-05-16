@@ -13,7 +13,6 @@ use SSitdikov\ATOL\Response\ResponseInterface;
  */
 interface RequestInterface
 {
-
     public const METHOD_POST = 'POST';
     public const METHOD_GET = 'GET';
 

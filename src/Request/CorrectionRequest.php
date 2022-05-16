@@ -18,7 +18,6 @@ use SSitdikov\ATOL\Response\TokenResponse;
  */
 class CorrectionRequest implements RequestInterface
 {
-
     private $groupId;
 
     private $uuid;
@@ -49,8 +48,7 @@ class CorrectionRequest implements RequestInterface
         Correction $correction,
         Info $info,
         TokenResponse $token
-    )
-    {
+    ) {
         $this->groupId = $groupId;
         $this->operation = $operation;
         $this->uuid = $uuid;

@@ -9,7 +9,6 @@ use function json_decode;
 
 class TokenRequestTest extends TestCase
 {
-
     const TOKEN = 'd41d8cd98f00b204e9800998ecf8427e';
 
     /**
@@ -18,8 +17,9 @@ class TokenRequestTest extends TestCase
     private $request;
     private $responses = [];
 
-    public function setUp()
+    public function setUp(): void
     {
+        parent::setUp();
         $this->request = new TokenRequest('login', 'password');
         $this->responses = [
             json_decode('{"error": null, "timestamp": "", "token": "' . self::TOKEN . '"}'),

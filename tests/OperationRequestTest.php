@@ -3,6 +3,8 @@
 namespace SSitdikov\ATOL\Tests;
 
 use PHPUnit\Framework\TestCase;
+use SSitdikov\ATOL\Object\Client;
+use SSitdikov\ATOL\Object\Company;
 use SSitdikov\ATOL\Object\Info;
 use SSitdikov\ATOL\Object\Item;
 use SSitdikov\ATOL\Object\Payment;
@@ -24,29 +26,26 @@ class OperationRequestTest extends TestCase
         $title = 'Title';
         $price = 1200.00;
         $quantity = 3;
-        $tax = Vat::TAX_NONE;
         $sum = $price * $quantity;
-        $taxSum = 0;
+        $vat = new Vat(Vat::TAX_VAT120, round($sum * 20 / 120, 2));
         $payment_object = 'commodity';
         $payment_method = 'full_payment';
         $measurement_unit = 'шт.';
 
-        $item = new Item($title, $price, $quantity, $tax);
+        $item = new Item($title, $price, $quantity, $vat);
 
         $this->assertEquals($title, $item->getName());
         $this->assertEquals($price, $item->getPrice());
         $this->assertEquals($quantity, $item->getQuantity());
         $this->assertEquals($sum, $item->getSum());
-        $this->assertEquals(Vat::TAX_NONE, $item->getTax());
-        $this->assertEquals($taxSum, $item->getTaxSum());
+        $this->assertEquals($vat, $item->getVat());
         $this->assertEquals(
             [
                 'name'             => $title,
                 'price'            => $price,
                 'quantity'         => $quantity,
                 'sum'              => $sum,
-                'tax'              => $tax,
-                'tax_sum'          => $taxSum,
+                'vat'              => $vat,
                 'payment_object'   => $payment_object,
                 'payment_method'   => $payment_method,
                 'measurement_unit' => $measurement_unit,
@@ -54,19 +53,6 @@ class OperationRequestTest extends TestCase
             $item->jsonSerialize()
         );
 
-        $item->setTax(Vat::TAX_VAT18);
-        $this->assertEquals(round($price * $quantity * 0.18, 2), $item->getTaxSum());
-        $item->setTax(Vat::TAX_VAT10);
-        $this->assertEquals(round($price * $quantity * 0.10, 2), $item->getTaxSum());
-        $item->setTax(Vat::TAX_VAT20);
-        $this->assertEquals(round($price * $quantity * 0.2, 2), $item->getTaxSum());
-        $item->setTax(Vat::TAX_VAT110);
-        $this->assertEquals(round($price * $quantity * 10 / 110, 2), $item->getTaxSum());
-        $item->setTax(Vat::TAX_VAT118);
-        $this->assertEquals(round($price * $quantity * 18 / 118, 2), $item->getTaxSum());
-        $item->setTax(Vat::TAX_VAT120);
-        $this->assertEquals(round($price * $quantity * 20 / 120, 2), $item->getTaxSum());
-        $item->setTax($tax);
 
         return $item;
     }
@@ -97,33 +83,37 @@ class OperationRequestTest extends TestCase
         $email = 'test@test.ru';
         $phone = '1234567890';
 
+        $client = new Client($email, $phone);
+
+        $companyINN = "1111111111";
+        $companyAddress = "test.mystore.dev";
+        $companyEmail = "company@mail.ru";
+        $company = new Company($companyINN, $companyAddress, $companyEmail, ReceiptSno::RECEIPT_SNO_USN_INCOME);
+
         $receipt = new Receipt();
-        $receipt->setSno(ReceiptSno::RECEIPT_SNO_USN_INCOME)
-            ->setEmail($email)
-            ->setPhone($phone)
+        $receipt
+            ->setClient($client)
+            ->setCompany($company)
             ->setPayments([$payment])
             ->setItems([$item]);
 
-        $this->assertEquals($email, $receipt->getEmail());
-        $this->assertEquals($phone, $receipt->getPhone());
+        $this->assertEquals($email, $receipt->getClient()->getEmail());
+        $this->assertEquals($phone, $receipt->getClient()->getPhone());
+
+        $this->assertEquals($companyINN, $receipt->getCompany()->getInn());
+        $this->assertEquals($companyAddress, $receipt->getCompany()->getPaymentAddress());
+        $this->assertEquals($companyEmail, $receipt->getCompany()->getEmail());
         $this->assertEquals(
             ReceiptSno::RECEIPT_SNO_USN_INCOME,
-            $receipt->getSno()
+            $receipt->getCompany()->getSno()
         );
         $this->assertEquals($item->getSum(), $receipt->getTotal());
 
+
         $this->assertEquals(
             [
-                'client'   => [
-                    'email' => $email,
-                    'phone' => $phone,
-                ],
-                'company'  => [
-                    'sno'             => ReceiptSno::RECEIPT_SNO_USN_INCOME,
-                    'inn'             => $receipt->getInn(),
-                    'email'           => $receipt->getCompanyEmail(),
-                    'payment_address' => $receipt->getPaymentAddress(),
-                ],
+                'client'   => $client,
+                'company'  => $company,
                 'items'    => [$item],
                 'total'    => $payment->getSum(),
                 'payments' => [$payment],
@@ -131,6 +121,8 @@ class OperationRequestTest extends TestCase
             ],
             $receipt->jsonSerialize()
         );
+
+
 
         $receipt->addItem($item);
         $this->assertEquals([$item, $item], $receipt->getItems());
@@ -146,19 +138,13 @@ class OperationRequestTest extends TestCase
      */
     public function newInfo()
     {
-        $inn = '1111111111';
-        $paymentAddress = 'test.mystore.dev';
         $callbackUrl = 'http://test.mystore.dev/callback/api/url';
 
-        $info = new Info($inn, $paymentAddress, $callbackUrl);
-        $this->assertEquals($inn, $info->getInn());
-        $this->assertEquals($paymentAddress, $info->getPaymentAddress());
+        $info = new Info($callbackUrl);
         $this->assertEquals($callbackUrl, $info->getCallbackUrl());
         $this->assertJson(
             json_encode([
                 'callbackUrl'     => $callbackUrl,
-                'inn'             => $inn,
-                'payment_address' => $paymentAddress,
             ]),
             json_encode($info->jsonSerialize())
         );

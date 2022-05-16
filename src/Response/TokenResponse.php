@@ -42,9 +42,9 @@ class TokenResponse implements ResponseInterface
      */
     public function __construct(stdClass $json)
     {
-        $this->error = $json->error;
-        $this->token = $json->token;
-        $this->timestamp = new DateTime($json->timestamp);
+        $this->error        = $json->error;
+        $this->token        = $json->token;
+        $this->timestamp    = new DateTime($json->timestamp);
     }
 
 
