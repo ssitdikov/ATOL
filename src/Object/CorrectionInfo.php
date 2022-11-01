@@ -57,9 +57,9 @@ class CorrectionInfo implements \JsonSerializable
     public function __construct(string $type = self::TYPE_SELF, $base_date, $base_number, $base_name)
     {
         $this->setType($type);
-        $this->setType($base_date);
-        $this->setType($base_number);
-        $this->setType($base_name);
+        $this->setBaseDate($base_date);
+        $this->setBaseNumber($base_number);
+        $this->setBaseName($base_name);
     }
 
     /**
